@@ -1,3 +1,12 @@
+import { asyncErrorHandler } from '../utils/asyncErrorHandler.js';
+import { registerationSchemaValidation } from '../validations/registerationJoiValidation.js';
+
+
 export const registerUser = (req,res) => {
-    res.status(201).json({message: "User registered successfully"});
+    const userData = req.body;
+    // Logic to handle user registration using userData
+    const { error } = registerationSchemaValidation.validate(userData);
+
+
+    
 };

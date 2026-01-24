@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import customError from './errors/customError.js';
 
 const app = express();
 const PORT = 5000;
@@ -17,6 +18,9 @@ app.use('/api/v1', UserRoute);
 app.use((req, res) => {
     res.status(404).json({ error: 'Route not found' });
 });
+
+// Global Error Handling Middleware
+app.use(customError);
 
 // Start the server
 app.listen(PORT, () => {

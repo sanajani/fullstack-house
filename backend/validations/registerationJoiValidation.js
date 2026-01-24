@@ -22,3 +22,13 @@ export const registerationSchemaValidation = joi.object({
     }),
 }).options({ abortEarly: false , allowUnknown: true });
 
+
+export const loginSchemaValidation = joi.object({
+    phoneNumber1: joi.string().required().messages({
+        'any.required': 'Phone Number 1 is required'
+    }),
+    password: joi.string().min(2).required().messages({
+        'string.min': 'Password should have a minimum length of 6',
+        'any.required': 'Password is required'
+    }),
+})

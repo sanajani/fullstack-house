@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 // Use UserRoute for user-related endpoints
-app.use('/api/v1', UserRoute);
+app.use('/api/v1/users', UserRoute);
 
 // 404 Error handling middleware
 app.use((req, res) => {

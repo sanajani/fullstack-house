@@ -20,5 +20,5 @@ export const registerationSchemaValidation = joi.object({
         'string.min': 'Password should have a minimum length of 6',
         'any.required': 'Password is required'
     }),
-});
+}).options({ abortEarly: false , allowUnknown: true });
 

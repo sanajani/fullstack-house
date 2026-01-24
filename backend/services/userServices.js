@@ -4,6 +4,8 @@ import UserModel from "../models/UserModel.js";
 import bcrypt from 'bcryptjs';
 
 export const registerUserService = async (userData) => {
+    console.log('services');
+    
     // Business logic for registering a user would go here
     const isUserExists = await UserModel.findOne({
         $or: [
@@ -19,5 +21,4 @@ export const registerUserService = async (userData) => {
 
     const newUser = new UserModel(userData);
     return await newUser.save();
-
 };

@@ -1,6 +1,9 @@
 import express from 'express';
+import connectToMongoDB from './db/mongodbConnection.js';
 import cors from 'cors';
 import customError from './errors/customError.js';
+
+
 
 const app = express();
 const PORT = 5000;
@@ -24,5 +27,6 @@ app.use(customError);
 
 // Start the server
 app.listen(PORT, () => {
+    connectToMongoDB();
     console.log(`Server is running on http://localhost:${PORT}`);
 });

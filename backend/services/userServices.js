@@ -37,3 +37,14 @@ export const loginUserService = async (userData) => {
     return {token, user};
 
 }
+
+export const getUserProfileService = async (userId) => {
+    const user = await UserModel.findById(userId);
+    if(!user) throw new AppError('User not found', 404);
+    return user;
+}
+
+export const updateUserProfileService = async (userId, updateData) => {
+    const updatedUser = await UserModel.findByIdAndUpdate(userId, updateData, { new: true });
+    return updatedUser;
+}

@@ -1,5 +1,6 @@
 import AppError from '../errors/AppError.js';
-import { loginUserService, registerUserService } from '../services/userServices.js';
+import UserModel from '../models/UserModel.js';
+import { getUserProfileService, loginUserService, registerUserService, updateUserProfileService } from '../services/userServices.js';
 import { asyncErrorHandler } from '../utils/asyncErrorHandler.js';
 import { registerationSchemaValidation, loginSchemaValidation } from '../validations/registerationJoiValidation.js';
 
@@ -43,3 +44,45 @@ export const loginUser = asyncErrorHandler(async (req,res,next) => {
     // Logic to handle user login using loginData
     res.status(200).json({ message: 'User logged in successfully', data: {user, token} });
 })
+
+// Controller to handle get user profile
+export const getUserProfile = asyncErrorHandler(async (req,res,next) => {
+    console.log(req.user);
+    
+    const userId = req?.user?.id;
+    console.log(userId);
+    
+    if(!userId) {
+        return next(new AppError('User ID is missing', 400));
+    }
+    // Logic to get user profile using userId
+    const user = await getUserProfileService(userId);
+    if(!user) {
+        return next(new AppError('User not found', 404));
+    }
+    res.status(200).json({ message: 'User profile fetched successfully', data: user });
+});
+
+// Controller to handle update user profile
+
+export const updateUserProfile = asyncErrorHandler(async (req,res,next) => {
+    
+    const userId = req?.user?.id;
+    if(!userId) {
+        return next(new AppError('Token is missing', 400));
+    }
+    const updateData = req.body;
+    // Logic to update user profile using userId and updateData
+    const updatedUser = await updateUserProfileService(userId, updateData);
+    if(!updatedUser) {
+        return next(new AppError('User profile update failed', 500));
+    }
+    res.status(200).json({ message: 'User profile updated successfully', data: updatedUser });
+});
+
+
+export const allUsers = asyncErrorHandler(async (req, res, next) => {
+    const allUsersData = await UserModel.find();
+    // Logic to get all users
+    res.status(200).json({ message: 'All users fetched successfully', data: allUsersData });
+});

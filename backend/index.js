@@ -4,7 +4,6 @@ import connectToMongoDB from './db/mongodbConnection.js';
 import cors from 'cors';
 import customError from './errors/customError.js';
 
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 

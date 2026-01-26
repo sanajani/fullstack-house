@@ -6,8 +6,8 @@ import generateJWTToken from "../utils/generateJWTToken.js";
 
 import bcrypt from 'bcryptjs';
 
+// Service to register user
 export const registerUserService = async (userData) => {
-    console.log('services');
     
     // Business logic for registering a user would go here
     const isUserExists = await UserModel.findOne({
@@ -26,6 +26,7 @@ export const registerUserService = async (userData) => {
     return await newUser.save();
 };
 
+// Service to login user
 export const loginUserService = async (userData) => {
     const user = await UserModel.findOne({ phoneNumber1: userData.phoneNumber1 }).select('+password');
     if(!user) throw new AppError('Invalid phone number or password', 401);
@@ -36,20 +37,22 @@ export const loginUserService = async (userData) => {
     // user.token = token;
     user.password = undefined;
     return {token, user};
-
 }
 
+// Service to get user profile
 export const getUserProfileService = async (userId) => {
     const user = await UserModel.findById(userId);
     if(!user) throw new AppError('User not found', 404);
     return user;
 }
 
+// Service to update user profile
 export const updateUserProfileService = async (userId, updateData) => {
     const updatedUser = await UserModel.findByIdAndUpdate(userId, updateData, { new: true });
     return updatedUser;
 }
 
+// Service to update user profile to agent profile
 export const updateUserToAgentProfileService = async (userId, userData) => {
     const existingUser = await UserModel.findById(userId);
     if(!existingUser) {

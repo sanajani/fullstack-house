@@ -1,6 +1,8 @@
-import AppError from '../errors/AppError.js';
+// user models
 import UserModel from '../models/UserModel.js';
-import { getUserProfileService, loginUserService, registerUserService, updateUserProfileService } from '../services/userServices.js';
+
+import AppError from '../errors/AppError.js';
+import { getUserProfileService, loginUserService, registerUserService, updateUserProfileService, updateUserToAgentProfileService } from '../services/userServices.js';
 import { asyncErrorHandler } from '../utils/asyncErrorHandler.js';
 import { registerationSchemaValidation, loginSchemaValidation } from '../validations/registerationJoiValidation.js';
 
@@ -80,9 +82,22 @@ export const updateUserProfile = asyncErrorHandler(async (req,res,next) => {
     res.status(200).json({ message: 'User profile updated successfully', data: updatedUser });
 });
 
-
+// it is test and will be removed later
 export const allUsers = asyncErrorHandler(async (req, res, next) => {
     const allUsersData = await UserModel.find();
     // Logic to get all users
     res.status(200).json({ message: 'All users fetched successfully', data: allUsersData });
+});
+
+// become agent controller
+export const becomeAgent = asyncErrorHandler(async (req, res, next) => {
+    const userId = req?.user?.id;
+    if(!userId) {
+        return next(new AppError('Token is missing', 400));
+    }
+    const agentData = req.body;
+    const updatedAgentStatus = await updateUserToAgentProfileService(userId, agentData);
+    if(!updatedAgentStatus) {
+        return next(new AppError('Become agent request failed', 500));
+    }
 });

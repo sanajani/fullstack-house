@@ -19,6 +19,12 @@ const userSchema = new mongoose.Schema({
         sparse: true,
         required: true,
     },
+    password: {
+        type: String,
+        required: true,
+        minlength: 2,
+        select: false
+    },
     phoneNumber2: {
         type: String,
         unique: true,
@@ -27,22 +33,14 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         unique: true,
-        lowercase: true,
         sparse: true,
         index: true
     },
     username: {
         type: String,
         unique: true,
-        lowercase: true,
         index: true,
         sparse: true
-    },
-    password: {
-        type: String,
-        required: true,
-        minlength: 2,
-        select: false
     },
     province:{
         type: String,

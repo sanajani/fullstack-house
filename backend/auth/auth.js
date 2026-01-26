@@ -2,7 +2,7 @@ import AppError from "../errors/AppError.js";
 import verifyToken from "../utils/verifyToken.js";
 
 export const isAuthenticateUser = (req, res, next) => {
-    console.log('Authenticating user...', req.headers);
+    console.log('inside auth middleware');
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -12,8 +12,9 @@ export const isAuthenticateUser = (req, res, next) => {
     try {
         const decoded = verifyToken(token);
         req.user = decoded;
+        console.log('next function called');
         next();
-
+        
     } catch (error) {
         next(error);
     }

@@ -1,5 +1,5 @@
 import express from 'express';
-import { registerUser, loginUser, getUserProfile, allUsers, updateUserProfile } from '../controllers/userController.js';
+import { registerUser, loginUser, getUserProfile, allUsers, updateUserProfile, becomeAgent } from '../controllers/userController.js';
 import { isAuthenticateUser } from '../auth/auth.js';
 
 const router = express.Router();
@@ -16,6 +16,9 @@ router.get('/me', isAuthenticateUser, getUserProfile);
 
 // ==>  api/v1/users/me
 router.put('/me', isAuthenticateUser, updateUserProfile);
+
+// ==>  api/v1/users/become-agent
+router.put('/become-agent', isAuthenticateUser, becomeAgent)
 
 router.get('/all', allUsers);
 

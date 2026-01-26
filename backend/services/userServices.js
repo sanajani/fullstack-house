@@ -51,6 +51,13 @@ export const updateUserProfileService = async (userId, updateData) => {
 }
 
 export const updateUserToAgentProfileService = async (userId, userData) => {
+    const existingUser = await UserModel.findById(userId);
+    if(!existingUser) {
+        throw new AppError('User not found', 404);
+    }
+    if(existingUser.hasRequestedAgent) {
+        throw new AppError('User has already requested to become an agent', 400);
+    }
         const {
   name,
   lastName,

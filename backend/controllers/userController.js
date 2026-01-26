@@ -91,6 +91,7 @@ export const allUsers = asyncErrorHandler(async (req, res, next) => {
 
 // become agent controller
 export const becomeAgent = asyncErrorHandler(async (req, res, next) => {
+    
     const userId = req?.user?.id;
     if(!userId) {
         return next(new AppError('Token is missing', 400));
@@ -100,4 +101,5 @@ export const becomeAgent = asyncErrorHandler(async (req, res, next) => {
     if(!updatedAgentStatus) {
         return next(new AppError('Become agent request failed', 500));
     }
+    res.status(200).json({ message: 'Become agent request submitted successfully', data: updatedAgentStatus });
 });

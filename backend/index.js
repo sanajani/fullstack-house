@@ -36,7 +36,7 @@ const PORT = process.env.PORT || 5000;
 
 // import  UserRoute
 import userRoute from './routes/UserRoute.js';
-import adminRoute from './routes/adminRoutes/adminRoute.js'
+import adminRoute from './routes/admin/adminRoute.js'
 
 app.use(cors());
 app.use(express.json({limit: '10kb'}));

@@ -1,5 +1,5 @@
 import AppError from "../../errors/AppError.js";
-import { getAllUsersServices, getUserByIdAndDeleteService, getUserByIdService, pendingAgentRequestServices } from "../../services/admin/userManagemntServices.js";
+import { getAllUsersServices, getUserByIdAndDeleteService, getUserByIdService, pendingAgentRequestServices, tenantToAgentAcceptService } from "../../services/admin/userManagemntServices.js";
 import { asyncErrorHandler } from "../../utils/asyncErrorHandler.js";
 
 // get all users
@@ -46,5 +46,20 @@ export const pendingAgentRequest = asyncErrorHandler(async (req,res, next) => {
     return res.status(200).json({
         message: "Success",
         data: pendingAgents
+    })
+})
+
+export const tenantToAgentAcceptController = asyncErrorHandler(async (req, res, next) => {
+    const {userId} = req.params;
+    console.log(userId, 'controller');
+    
+    if(!userId) return next(new AppError("UserId is required", 404))
+    const acceptedAgent = await tenantToAgentAcceptService(userId)
+console.log('user is', acceptedAgent);
+
+
+    return res.status(200).json({
+        message:"Success",
+        data: acceptedAgent
     })
 })

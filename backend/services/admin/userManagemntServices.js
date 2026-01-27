@@ -29,3 +29,18 @@ export const pendingAgentRequestServices = async () => {
     }
     return pendingAgents
 }
+
+
+export const tenantToAgentAcceptService = async (userId) => {
+    // console.log(userId);
+    
+    let isUserExist = await UserModel.findOne({_id: userId});
+    console.log('what you got',isUserExist);
+
+    if(!isUserExist) throw new AppError("User NOT Fount to change role", 404);
+
+    isUserExist.role = 'agent';
+    isUserExist.agentRequestStatus = 'approved'
+    const becomedAgent = await isUserExist.save();
+    return becomedAgent
+}

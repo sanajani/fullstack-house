@@ -37,6 +37,7 @@ const PORT = process.env.PORT || 5000;
 // import  UserRoute
 import userRoute from './routes/UserRoute.js';
 import adminRoute from './routes/admin/adminRoute.js'
+import agentRoute from './routes/agent/agentRoutes.js'
 
 app.use(cors());
 app.use(express.json({limit: '10kb'}));
@@ -49,6 +50,9 @@ app.use('/api/v1/users', userRoute);
 
 // admin routes
 app.use('/api/v1/admin', adminRoute);
+
+// agent routes
+app.use('/api/v1/agent', agentRoute)
 
 // 404 Error handling middleware
 app.use((req, res) => {

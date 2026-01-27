@@ -1,11 +1,12 @@
 import express from 'express';
-import { createProperty } from '../../controllers/agent/properties/Properties.js';
+import { createPropertyByAgent, getAllPropertiesByAgent } from '../../controllers/agent/properties/Properties.js';
 
 const router = express.Router();
 
 // /api/v1/agent/property
 router.route("/property")
-.post(createProperty)
+.post(createPropertyByAgent)
+.get(getAllPropertiesByAgent)
 
 
 export default router;

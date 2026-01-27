@@ -10,6 +10,20 @@ export const createPropertiesService = async (reqData) => {
         return savedProperty
 }
 
+export const getAllPropertiesServices = async (agentId) => {
+    console.log(agentId);
+    
+    // const properties = await PropertiesModel.find().populate("agent", "title _id description propertyType location")
+    const properties = await PropertiesModel.find({agent: agentId}, 'title').populate('agent' , "name")
+    console.log(properties);
+    
+    if(!properties || properties.length === 0){
+        throw new AppError("There is no property for that agent");
+    }
+
+    return properties
+}
+
 
     // const {
     //     title, 

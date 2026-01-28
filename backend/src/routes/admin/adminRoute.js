@@ -3,7 +3,6 @@ import { isAuthenticateUser } from '../../auth/auth.js';
 import { getAllUsers, getUserById, getUserByIdAndDelete, pendingAgentRequest, tenantToAgentAcceptController } from '../../controllers/admin/userManagementController.js';
 // import isAdminProtectedMiddleware  from '../../auth/adminAuth/adminAuth.js'
 
-
 const router = express.Router();
 
 // api/v1/admin

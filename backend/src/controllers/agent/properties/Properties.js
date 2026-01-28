@@ -27,7 +27,9 @@ export const createPropertyByAgent = asyncErrorHandler(async (req,res,next) => {
 export const getAllPropertiesByAgent = asyncErrorHandler(async (req,res,next) => {
     // const agentId = req.user;
     const agentId = '64f1a2b3c4d5e6f7a8b9c0d1'
-    if(!agentId) return next(new AppError("User Id is missing", 400))
+    if(!agentId) {
+        return next(new AppError("User Id is missing", 400))
+    }
     
     const allProperties = await getAllPropertiesServices(agentId);
 

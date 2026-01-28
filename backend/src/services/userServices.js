@@ -71,8 +71,6 @@ export const updateUserToAgentProfileService = async (userId, userData) => {
   province,
   district,
   role,
-  hasRequestedAgent,
-  agentRequestStatus,
   agentInfo
     } = userData;
     if(role){

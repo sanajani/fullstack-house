@@ -4,7 +4,8 @@ import WantToBecomeAgentModel from "../../models/wantToBecomeAgent.js";
 
 export const getAllUsersServices = async () => {
     const allUsers = await UserModel.find();
-
+    console.log(allUsers);
+    
     return allUsers
 }
 

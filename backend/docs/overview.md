@@ -29,9 +29,9 @@ Users are individuals who browse, search, and interact with property listings.
 * POST /api/v1/users/login    --> Login User
 *  GET /api/v1/users/me (PROTECTED) --> Get User Profile
 *  put /api/v1/users/me (PROTECTED) --> Update User Profile
-# NOTE THE BECOME-AGENT 
+### NOTE THE BECOME-AGENT 
 *  GET /api/v1/users/become-agent (PROTECTED) --> Change Role from User To Agent 
-# NOTE THE BECOME-AGENT ROUTE WILL GO INSIDE AGENT ROUTES FOLDER
+### NOTE THE BECOME-AGENT ROUTE WILL GO INSIDE AGENT ROUTES FOLDER
 
 ## 2️⃣ Agents (Property Listers)
 

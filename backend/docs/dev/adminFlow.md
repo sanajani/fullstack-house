@@ -6,13 +6,13 @@ Client
   | GET /user
   | Header: Authorization: Bearer <token>
   v
-Route -> router.get('/user', isAuthenticateUser, getAllUsers)
+Route -> router.get('/user', isAuthenticateUser, listUsersController)
   |
-Controller -> getAllUsers
-  |-- Call getAllUsersServices()
+Controller -> listUsersController
+  |-- Call fetchAllUsers()
   |-- Return all users → 404 if none
   |
-Service -> getAllUsersServices
+Service -> fetchAllUsers
   |-- UserModel.find()
   |
 Controller -> send response
@@ -30,11 +30,11 @@ Client
   v
 Route -> router.get('/user/:userId', isAuthenticateUser, getUserById)
   |
-Controller -> getUserById
+Controller -> getUserController
   |-- Extract userId
-  |-- Call getUserByIdService(userId)
+  |-- Call fetchUserById(userId)
   |
-Service -> getUserByIdService
+Service -> fetchUserById
   |-- UserModel.findById(userId)
   |
 Controller -> send response
@@ -50,13 +50,13 @@ Client
   | DELETE /user/:userId
   | Header: Authorization: Bearer <token>
   v
-Route -> router.delete('/user/:userId', isAuthenticateUser, getUserByIdAndDelete)
+Route -> router.delete('/user/:userId', isAuthenticateUser, deleteUserController)
   |
-Controller -> getUserByIdAndDelete
+Controller -> deleteUserController
   |-- Extract userId
-  |-- Call getUserByIdAndDeleteService(userId)
+  |-- Call deleteUserById(userId)
   |
-Service -> getUserByIdAndDeleteService
+Service -> deleteUserById
   |-- UserModel.findByIdAndDelete(userId)
   |
 Controller -> send response
@@ -72,12 +72,12 @@ Client
   | GET /want-to-become-agent
   | Header: Authorization: Bearer <token>
   v
-Route -> router.get('/want-to-become-agent', isAuthenticateUser, pendingAgentRequest)
+Route -> router.get('/want-to-become-agent', isAuthenticateUser, listPendingAgentsController)
   |
-Controller -> pendingAgentRequest
-  |-- Call pendingAgentRequestServices()
+Controller -> listPendingAgentsController
+  |-- Call fetchPendingAgentRequests()
   |
-Service -> pendingAgentRequestServices
+Service -> fetchPendingAgentRequests
   |-- WantToBecomeAgentModel.find()
   |-- Populate userId fields: name, phoneNumber1, agentInfo, agentRequestStatus
   |
@@ -94,12 +94,12 @@ Client
   | GET /tenant-to-agent/:userId
   | Header: Authorization: Bearer <token>
   v
-Route -> router.get('/tenant-to-agent/:userId', isAuthenticateUser, tenantToAgentAcceptController)
+Route -> router.get('/tenant-to-agent/:userId', isAuthenticateUser, approveAgentRequestController)
   |
-Controller -> tenantToAgentAcceptController
-  |-- Call tenantToAgentAcceptService(userId)
+Controller -> approveAgentRequestController
+  |-- Call approveAgentRole(userId)
   |
-Service -> tenantToAgentAcceptService
+Service -> approveAgentRole
   |-- Find user by userId
   |-- Update role='agent', agentRequestStatus='approved'
   |-- Save updated user

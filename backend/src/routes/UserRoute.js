@@ -1,24 +1,24 @@
 import express from 'express';
-import { registerUser, loginUser, getUserProfile, allUsers, updateUserProfile, becomeAgent } from '../controllers/userController.js';
+import { registerUserController, loginUserController, getMyProfileController, allUsers, updateMyProfileController, requestAgentController } from '../controllers/userController.js';
 import { isAuthenticateUser } from '../auth/auth.js';
 
 const router = express.Router();
 
 // Sample user data
 // ==>  api/v1/users/register
-router.post('/register', registerUser);
+router.post('/register', registerUserController);
 
 // ==>  api/v1/users/login
-router.post('/login', loginUser);
+router.post('/login', loginUserController);
 
 // ==>  api/v1/users/me
-router.get('/me', isAuthenticateUser, getUserProfile);
+router.get('/me', isAuthenticateUser, getMyProfileController);
 
 // ==>  api/v1/users/me
-router.put('/me', isAuthenticateUser, updateUserProfile);
+router.put('/me', isAuthenticateUser, updateMyProfileController);
 
 // ==>  api/v1/users/become-agent
-router.put('/become-agent', isAuthenticateUser, becomeAgent)
+router.put('/become-agent', isAuthenticateUser, requestAgentController)
 
 router.get('/all', allUsers);
 

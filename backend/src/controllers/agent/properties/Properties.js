@@ -1,6 +1,6 @@
 // // properties controller
 import AppError from '../../../errors/AppError.js';
-import { createPropertiesService, getAllPropertiesServices } from '../../../services/agent/propertiesServices.js';
+import { createProperty, fetchPropertiesByAgent } from '../../../services/agent/propertiesServices.js';
 import { asyncErrorHandler } from "../../../utils/asyncErrorHandler.js"
 import { propertiesValidation } from '../../../validations/properties/properties.js'
 
@@ -14,7 +14,7 @@ export const createPropertyByAgent = asyncErrorHandler(async (req,res,next) => {
         return next(new AppError(error.details[0].message, 400))
     }
 
-    const property = await createPropertiesService(req.body);
+    const property = await createProperty(req.body);
 
     return res.status(200).json({
         message: "Successfully property created",
@@ -31,7 +31,7 @@ export const getAllPropertiesByAgent = asyncErrorHandler(async (req,res,next) =>
         return next(new AppError("User Id is missing", 400))
     }
     
-    const allProperties = await getAllPropertiesServices(agentId);
+    const allProperties = await fetchPropertiesByAgent(agentId);
 
     return res.status(200).json({
         message: "Success",

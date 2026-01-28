@@ -1,18 +1,18 @@
 import express from 'express';
 import { isAuthenticateUser } from '../../auth/auth.js';
-import { getAllUsers, getUserById, getUserByIdAndDelete, pendingAgentRequest, tenantToAgentAcceptController } from '../../controllers/admin/userManagementController.js';
+import { listUsersController, getUserController, deleteUserController, listPendingAgentsController, approveAgentRequestController } from '../../controllers/admin/userManagementController.js';
 // import isAdminProtectedMiddleware  from '../../auth/adminAuth/adminAuth.js'
 
 const router = express.Router();
 
 // api/v1/admin
-// router.get("/user", isAuthenticateUser, isAdminProtectedRoute,getAllUsers)
-router.get("/user", isAuthenticateUser,getAllUsers);
-router.get("/user/:userId", isAuthenticateUser,getUserById);
-router.delete("/user/:userId", isAuthenticateUser,getUserByIdAndDelete);
+// router.get("/user", isAuthenticateUser, isAdminProtectedRoute,listUsersController)
+router.get("/user", isAuthenticateUser,listUsersController);
+router.get("/user/:userId", isAuthenticateUser,getUserController);
+router.delete("/user/:userId", isAuthenticateUser,deleteUserController);
 
 // api/v1/admin
-router.get('/want-to-become-agent', isAuthenticateUser, pendingAgentRequest)
-router.get('/tenant-to-agent/:userId', isAuthenticateUser, tenantToAgentAcceptController)
+router.get('/want-to-become-agent', isAuthenticateUser, listPendingAgentsController)
+router.get('/tenant-to-agent/:userId', isAuthenticateUser, approveAgentRequestController)
 
 export default router;

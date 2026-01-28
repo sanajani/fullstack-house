@@ -11,9 +11,9 @@ Controller -> createPropertyByAgent
   |-- Validate request body with Joi (propertiesValidation)
   |     |-- Validate required fields: agent, title, description, propertyType, transaction, location, details, price
   |     |-- Validate optional fields: amenities, media
-  |-- Call createPropertiesService(req.body)
+  |-- Call createProperty(req.body)
   |
-Service -> createPropertiesService
+Service -> createProperty
   |-- Create new PropertiesModel instance with reqData
   |-- Save property to DB
   |-- Throw 409 if save fails
@@ -44,9 +44,9 @@ Route -> router.get('/property', getAllPropertiesByAgent)
 Controller -> getAllPropertiesByAgent
   |-- Get agentId (from req.user or hardcoded in this example)
   |-- Check if agentId exists → 400 if missing
-  |-- Call getAllPropertiesServices(agentId)
+  |-- Call fetchPropertiesByAgent(agentId)
   |
-Service -> getAllPropertiesServices
+Service -> fetchPropertiesByAgent
   |-- Query DB: PropertiesModel.find({ agent: agentId }, 'title')
   |-- Populate agent info: name
   |-- Check if properties exist → 404 if none

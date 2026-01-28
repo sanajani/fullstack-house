@@ -2,12 +2,14 @@
 import UserModel from '../models/UserModel.js';
 
 import AppError from '../errors/AppError.js';
-import { getUserProfileService, loginUserService, registerUserService, updateUserProfileService, updateUserToAgentProfileService } from '../services/userServices.js';
+import { getMyProfile, loginUser, registerUser, updateMyProfile, requestAgentRole } from '../services/userServices.js';
 import { asyncErrorHandler } from '../utils/asyncErrorHandler.js';
 import { registerationSchemaValidation, loginSchemaValidation } from '../validations/registerationJoiValidation.js';
 
+// USER CONTROLLER 
+
 // Controller to handle user registration
-export const registerUser = asyncErrorHandler(async (req,res, next) => {
+export const registerUserController = asyncErrorHandler(async (req,res, next) => {
     if(!req.body || Object.keys(req.body).length === 0) {
         return next(new AppError('Request body is missing', 400));
     }
@@ -19,7 +21,7 @@ export const registerUser = asyncErrorHandler(async (req,res, next) => {
         return next(new AppError(error.details[0].message, 400));
     }
 
-    const user = await registerUserService(userData);
+    const user = await registerUser(userData);
     if(!user) {
         return next(new AppError('User registration failed', 500));
     }
@@ -28,7 +30,7 @@ export const registerUser = asyncErrorHandler(async (req,res, next) => {
 });
 
 // controller to handle user login
-export const loginUser = asyncErrorHandler(async (req,res,next) => {
+export const loginUserController = asyncErrorHandler(async (req,res,next) => {
     if(!req.body || Object.keys(req.body).length === 0) {
         return next(new AppError('Request body is missing', 400));
     }
@@ -39,7 +41,7 @@ export const loginUser = asyncErrorHandler(async (req,res,next) => {
     if( error ) 
         return next(new AppError(error?.details[0].message, 400));
 
-    const { token, user } = await loginUserService(loginData);
+    const { token, user } = await loginUser(loginData);
     if( !user || !token ) 
         return next(new AppError('User login failed', 500));
 
@@ -48,7 +50,7 @@ export const loginUser = asyncErrorHandler(async (req,res,next) => {
 })
 
 // Controller to handle get user profile
-export const getUserProfile = asyncErrorHandler(async (req,res,next) => {
+export const getMyProfileController = asyncErrorHandler(async (req,res,next) => {
     console.log(req.user);
     
     const userId = req?.user?.id;
@@ -58,7 +60,7 @@ export const getUserProfile = asyncErrorHandler(async (req,res,next) => {
         return next(new AppError('User ID is missing', 400));
     }
     // Logic to get user profile using userId
-    const user = await getUserProfileService(userId);
+    const user = await getMyProfile(userId);
     if(!user) {
         return next(new AppError('User not found', 404));
     }
@@ -67,7 +69,7 @@ export const getUserProfile = asyncErrorHandler(async (req,res,next) => {
 
 // Controller to handle update user profile
 
-export const updateUserProfile = asyncErrorHandler(async (req,res,next) => {
+export const updateMyProfileController = asyncErrorHandler(async (req,res,next) => {
     
     const userId = req?.user?.id;
     if(!userId) {
@@ -75,7 +77,7 @@ export const updateUserProfile = asyncErrorHandler(async (req,res,next) => {
     }
     const updateData = req.body;
     // Logic to update user profile using userId and updateData
-    const updatedUser = await updateUserProfileService(userId, updateData);
+    const updatedUser = await updateMyProfile(userId, updateData);
     if(!updatedUser) {
         return next(new AppError('User profile update failed', 500));
     }
@@ -90,14 +92,14 @@ export const allUsers = asyncErrorHandler(async (req, res, next) => {
 });
 
 // become agent controller
-export const becomeAgent = asyncErrorHandler(async (req, res, next) => {
+export const requestAgentController = asyncErrorHandler(async (req, res, next) => {
     
     const userId = req?.user?.id;
     if(!userId) {
         return next(new AppError('Token is missing', 400));
     }
     const agentData = req.body;
-    const updatedAgentStatus = await updateUserToAgentProfileService(userId, agentData);
+    const updatedAgentStatus = await requestAgentRole(userId, agentData);
     if(!updatedAgentStatus) {
         return next(new AppError('Become agent request failed', 500));
     }

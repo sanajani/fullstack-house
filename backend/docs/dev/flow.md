@@ -1,98 +1,3 @@
-<!-- # Instructions for developers
-
-# this is real state application for Afghanistan
-
-## we have 3 rules in the applicaiton
-# ADMIN/ AGENT/ TENANT
-## ADMIN -> have access to all the futures of the application
-## AGENT -> create update delete properties message with users
-## TENANT -> browse properties message with agents 
-
-Users can search for property 
-but for more functionality they have to register
-register -> login -> becomeAgent -> postProperty and so on
-
-## REGISTER ROUTE
-/api/v1/users/register
-Client
-  |
-  | POST /register
-  v
-Route -> router.post('/register', registerUser)
-  |
-Controller -> registerUser
-  |-- Check request body
-  |-- Validate with Joi
-  |-- Call registerUserService
-  |
-Service -> registerUserService
-  |-- Check if user exists
-  |-- Hash password
-  |-- Save to DB
-  |
-Controller -> send response
-  |
-Client <- 201 Created / Error
-
-## LOGIT ROUTE
-/api/v1/users/login
-Client
-  |
-  | POST /login
-  v
-Route -> router.post('/login', loginUser)
-  |
-Controller -> loginUser
-  |-- Check if request body exists
-  |-- Validate request body with loginSchemaValidation
-  |-- Call loginUserService
-  |
-Service -> loginUserService
-  |-- Find user by phoneNumber1
-  |-- Compare password with bcrypt
-  |-- Generate JWT token
-  |-- Remove password from user object
-  |
-Controller -> send response
-  |-- res.status(200).json({ message, data: {user, token} })
-  |
-Client <- 200 OK / Error
-
-## GET PROFILE OR /ME
-/api/v1/users/me
-Client
-  |
-  | GET /me
-  | Header: Authorization: Bearer <token>
-  v
-Route -> router.get('/me', isAuthenticateUser, getUserProfile)
-  |
-Middleware -> isAuthenticateUser
-  |-- Check Authorization header exists and starts with 'Bearer '
-  |-- Extract token
-  |-- Verify token using verifyToken()
-  |-- Attach decoded user info to req.user
-  |-- Call next()
-  |
-Controller -> getUserProfile
-  |-- Get userId from req.user
-  |-- Call getUserProfileService(userId)
-  |
-Service -> getUserProfileService
-  |-- Find user in DB by userId
-  |-- Return user object
-  |
-Controller -> send response
-  |-- res.status(200).json({ message, data: user })
-  |
-Client <- 200 OK / Error
-
-
-## UPDATE PROFILE OR /ME
-api/v1/users/me
-
- -->
-
 ──────────────────────────────
 1️⃣ User Registration
 ──────────────────────────────
@@ -101,14 +6,14 @@ Client
   | POST /register
   | Body: { name, lastName, phoneNumber1, email?, password }
   v
-Route -> router.post('/register', registerUser)
+Route -> router.post('/register', registerUserController)
   |
-Controller -> registerUser
+Controller -> registerUserController
   |-- Check request body exists
   |-- Validate body with Joi
-  |-- Call registerUserService(userData)
+  |-- Call registerUser(userData)
   |
-Service -> registerUserService
+Service -> registerUser
   |-- Check if user exists (phone/email/username)
   |-- Hash password
   |-- Save new user in DB
@@ -126,14 +31,14 @@ Client
   | POST /login
   | Body: { phoneNumber1, password }
   v
-Route -> router.post('/login', loginUser)
+Route -> router.post('/login', loginUserController)
   |
-Controller -> loginUser
+Controller -> loginUserController
   |-- Check request body exists
   |-- Validate body with Joi
-  |-- Call loginUserService(loginData)
+  |-- Call loginUser(loginData)
   |
-Service -> loginUserService
+Service -> loginUser
   |-- Find user by phoneNumber1
   |-- Compare password with bcrypt
   |-- Generate JWT token
@@ -152,16 +57,16 @@ Client
   | GET /me
   | Header: Authorization: Bearer <token>
   v
-Route -> router.get('/me', isAuthenticateUser, getUserProfile)
+Route -> router.get('/me', isAuthenticateUser, getMyProfileController)
   |
 Middleware -> isAuthenticateUser
   |-- Verify token, attach req.user
   |
-Controller -> getUserProfile
+Controller -> getMyProfileController
   |-- Get userId from req.user
-  |-- Call getUserProfileService(userId)
+  |-- Call getMyProfile(userId)
   |
-Service -> getUserProfileService
+Service -> getMyProfile
   |-- Find user by userId
   |-- Return user
   |
@@ -179,13 +84,13 @@ Client
   | Header: Authorization: Bearer <token>
   | Body: { fields to update }
   v
-Route -> router.put('/me', isAuthenticateUser, updateUserProfile)
+Route -> router.put('/me', isAuthenticateUser, updateMyProfileController)
   |
-Controller -> updateUserProfile
+Controller -> updateMyProfileController
   |-- Get userId from req.user
-  |-- Call updateUserProfileService(userId, updateData)
+  |-- Call updateMyProfile(userId, updateData)
   |
-Service -> updateUserProfileService
+Service -> updateMyProfile
   |-- Find user by userId and update fields
   |-- Return updated user
   |
@@ -202,13 +107,13 @@ Client
   | GET /user
   | Header: Authorization: Bearer <token>
   v
-Route -> router.get('/user', isAuthenticateUser, getAllUsers)
+Route -> router.get('/user', isAuthenticateUser, listUsersController)
   |
-Controller -> getAllUsers
-  |-- Call getAllUsersServices()
+Controller -> listUsersController
+  |-- Call fetchAllUsers()
   |-- Return array of users → 404 if none
   |
-Service -> getAllUsersServices
+Service -> fetchAllUsers
   |-- UserModel.find()
   |
 Controller -> send response
@@ -226,11 +131,11 @@ Client
   v
 Route -> router.get('/user/:userId', isAuthenticateUser, getUserById)
   |
-Controller -> getUserById
+Controller -> getUserController
   |-- Extract userId
-  |-- Call getUserByIdService(userId)
+  |-- Call fetchUserById(userId)
   |
-Service -> getUserByIdService
+Service -> fetchUserById
   |-- UserModel.findById(userId)
   |
 Controller -> send response
@@ -246,13 +151,13 @@ Client
   | DELETE /user/:userId
   | Header: Authorization: Bearer <token>
   v
-Route -> router.delete('/user/:userId', isAuthenticateUser, getUserByIdAndDelete)
+Route -> router.delete('/user/:userId', isAuthenticateUser, deleteUserController)
   |
-Controller -> getUserByIdAndDelete
+Controller -> deleteUserController
   |-- Extract userId
-  |-- Call getUserByIdAndDeleteService(userId)
+  |-- Call deleteUserById(userId)
   |
-Service -> getUserByIdAndDeleteService
+Service -> deleteUserById
   |-- UserModel.findByIdAndDelete(userId)
   |
 Controller -> send response
@@ -269,12 +174,12 @@ Client
   | Header: Authorization: Bearer <token>
   | Body: { user info + agentInfo }
   v
-Route -> router.put('/become-agent', isAuthenticateUser, becomeAgent)
+Route -> router.put('/become-agent', isAuthenticateUser, requestAgentController)
   |
-Controller -> becomeAgent
-  |-- Call updateUserToAgentProfileService(userId, agentData)
+Controller -> requestAgentController
+  |-- Call requestAgentRole(userId, agentData)
   |
-Service -> updateUserToAgentProfileService
+Service -> requestAgentRole
   |-- Validate required fields
   |-- Check user already requested → 400
   |-- Update user: hasRequestedAgent=true, agentRequestStatus='pending', agentInfo
@@ -294,12 +199,12 @@ Client
   | GET /want-to-become-agent
   | Header: Authorization: Bearer <token>
   v
-Route -> router.get('/want-to-become-agent', isAuthenticateUser, pendingAgentRequest)
+Route -> router.get('/want-to-become-agent', isAuthenticateUser, listPendingAgentsController)
   |
-Controller -> pendingAgentRequest
-  |-- Call pendingAgentRequestServices()
+Controller -> listPendingAgentsController
+  |-- Call fetchPendingAgentRequests()
   |
-Service -> pendingAgentRequestServices
+Service -> fetchPendingAgentRequests
   |-- WantToBecomeAgentModel.find().populate('userId', 'name phoneNumber1 agentInfo agentRequestStatus')
   |
 Controller -> send response
@@ -315,12 +220,12 @@ Client
   | GET /tenant-to-agent/:userId
   | Header: Authorization: Bearer <token>
   v
-Route -> router.get('/tenant-to-agent/:userId', isAuthenticateUser, tenantToAgentAcceptController)
+Route -> router.get('/tenant-to-agent/:userId', isAuthenticateUser, approveAgentRequestController)
   |
-Controller -> tenantToAgentAcceptController
-  |-- Call tenantToAgentAcceptService(userId)
+Controller -> approveAgentRequestController
+  |-- Call approveAgentRole(userId)
   |
-Service -> tenantToAgentAcceptService
+Service -> approveAgentRole
   |-- Find user by userId
   |-- Update role='agent', agentRequestStatus='approved'
   |-- Save updated user

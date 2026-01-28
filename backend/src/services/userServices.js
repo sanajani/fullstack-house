@@ -7,16 +7,19 @@ import generateJWTToken from "../utils/generateJWTToken.js";
 import bcrypt from 'bcryptjs';
 
 // Service to register user
-export const registerUserService = async (userData) => {
+export const registerUser = async (userData) => {
+    const query = [];
+    if(userData.phoneNumber1) query.push({phoneNumber1: userData.phoneNumber1})
+    if(userData.email) query.push({email: userData.email})
+    if(userData.username) query.push({username: userData.username})
+
     
     // Business logic for registering a user would go here
     const isUserExists = await UserModel.findOne({
-        $or: [
-            { email: userData.email }, 
-            { username: userData.username }, 
-            { phoneNumber1: userData.phoneNumber1 }
-        ]
+        $or: query
     })
+    // console.log(isUserExists);
+    
     if(isUserExists) throw new AppError('User already exist', 409);
 
     userData.password = await bcrypt.hash(userData.password, 12);
@@ -27,7 +30,7 @@ export const registerUserService = async (userData) => {
 };
 
 // Service to login user
-export const loginUserService = async (userData) => {
+export const loginUser = async (userData) => {
     const user = await UserModel.findOne({ phoneNumber1: userData.phoneNumber1 }).select('+password');
     if(!user) throw new AppError('Invalid phone number or password', 401);
 
@@ -40,21 +43,23 @@ export const loginUserService = async (userData) => {
 }
 
 // Service to get user profile
-export const getUserProfileService = async (userId) => {
+export const getMyProfile = async (userId) => {
     const user = await UserModel.findById(userId);
     if(!user) throw new AppError('User not found', 404);
     return user;
 }
 
 // Service to update user profile
-export const updateUserProfileService = async (userId, updateData) => {
+export const updateMyProfile = async (userId, updateData) => {
     const updatedUser = await UserModel.findByIdAndUpdate(userId, updateData, { new: true });
     return updatedUser;
 }
 
 // Service to update user profile to agent profile
-export const updateUserToAgentProfileService = async (userId, userData) => {
+export const requestAgentRole = async (userId, userData) => {
     const existingUser = await UserModel.findById(userId);
+    console.log(existingUser , 'this is log');
+    
     if(!existingUser) {
         throw new AppError('User not found', 404);
     }
@@ -83,7 +88,6 @@ export const updateUserToAgentProfileService = async (userId, userData) => {
     specialization,
     bio,
     profilePicture,
-    isVerifiedAgent,
     } = agentInfo || {};
 
     if(!name || !lastName || !phoneNumber1 || !phoneNumber2 || !username || !province || !district || !agencyName ) {
@@ -107,8 +111,7 @@ export const updateUserToAgentProfileService = async (userId, userData) => {
                 experienceYears,
                 specialization,
                 bio,
-                profilePicture,
-                isVerifiedAgent
+                profilePicture
             }
         },
         { new: true }

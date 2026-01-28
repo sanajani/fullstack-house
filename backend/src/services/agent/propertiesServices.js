@@ -1,7 +1,7 @@
 import AppError from "../../errors/AppError.js";
 import {PropertiesModel} from '../../models/properties/PropertiesModel.js'
 
-export const createPropertiesService = async (reqData) => {
+export const createProperty = async (reqData) => {
 
         const property = new PropertiesModel(reqData)
         let savedProperty = await property.save();
@@ -10,7 +10,7 @@ export const createPropertiesService = async (reqData) => {
         return savedProperty
 }
 
-export const getAllPropertiesServices = async (agentId) => {
+export const fetchPropertiesByAgent = async (agentId) => {
     console.log(agentId);
     
     // const properties = await PropertiesModel.find().populate("agent", "title _id description propertyType location")

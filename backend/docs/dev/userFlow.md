@@ -5,14 +5,14 @@ Client
   | POST /register
   | Body: { name, lastName, phoneNumber1, email?, password }
   v
-Route -> router.post('/register', registerUser)
+Route -> router.post('/register', registerUserController)
   |
-Controller -> registerUser
+Controller -> registerUserController
   |-- Check request body exists
   |-- Validate request body with registerationSchemaValidation
-  |-- Call registerUserService(userData)
+  |-- Call registerUser(userData)
   |
-Service -> registerUserService
+Service -> registerUser
   |-- Check if user already exists (phone/email/username)
   |-- Hash password with bcrypt
   |-- Create and save new user in DB
@@ -31,14 +31,14 @@ Client
   | POST /login
   | Body: { phoneNumber1, password }
   v
-Route -> router.post('/login', loginUser)
+Route -> router.post('/login', loginUserController)
   |
-Controller -> loginUser
+Controller -> loginUserController
   |-- Check request body exists
   |-- Validate request body with loginSchemaValidation
-  |-- Call loginUserService(loginData)
+  |-- Call loginUser(loginData)
   |
-Service -> loginUserService
+Service -> loginUser
   |-- Find user by phoneNumber1
   |-- Compare password with bcrypt
   |-- Generate JWT token
@@ -58,7 +58,7 @@ Client
   | GET /me
   | Header: Authorization: Bearer <token>
   v
-Route -> router.get('/me', isAuthenticateUser, getUserProfile)
+Route -> router.get('/me', isAuthenticateUser, getMyProfileController)
   |
 Middleware -> isAuthenticateUser
   |-- Check Authorization header exists and starts with 'Bearer '
@@ -67,11 +67,11 @@ Middleware -> isAuthenticateUser
   |-- Attach decoded user info to req.user
   |-- Call next()
   |
-Controller -> getUserProfile
+Controller -> getMyProfileController
   |-- Get userId from req.user
-  |-- Call getUserProfileService(userId)
+  |-- Call getMyProfile(userId)
   |
-Service -> getUserProfileService
+Service -> getMyProfile
   |-- Find user in DB by userId
   |-- Return user object
   |
@@ -90,7 +90,7 @@ Client
   | Header: Authorization: Bearer <token>
   | Body: { fields to update }
   v
-Route -> router.put('/me', isAuthenticateUser, updateUserProfile)
+Route -> router.put('/me', isAuthenticateUser, updateMyProfileController)
   |
 Middleware -> isAuthenticateUser
   |-- Check Authorization header exists and starts with 'Bearer '
@@ -99,12 +99,12 @@ Middleware -> isAuthenticateUser
   |-- Attach decoded user info to req.user
   |-- Call next()
   |
-Controller -> updateUserProfile
+Controller -> updateMyProfileController
   |-- Get userId from req.user
   |-- Get updateData from req.body
-  |-- Call updateUserProfileService(userId, updateData)
+  |-- Call updateMyProfile(userId, updateData)
   |
-Service -> updateUserProfileService
+Service -> updateMyProfile
   |-- Find user by userId and update fields with updateData
   |-- Return updated user object
   |

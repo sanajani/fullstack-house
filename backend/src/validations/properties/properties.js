@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 export const propertiesValidation = Joi.object({
-  agent: Joi.string().required(),
+  agent: Joi.string().allow(''),
   title: Joi.string().required().messages({
     'any.required': 'Title is required',
     'string.empty': 'Title cannot be empty'

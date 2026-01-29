@@ -1,20 +1,20 @@
 import AppError from "../../errors/AppError.js";
 import {PropertiesModel} from '../../models/properties/PropertiesModel.js'
 
-export const createProperty = async (reqData) => {
+export const createProperty = async (reqData, agentId) => {
 
-        const property = new PropertiesModel(reqData)
-        let savedProperty = await property.save();
-        if(!savedProperty) throw new AppError("Something went wrong please check it", 409)
+    const property = new PropertiesModel({...reqData, agent: agentId})
+    let savedProperty = await property.save();
+    if(!savedProperty) throw new AppError("Something went wrong please check it", 409)
 
-        return savedProperty
+    return savedProperty
 }
 
 export const fetchPropertiesByAgent = async (agentId) => {
     console.log(agentId);
     
     // const properties = await PropertiesModel.find().populate("agent", "title _id description propertyType location")
-    const properties = await PropertiesModel.find({agent: agentId}, 'title').populate('agent' , "name")
+    const properties = await PropertiesModel.find({agent: agentId}, 'title description propertyType transaction province').populate('agent' , "name")
     console.log(properties);
     
     if(!properties || properties.length === 0){

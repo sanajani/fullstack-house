@@ -5,7 +5,10 @@ import { asyncErrorHandler } from "../../../utils/asyncErrorHandler.js"
 import { propertiesValidation } from '../../../validations/properties/properties.js'
 
 // // add property
-export const createPropertyByAgent = asyncErrorHandler(async (req,res,next) => {
+export const createPropertyByAgentController = asyncErrorHandler(async (req,res,next) => {
+    const agentId = req.user?._id || '697a5f977fe150abe9e37c60';
+    const isAgent = req.user?.role || 'agent';
+    if(!agentId || !isAgent === 'agent') return next(new AppError("Invalid credintials", 409)) 
     if(!req.body || Object.keys(req.body).length === 0) return next(new AppError("Request body is missing", 400))
 
     // validation on req body
@@ -14,7 +17,7 @@ export const createPropertyByAgent = asyncErrorHandler(async (req,res,next) => {
         return next(new AppError(error.details[0].message, 400))
     }
 
-    const property = await createProperty(req.body);
+    const property = await createProperty(req.body, agentId);
 
     return res.status(200).json({
         message: "Successfully property created",
@@ -24,9 +27,8 @@ export const createPropertyByAgent = asyncErrorHandler(async (req,res,next) => {
 
 
 // get all properties
-export const getAllPropertiesByAgent = asyncErrorHandler(async (req,res,next) => {
-    // const agentId = req.user;
-    const agentId = '64f1a2b3c4d5e6f7a8b9c0d1'
+export const getAllPropertiesByAgentController = asyncErrorHandler(async (req,res,next) => {
+    const agentId = req.user._id || '697a5f977fe150abe9e37c60';
     if(!agentId) {
         return next(new AppError("User Id is missing", 400))
     }

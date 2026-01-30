@@ -29,3 +29,13 @@ export const getAllPropertiesService = async (transaction, city, minPrice, maxPr
 
     return {properties, pageNumber, pages}
 }
+
+
+export const getSinglePropertyByIdService = async (propertyId) => {
+    const property = await PropertiesModel.findById(propertyId);
+    if(!property) {
+        throw new AppError("Property Not Found", 404);
+    }
+
+    return property
+}

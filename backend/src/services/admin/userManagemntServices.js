@@ -26,7 +26,7 @@ export const deleteUserById = async (userId) => {
 }
 
 export const fetchPendingAgentRequests = async () => {
-    const pendingAgents = await WantToBecomeAgentModel.find().populate('userId', 'name phoneNumber1 agentInfo agentRequestStatus');
+    const pendingAgents = await WantToBecomeAgentModel.find().populate('userId', 'name phoneNumber1');
     if(!pendingAgents || pendingAgents.length === 0){
         throw new AppError('There is no agent pending', 404);
     }
@@ -44,6 +44,10 @@ export const approveAgentRole = async (userId) => {
 
     isUserExist.role = 'agent';
     isUserExist.agentRequestStatus = 'approved'
+    const approvePendingAgents = await WantToBecomeAgentModel.findOne({userId})
+    approvePendingAgents.agentRequestStatus = 'approved';
+    await approvePendingAgents.save();
     const becomedAgent = await isUserExist.save();
     return becomedAgent
 }
+

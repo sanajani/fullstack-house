@@ -75,4 +75,11 @@ const PropertySchema = new Schema({
     }]
 },{timestamps: true});
 
+
+// Indexes
+PropertySchema.index({ "location.city": 1, transaction: 1 }); // for search
+PropertySchema.index({ "price.amount": 1 }); // price sorting
+PropertySchema.index({ createdAt: -1 }); // newest first
+
+
 export const PropertiesModel = model("properties", PropertySchema)

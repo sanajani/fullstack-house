@@ -5,6 +5,11 @@ const wantToBecomeAgentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true,
+    },
+    agentRequestStatus: {
+        type: String,
+        enum: ['pending', 'approved', 'rejected', null],
+        default: null
     }
 });
 

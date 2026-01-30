@@ -1,20 +1,16 @@
 import AppError from "../../errors/AppError.js";
 import {PropertiesModel} from '../../models/properties/PropertiesModel.js'
+import mongoose from "mongoose";
 
-export const createProperty = async (reqData) => {
+// CREATE PROPERTY BT AGENT SERVICE
+export const createProperty = async (reqData, agentId) => 
+    PropertiesModel.create({...reqData, agent: agentId})
 
-        const property = new PropertiesModel(reqData)
-        let savedProperty = await property.save();
-        if(!savedProperty) throw new AppError("Something went wrong please check it", 409)
-
-        return savedProperty
-}
-
+// FETCH SINGLE PROPERTY BY AGENT
 export const fetchPropertiesByAgent = async (agentId) => {
-    console.log(agentId);
     
     // const properties = await PropertiesModel.find().populate("agent", "title _id description propertyType location")
-    const properties = await PropertiesModel.find({agent: agentId}, 'title').populate('agent' , "name")
+    const properties = await PropertiesModel.find({agent: agentId}, 'title description propertyType transaction province').populate('agent' , "name")
     console.log(properties);
     
     if(!properties || properties.length === 0){
@@ -24,28 +20,67 @@ export const fetchPropertiesByAgent = async (agentId) => {
     return properties
 }
 
+// DELETE PROPERTY BY AGENT AND BY ID
+export const deletePropertyService = async (propertyId, agentId) => {
+    
+    const deletedProperty = await PropertiesModel.deleteOne({_id: propertyId, agent: agentId})
+    if(deletedProperty.deletedCount === 0) {
+        throw new AppError("Invalid credintials or data not found", 403)
+    }
+            
+    return true
+}
+// FETCH SINGLE PROPERTY SERVICE
+export const fetchPropertyByIDService = async (propertyId, agentId) => {
+    if (!propertyId || !mongoose.Types.ObjectId.isValid(propertyId)) {
+        throw new AppError("Invalid property ID", 400);
+    }
+    const property = await PropertiesModel.findById(propertyId);
+    if(!property){
+        throw new AppError("Property does not exist", 404);
+    }
+    if(!property.agent.equals(agentId)){
+        throw new AppError("Invalid credentials",403)
+    }
+    return property
+}
 
-    // const {
-    //     title, 
-    //     description, 
-    //     propertyType, 
-    //     transaction, 
-    //     location= {}, 
-    //     details= {},
-    //     amenities, 
-    //     price= {}, 
-    //     media= []
-    // } = reqData;
-    //     const {
-    //         province, city, district,
-    //         streetAddress, exactLocation, landmark
-    //     } = location;
-    //     const {
-    //         bedroom, bathroom, area,
-    //         floor, totalFloor, yearBuild,
-    //         furniture, parking, security
-    //     } = details;
-    //     const {
-    //         amount, currency,
-    //         period, negotiable
-    //     } = price;
+// UPDATE SINGLE DOCUMENT BY AGENT 
+export const updatePropertyService = async (propertyId, agentId, updateData) => {
+ // 1️⃣ Validate propertyId
+
+  if (!propertyId || !mongoose.Types.ObjectId.isValid(propertyId)) {
+    throw new AppError("Invalid property ID", 400);
+  }
+      // 2️⃣ Find the property
+  const property = await PropertiesModel.findById(propertyId);
+        if (!property) {
+            throw new AppError("Property does not exist", 404);
+        }
+        // 3️⃣ Check ownership
+        if (!property.agent.equals(agentId)) {
+            throw new AppError("Invalid credentials", 403);
+        }
+
+//   const updatedProperty = await PropertiesModel.findByIdAndUpdate(propertyId, {...updateData}, {new: true})
+  
+
+  // 4️⃣ Merge updateData into property safely
+  Object.keys(updateData).forEach((key) => {
+    if (typeof updateData[key] === "object" && !Array.isArray(updateData[key])) {
+      // Merge nested object
+      property[key] = { ...property[key].toObject(), ...updateData[key] };
+    } else {
+      // Replace primitive value or array
+      property[key] = updateData[key];
+    }
+  });
+
+  // 5️⃣ Save the updated property
+  const updatedProperty = await property.save();
+
+  if(!updatedProperty){
+    throw new AppError("Property did't updated", 403)
+  }
+  return updatedProperty
+}

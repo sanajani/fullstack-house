@@ -8,13 +8,12 @@ export const isAuthenticateUser = (req, res, next) => {
         return next(new AppError('Authorization header missing or malformed', 401));
     }
 
-    const token = authHeader.split(' ')[1];
-    console.log(token);
-    
+    const token = authHeader.split(' ')[1];    
 
     try {
         const decoded = verifyToken(token);
-        console.log(decoded);
+        console.log(decoded, 'this is decoded data');
+        
         req.user = decoded;
 
         next();

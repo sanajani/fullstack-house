@@ -35,9 +35,10 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // import  UserRoute
-import userRoute from './routes/UserRoute.js';
-import adminRoute from './routes/admin/adminRoute.js'
-import agentRoute from './routes/agent/agentRoutes.js'
+import userRoute from './routes/user/UserRoute.js';
+import adminRoute from './routes/admin/adminRoute.js';
+import agentRoute from './routes/agent/agentRoutes.js';
+import properties from './routes/user/propertyRoute.js'
 
 app.use(cors());
 app.use(express.json({limit: '10kb'}));
@@ -47,6 +48,7 @@ app.use(express.json({limit: '10kb'}));
 
 // Use UserRoute for user-related endpoints
 app.use('/api/v1/users', userRoute);
+app.use('/api/v1/properties', properties);
 
 // admin routes
 app.use('/api/v1/admin', adminRoute);

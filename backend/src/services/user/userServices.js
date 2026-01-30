@@ -1,8 +1,8 @@
-import AppError from "../errors/AppError.js";
-import UserModel from "../models/UserModel.js";
-import WantToBecomeAgentModel from "../models/wantToBecomeAgent.js";
+import AppError from "../../errors/AppError.js";
+import UserModel from "../../models/UserModel.js";
+import WantToBecomeAgentModel from "../../models/wantToBecomeAgent.js";
 
-import generateJWTToken from "../utils/generateJWTToken.js";
+import generateJWTToken from "../../utils/generateJWTToken.js";
 
 import bcrypt from 'bcryptjs';
 

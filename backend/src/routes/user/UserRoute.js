@@ -1,6 +1,11 @@
 import express from 'express';
-import { registerUserController, loginUserController, getMyProfileController, allUsers, updateMyProfileController, requestAgentController } from '../controllers/userController.js';
-import { isAuthenticateUser } from '../auth/auth.js';
+import { 
+    registerUserController, 
+    loginUserController, 
+    getMyProfileController, 
+    allUsers, updateMyProfileController, 
+    requestAgentController } from '../../controllers/user/userController.js';
+import { isAuthenticateUser } from '../../auth/auth.js';
 
 const router = express.Router();
 
@@ -19,9 +24,6 @@ router.put('/me', isAuthenticateUser, updateMyProfileController);
 
 // ==>  api/v1/users/become-agent
 router.put('/become-agent', isAuthenticateUser, requestAgentController)
-
-router.get('/all', allUsers);
-
 
 export default router;
 

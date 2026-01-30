@@ -1,10 +1,11 @@
 // user models
-import UserModel from '../models/UserModel.js';
+import UserModel from '../../models/UserModel.js';
 
-import AppError from '../errors/AppError.js';
-import { getMyProfile, loginUser, registerUser, updateMyProfile, requestAgentRole } from '../services/userServices.js';
-import { asyncErrorHandler } from '../utils/asyncErrorHandler.js';
-import { registerationSchemaValidation, loginSchemaValidation } from '../validations/registerationJoiValidation.js';
+// import AppError from '../../errors/AppError.js';
+import AppError from '../../errors/AppError.js';
+import { getMyProfile, loginUser, registerUser, updateMyProfile, requestAgentRole } from '../../services/user/userServices.js';
+import { asyncErrorHandler } from '../../utils/asyncErrorHandler.js';
+import { registerationSchemaValidation, loginSchemaValidation } from '../../validations/registerationJoiValidation.js';
 
 // USER CONTROLLER 
 

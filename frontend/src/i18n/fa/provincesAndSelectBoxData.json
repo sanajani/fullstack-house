@@ -1,6 +1,5 @@
 {
   "provinces": [
-    { "value": "ولایت", "label": "ولایت" },
     { "value": "badakhshan", "label": "بدخشان" },
     { "value": "badghis", "label": "بادغیس" },
     { "value": "baghlan", "label": "بغلان" },
@@ -36,12 +35,10 @@
     { "value": "zabul", "label": "زابل" }
   ],
   "dealTypes": [
-    { "value": "نوع قرارداد", "label": "نوع قرارداد" },
     { "value": "sale", "label": "فروشی" },
     { "value": "rent", "label": "اجاره‌ای" }
   ],
   "houseRent": [
-    { "value": "قیمت کرایه", "label": "قیمت کرایه" },
     { "value": "under_5000", "label": "زیر 5000" },
     { "value": "under_10000", "label": "زیر 10000" },
     { "value": "under_15000", "label": "زیر 15000" },
@@ -50,8 +47,6 @@
     { "value": "above_50000", "label": "بالای 50000" }
   ],
   "propertyType": [
-    { "value": "نوع خانه", "label": "نوع خانه" },
-
     { "value": "apartment", "label": "آپارتمان" },
     { "value": "house", "label": "خانه" },
     { "value": "villa", "label": "ویلا" },

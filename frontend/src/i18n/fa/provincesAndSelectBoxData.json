@@ -1,0 +1,63 @@
+{
+  "provinces": [
+    { "value": "ولایت", "label": "ولایت" },
+    { "value": "badakhshan", "label": "بدخشان" },
+    { "value": "badghis", "label": "بادغیس" },
+    { "value": "baghlan", "label": "بغلان" },
+    { "value": "bamyan", "label": "بامیان" },
+    { "value": "daykundi", "label": "دایکندی" },
+    { "value": "farah", "label": "فراه" },
+    { "value": "faryab", "label": "فاریاب" },
+    { "value": "ghazni", "label": "غزنی" },
+    { "value": "ghor", "label": "غور" },
+    { "value": "helmand", "label": "هلمند" },
+    { "value": "herat", "label": "هرات" },
+    { "value": "jowzjan", "label": "جوزجان" },
+    { "value": "kabul", "label": "کابل" },
+    { "value": "kandahar", "label": "کندهار" },
+    { "value": "kapisa", "label": "کاپیسا" },
+    { "value": "khost", "label": "خوست" },
+    { "value": "kunar", "label": "کنر" },
+    { "value": "kunduz", "label": "کندز" },
+    { "value": "laghman", "label": "لغمان" },
+    { "value": "logar", "label": "لوگر" },
+    { "value": "maidan_wardak", "label": "میدان وردک" },
+    { "value": "nangarhar", "label": "ننگرهار" },
+    { "value": "nimroz", "label": "نیمروز" },
+    { "value": "nuristan", "label": "نورستان" },
+    { "value": "paktia", "label": "پکتیا" },
+    { "value": "paktika", "label": "پکتیکا" },
+    { "value": "panjshir", "label": "پنجشیر" },
+    { "value": "parwan", "label": "پروان" },
+    { "value": "samangan", "label": "سمنگان" },
+    { "value": "sar-e-pol", "label": "سروپول" },
+    { "value": "takhar", "label": "تخار" },
+    { "value": "urozgan", "label": "اورزگان" },
+    { "value": "zabul", "label": "زابل" }
+  ],
+  "dealTypes": [
+    { "value": "نوع قرارداد", "label": "نوع قرارداد" },
+    { "value": "sale", "label": "فروشی" },
+    { "value": "rent", "label": "اجاره‌ای" }
+  ],
+  "houseRent": [
+    { "value": "قیمت کرایه", "label": "قیمت کرایه" },
+    { "value": "under_5000", "label": "زیر 5000" },
+    { "value": "under_10000", "label": "زیر 10000" },
+    { "value": "under_15000", "label": "زیر 15000" },
+    { "value": "under_25000", "label": "زیر 25000" },
+    { "value": "under_50000", "label": "زیر 50000" },
+    { "value": "above_50000", "label": "بالای 50000" }
+  ],
+  "propertyType": [
+    { "value": "نوع خانه", "label": "نوع خانه" },
+
+    { "value": "apartment", "label": "آپارتمان" },
+    { "value": "house", "label": "خانه" },
+    { "value": "villa", "label": "ویلا" },
+    { "value": "room", "label": "اتاق" },
+    { "value": "studio", "label": "استودیو" },
+    { "value": "commercial", "label": "تجاری" },
+    { "value": "land", "label": "زمین" }
+  ]
+}

@@ -10,7 +10,7 @@ const SelectBox = ({options, value, placeholder,onChange, className}) => {
         {placeholder}
     </option>
       {options.map((opt) => (
-        <option key={opt.label} value={opt.value}>
+        <option key={opt.label} value={opt.value} className="text-center">
           {opt.label}
         </option>
       ))}

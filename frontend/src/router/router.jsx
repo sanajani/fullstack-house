@@ -1,6 +1,16 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
 
+// pages
+import Home from '../pages/Home';
+
+// 
+// import ShowSingleProperty from '../pages/ShowSingleProperty';
+
+import ImagePreviewDesk from '../components/gallary/ImagePreviewDesk';
+import ImagePreviewMobile from '../components/gallary/ImagePreviewMobile';
+import ShowSingleProperty from '../pages/ShowSingleProperty';
+
 export const router = createBrowserRouter([
     {
         path:'/',
@@ -8,19 +18,19 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <h1 className='font-mono'>Home Page</h1>                
+                element: <Home />               
             },
             {
                 path:'about',
-                element: <h1>About page</h1>
+                element: <ShowSingleProperty />
             },
             {
                 path: 'contact',
-                element: <h1>Contact Page</h1>                
+                element: <ImagePreviewDesk />              
             },
             {
                 path:'info',
-                element: <h1>Info page</h1>
+                element: <ImagePreviewMobile />
             },
         ]
     }

@@ -5,7 +5,6 @@ import SearchSelectBoxes from "./SearchSelectBoxes";
 import SideBar from "./SideBar";
 import { IoClose } from "react-icons/io5";
 
-
 const Navbar = () => {
   const [showSideBar, setShowSideBar] = useState(false);
 
@@ -15,7 +14,7 @@ const Navbar = () => {
     const [selectedPropertyType, setSelectPropertyType] = useState("");
     
   return (
-    <div className="mb-5 flex flex-col bg-blue-600 p-2 text-white relative overflow-hidden">
+    <div className="z-50 flex flex-col bg-blue-600 p-2 text-white relative overflow-hidden">
         <div className="w-full md:w-[85vw] mx-auto">
         <div className="flex mb-4 justify-between items-center">
             <Link to='/'><h1 className="font-bold text-3xl">خانه من</h1></Link>

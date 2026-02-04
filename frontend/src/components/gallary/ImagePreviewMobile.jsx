@@ -47,9 +47,9 @@ const iamges = [
     },
 ]
 
-const ImagePreviewMobile = () => {
+const ImagePreviewMobile = ({setShowGallery}) => {
   return (
-    <div className='bg-gray-600 w-full'>
+    <div className='bg-gray-600 w-full '>
             <Swiper 
                 slidesPerView={1}      // show 1 slide at a time
                 spaceBetween={0}       // optional, gap between slides
@@ -60,10 +60,9 @@ const ImagePreviewMobile = () => {
             className='w-full h-full'>
                 {
                     iamges.map((value, index) => {
-                       return <SwiperSlide key={index} className='w-full h-full'><img className='w-full h-full object-cover' src={value.src} alt={value.alt} /></SwiperSlide>
+                       return <SwiperSlide onClick={() => setShowGallery(true)} key={index} className='w-full h-full'><img className='w-full h-full object-cover' src={value.src} alt={value.alt} /></SwiperSlide>
                     })
                 }
-              
             </Swiper>
     </div>
   )

@@ -4,6 +4,8 @@ import App from '../App';
 // pages
 import Home from '../pages/Home';
 import ShowSingleProperty from '../pages/ShowSingleProperty';
+import Signup from '../pages/Signup';
+import Login from '../pages/Login';
 
 export const router = createBrowserRouter([
     {
@@ -17,6 +19,14 @@ export const router = createBrowserRouter([
             {
                 path:'property/:id',
                 element: <ShowSingleProperty />
+            },
+            {
+                path:'signup',
+                element: <Signup />
+            },
+                    {
+                path:'login',
+                element: <Login />
             }
         ]
     }

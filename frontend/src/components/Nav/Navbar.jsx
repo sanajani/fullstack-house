@@ -29,7 +29,7 @@ const Navbar = () => {
         </div>
         {/* sidebar  */}
         <div className={`w-full bg-blue-600 fixed top-0 left-0 h-screen md:w-[35%] transition-transform duration-300 ease-in-out ${showSideBar ? 'translate-x-0': '-translate-x-450'}`}>
-          <button className="text-4xl mx-3 my-2 p-4" onClick={() => setShowSideBar(false)}>
+          <button className="text-4xl mx-3 my-2 p-4 cursor-pointer" onClick={() => setShowSideBar(false)}>
             <IoClose/>
           </button>
           <SideBar setShowSideBar={setShowSideBar} />

@@ -45,7 +45,7 @@ const images = [
     },
 ]
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ShowSingleImage from "./ShowSingleImage";
 
 const ImageGallery = ({setShowGallery}) => {
@@ -56,6 +56,15 @@ const ImageGallery = ({setShowGallery}) => {
         setImageIndex(index)
         setShowImage(true)
     }
+
+    
+    // Prevent body scroll when gallery is open
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, []);
 
   return (
         <motion.div className='z-50 w-full min-h-screen bg-white fixed inset-0 top-0 left-0 overflow-y-auto'
@@ -73,9 +82,10 @@ const ImageGallery = ({setShowGallery}) => {
           {/* end of top bar */}
 
           {/* iamge gallery div container */}
-          <div className='max-w-6xl mx-auto w-full md:w-[70%] p-4'>
+          <div className='max-w-6xl mx-auto w-full md:w-[70%] p-4 min-h-screen'>
+          {/* <div className='max-w-6xl mx-auto w-full md:w-[70%] p-4 overflow-y-auto' style={{maxHeight: 'calc(100vh - 80px)'}}> */}
             {/* image container */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {
                 images?.map((value, index) => {
                   return <img onClick={() => openShowImageComponent(index)} className="w-full h-full object-cover cursor-pointer" key={index} src={value.src} alt={value.alt} />

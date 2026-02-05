@@ -3,12 +3,6 @@ import App from '../App';
 
 // pages
 import Home from '../pages/Home';
-
-// 
-// import ShowSingleProperty from '../pages/ShowSingleProperty';
-
-import ImagePreviewDesk from '../components/gallary/ImagePreviewDesk';
-import ImagePreviewMobile from '../components/gallary/ImagePreviewMobile';
 import ShowSingleProperty from '../pages/ShowSingleProperty';
 
 export const router = createBrowserRouter([
@@ -21,17 +15,9 @@ export const router = createBrowserRouter([
                 element: <Home />               
             },
             {
-                path:'about',
+                path:'property/:id',
                 element: <ShowSingleProperty />
-            },
-            {
-                path: 'contact',
-                element: <ImagePreviewDesk />              
-            },
-            {
-                path:'info',
-                element: <ImagePreviewMobile />
-            },
+            }
         ]
     }
 ])

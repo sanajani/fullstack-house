@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
 
 const PropertyPreview = () => {
   return (
     <div className="p-3 border-2 m-2 mb-9 rounded-2xl border-blue-700">
+      <Link to='/property/6423823422'>
       {/* iamges */}
       <div>
         <img
@@ -27,6 +29,8 @@ const PropertyPreview = () => {
           <p>12000</p>
         </div>
       </div>
+      </Link>
+
     </div>
   );
 };

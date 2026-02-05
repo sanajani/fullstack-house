@@ -27,7 +27,8 @@ const iamges = [
 // SHOW images ONLY ON DESKTOP
 const ImagePreviewDesk = ({setShowGallery}) => {  
   return (
-    <div className="grid grid-cols-12 rounded-2xl h-96 xl:h-[400px] w-[90%] max-w-6xl mx-auto bg-gray-200 mt-3 shadow-[0_0_20px_0_rgba(0,0,0,0.5)] text-white text-4xl grid-rows-12 gap-3 p-2">
+    <div className="grid grid-cols-12 rounded-2xl h-96 xl:h-[400px] w-[90%] max-w-6xl
+     mx-auto bg-gray-200 mt-3 shadow-[0_0_20px_0_rgba(0,0,0,0.5)] text-white text-4xl grid-rows-12 gap-3 p-2">
       <div className="bg-red-400 rounded-2xl col-span-7 row-span-12" onClick={() => setShowGallery(true)}>
       <img
           src={iamges[0].src}

@@ -1,21 +1,15 @@
-import { useState } from "react";
+import { Link } from "react-router-dom";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { loginSchema } from "../utils/zodSchema";
+import { useForm } from "react-hook-form";
+import FormField from "../components/inputBoxes/FormField";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    phoneNumber1: "",
-  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    // TODO: Send login request to backend
-  };
+  const {register, handleSubmit, formState: {errors}} = useForm({resolver: zodResolver(loginSchema)});
+  const loginFormSubmit = (data) => {
+    console.log('this is your data:', data);
+  }
 
   return (
     <div className="min-h-screen max-w-6xl flex items-center justify-center bg-gray-50 mx-auto p-4">
@@ -28,40 +22,32 @@ const Login = () => {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit(loginFormSubmit)}>
 
           {/* Name */}
-          <div>
-            <label className="text-sm font-medium mb-1 block">نام</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="نام شما"
-              required
-              className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
+          <FormField label={'نام '} error={errors.name} >
+              <input 
+                placeholder={' نام شما'}
+                type='text'
+                {...register('name')}
+                autoComplete="off"
+                className={`w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              />
+          </FormField>
           {/* Phone Number */}
-          <div>
-            <label className="text-sm font-medium mb-1 block">شماره تلفن</label>
-            <input
-              type="text"
-              name="phoneNumber1"
-              value={formData.phoneNumber1}
-              onChange={handleChange}
+          <FormField error={errors.phoneNumber1} label={'شماره تماس '}>
+            <input 
               placeholder="۰۷۹XXXXXXXX"
-              required
-              className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type={'text'} 
+              {...register('phoneNumber1')}
+              className={`w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              autoComplete="off"
             />
-          </div>
-
+          </FormField>
           {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 transition"
+            className="w-full bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 transition cursor-pointer"
           >
             ورود
           </button>
@@ -69,7 +55,7 @@ const Login = () => {
 
         {/* Footer */}
         <p className="text-sm text-gray-500 text-center">
-          حساب ندارید؟ <a href="/signup" className="text-blue-600">ثبت نام</a>
+          حساب ندارید؟ <Link to="/signup" className="text-blue-600">ثبت نام</Link>
         </p>
       </div>
     </div>

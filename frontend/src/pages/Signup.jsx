@@ -1,30 +1,19 @@
 
+import { Link } from "react-router-dom";
+import FormField from "../components/inputBoxes/FormField";
+import {zodResolver} from '@hookform/resolvers/zod'
+import { signupSchema } from "../utils/zodSchema";
 
-import { useState } from "react";
+import {useForm} from 'react-hook-form'
 
 const Signup = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    lastName: "",
-    phoneNumber1: "",
-    password: "",
-    email: "",
-    username: "",
-    province: "",
-    district: "",
-    preferedLocation: [],
-  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const {register, handleSubmit, formState: {errors}} = useForm({resolver: zodResolver(signupSchema)});
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    // TODO: Send data to backend
-  };
+  const signupFormSubmit = (data) => {
+    console.log(data);
+    
+  }
 
   return (
     <div className="min-h-screen max-w-6xl flex items-center justify-center bg-gray-50 mx-auto p-4">
@@ -37,115 +26,100 @@ const Signup = () => {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-2 grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
+        <form onSubmit={handleSubmit(signupFormSubmit)} className="space-y-2 grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
 
           {/* Name */}
-          <div>
-            <label className="text-sm font-medium mb-1 block">نام</label>
+          {/* <FormField label={'نام '} error={errors.name} > */}
+          <FormField label='نام' error={errors.name}>
             <input
               type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
               placeholder="نام شما"
-              required
+              autoComplete="off"
+              {...register('name')}
               className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-          </div>
+          </FormField>
 
           {/* Last Name */}
-          <div>
-            <label className="text-sm font-medium mb-1 block">نام خانوادگی</label>
+          {/* <FormField> */}
+          <FormField label='نام خانوادگی' error={errors.lastName}>
             <input
               type="text"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
               placeholder="نام خانوادگی شما"
-              required
+              {...register('lastName')}
+              autoComplete="off"
               className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-          </div>
+          </FormField>
 
           {/* Phone */}
-          <div>
-            <label className="text-sm font-medium mb-1 block">شماره تلفن</label>
+          <FormField label='شماره تماس' error={errors.phoneNumber1}>
             <input
               type="text"
-              name="phoneNumber1"
-              value={formData.phoneNumber1}
-              onChange={handleChange}
               placeholder="۰۷۹XXXXXXXX"
-              required
+              autoComplete="off"
+              {...register('phoneNumber1')}
               className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-          </div>
+          </FormField>
 
           {/* Password */}
-          <div>
-            <label className="text-sm font-medium mb-1 block">رمز عبور</label>
+          <FormField label='رمز عبور' error={errors.password}>
             <input
               type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
               placeholder="رمز عبور"
-              required
+              autoComplete="off"
+              {...register('password')}
+
               className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-          </div>
+          </FormField>
 
           {/* Email */}
-          <div>
-            <label className="text-sm font-medium mb-1 block">ایمیل (اختیاری)</label>
+          <FormField label=' ایمیل (اختیاری)' error={errors.email}>
             <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
+              type="text"
               placeholder="example@mail.com"
+              autoComplete="off"
+              {...register('email')}
               className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-          </div>
+          </FormField>
 
           {/* Username */}
-          <div>
-            <label className="text-sm font-medium mb-1 block">نام کاربری (اختیاری)</label>
+          <FormField label=' نام کاربری (اختیاری)' error={errors.username}>
             <input
               type="text"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
               placeholder="username"
+              autoComplete="off"
+              {...register('username')}
+
               className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-          </div>
+          </FormField>
 
           {/* Province */}
-          <div>
-            <label className="text-sm font-medium mb-1 block">ولایت</label>
+          <FormField label='ولایت (اختیاری)' error={errors.province}>
             <input
               type="text"
-              name="province"
-              value={formData.province}
-              onChange={handleChange}
               placeholder="ولایت"
               className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              autoComplete="off"
+              {...register('province')}
+
             />
-          </div>
+          </FormField>
 
           {/* District */}
-          <div>
-            <label className="text-sm font-medium mb-1 block">ناحیه (اختیاری)</label>
+          <FormField label='ناحیه (اختیاری) ' error={errors.district}>
             <input
               type="text"
-              name="district"
-              value={formData.district}
-              onChange={handleChange}
               placeholder="ناحیه"
               className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              autoComplete="off"
+              {...register('district')}
             />
-          </div>
+          </FormField>
 
           {/* Submit */}
           <button
@@ -158,7 +132,7 @@ const Signup = () => {
 
         {/* Footer */}
         <p className="text-sm text-gray-500 text-center">
-          قبلاً حساب دارید؟ <a href="/login" className="text-blue-600">ورود</a>
+          قبلاً حساب دارید؟ <Link to="/login" className="text-blue-600">ورود</Link>
         </p>
       </div>
     </div>

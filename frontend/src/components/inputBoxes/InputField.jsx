@@ -4,16 +4,17 @@ const baseStyle = "border border-gray-300 rounded-lg p-2 w-full focus:outline-no
 
 const InputField = ({
     as = 'input',
+    error,
     name,
     register,
     wrapperClass='',
-    className='',
     children,
+    className='',
     ...props
 }) => {
     const Component = as;
   return (
-    <FormFieldNoLabel className={wrapperClass}>
+    <FormFieldNoLabel error={error} wrapperClass={wrapperClass}>
         <Component 
         className={`${baseStyle} ${className}`}
         {...(register && name ? register(name) : {})}

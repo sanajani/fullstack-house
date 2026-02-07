@@ -1,6 +1,6 @@
 import InputField from "../inputBoxes/InputField";
 
-const Details = ({ register }) => {
+const Details = ({ register, errors }) => {
   return (
     <section className="space-y-3">
       <h2 className="font-semibold text-lg text-gray-700">معلومات</h2>
@@ -9,44 +9,52 @@ const Details = ({ register }) => {
 
         <InputField
           type="number"
-          name="bedroom"
+          name="details.bedroom"
           register={register}
           placeholder="تعداد اتاق خواب"
+          error={errors.details?.bedroom}
         />
 
         <InputField
           type="number"
-          name="bathroom"
+          name="details.bathroom"
           register={register}
           placeholder="تعداد حمام"
+          error={errors.details?.bathroom}
+
         />
 
         <InputField
-          type="number"
-          name="area"
+          name="details.area"
           register={register}
           placeholder="متراژ"
+          error={errors.details?.area}
+
         />
 
         <InputField
           type="number"
-          name="floor"
+          name="details.floor"
           register={register}
           placeholder="منزل"
+          error={errors.details?.floor}
+
         />
 
         <InputField
           type="number"
-          name="totalFloor"
+          name="details.totalFloor"
           register={register}
+          error={errors.details?.totalFloor}
           placeholder="کل منزل‌ها"
         />
 
         <InputField
-          type="number"
-          name="yearBuild"
+          name="details.yearBuild"
           register={register}
           placeholder="سال تأسیس"
+          error={errors.details?.yearBuild}
+
         />
 
       </div>

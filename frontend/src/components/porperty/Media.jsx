@@ -13,6 +13,7 @@ const Media = ({ register }) => {
         type="file"
         name="media"
         register={register}
+        className="cursor-pointer"
       />
     </section>
   );

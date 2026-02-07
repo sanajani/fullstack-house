@@ -25,7 +25,7 @@
 
 import InputField from "../inputBoxes/InputField";
 
-const Price = ({ register }) => {
+const Price = ({ register,errors }) => {
   return (
     <section className="space-y-3">
       <h2 className="font-semibold text-lg text-gray-700">قیمت</h2>
@@ -34,14 +34,15 @@ const Price = ({ register }) => {
 
         {/* Amount */}
         <InputField
-          name="priceAmount"
+          name="price.amount"
           register={register}
           type="number"
           placeholder="مقدار"
+          error={errors.price?.amount}
         />
 
         {/* Currency */}
-        <InputField as="select" name="priceCurrency" register={register}>
+        <InputField as="select" name="price.currency" register={register} error={errors.price?.currency}>
           <option value="">واحد پولی</option>
           <option value="afghani">افغانی</option>
           <option value="dollar">دالر</option>
@@ -49,9 +50,18 @@ const Price = ({ register }) => {
 
         {/* Period */}
         <InputField
-          name="pricePeriod"
+          name="price.period"
           register={register}
           placeholder="زمان کرایه"
+          error={errors.price?.period}
+        />
+        
+        {/* negotiable */}
+        <InputField
+          name="price.negotiable"
+          register={register}
+          placeholder="ایا قابل مذاکره است؟"
+          error={errors.price?.negotiable}
         />
 
       </div>

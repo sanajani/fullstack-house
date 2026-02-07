@@ -101,3 +101,119 @@ name: z
   .min(40, ' در مورد خود و تجربه کاری خود معلومات ارایه کنید'),
 
 })
+
+
+export const propertySchema = z.object({
+
+  title: z.string().nonempty("عنوان ملک الزامی است"),
+
+  description: z.string().min(1,"توضیحات الزامی است").max(200, "توضیحات نباید بیشتر 200 حرف باشد"),
+
+  propertyType:   z.string()
+  .min(1, "نوع ملک الزامی است")
+  .refine(val =>
+    ["apartment", "house", "villa", "room", "studio", "commercial", "land"].includes(val),
+    { message: "نوع ملک نامعتبر است" }
+  ),
+transaction: z
+  .string()
+  .nonempty("نوع معامله الزامی است")
+  .refine(
+    val => ["rent", "sell", "gerawi"].includes(val),
+    { message: "نوع معامله نامعتبر است" }
+  ),
+
+  location: z.object({
+    province: z.string().min(2,"ولایت الزامی است"),
+    city: z.string().min(2,"شهر الزامی است"),
+    district: z.string().min(2,"ناحیه الزامی است"),
+    streetAddress: z.string().min(2,"آدرس الزامی است"),
+    exactLocation: z.string().optional(),
+    landmark: z.string().min(2,"نشانگر الزامی است"),
+  }),
+
+  details: z.object({
+  bedroom: z
+    .string()
+    .min(1, "تعداد اتاق خواب الزامی است"),
+  
+  bathroom: z
+    .string()
+    .min(1, "تعداد حمام الزامی است"),
+  
+  area: z
+    .string()
+    .min(1, "متراژ الزامی است"),
+  
+  floor: z
+    .string()
+    .min(1, "طبقه الزامی است"),
+  
+  totalFloor: z
+    .string()
+    .min(1, "کل طبقات الزامی است"),
+  
+  yearBuild: z
+    .string()
+    .min(1, "سال تأسیس الزامی است"),
+  furniture: z
+    .string()
+    .nullable()
+    .optional()
+    // .min(1, "وضعیت مبلمان الزامی است"),
+  ,
+  parking: z
+    .string()
+    .nullable()
+    .optional()
+
+    // .min(1, "پارکینگ الزامی است"),
+  ,
+  security: z
+    .string()
+    .nullable()
+    .optional()
+
+    // .min(1, "امنیت الزامی است"),
+  }),
+
+  amenities: z
+    .array(
+      z.enum([
+        "parking",
+        "elevator",
+        "security",
+        "garden",
+        "pool",
+        "balcony",
+        "ac",
+        "heating",
+        "internet",
+        "calble_tv",
+        "pet_friendly",
+        "furniture",
+      ])
+    )
+    .optional(),
+
+  price: z.object({
+    amount: z.string().min(2, "مقدار الزامی است" ),
+    currency: z.string().min(1,'لطفا واحد پولی را نیز انتخاب کنید'),
+    period: z.string().optional(),
+    negotiable: z.string().min(2, "ذکر کنید قابل مذاکره است یا خیر" ),
+  }),
+
+  media: z
+    .array(
+      z.object({
+        url: z.string().nonempty("آدرس عکس الزامی است"),
+        public_id: z.string().optional(),
+        caption: z
+          .string()
+          .max(200, "حداکثر 200 کاراکتر")
+          .default("One of the beautiest house in the market"),
+        isPrimary: z.boolean().default(false),
+      })
+    )
+    .optional(),
+});

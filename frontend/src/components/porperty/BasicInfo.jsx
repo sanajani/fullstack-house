@@ -1,6 +1,6 @@
 import InputField from "../inputBoxes/InputField";
 
-const BasicInfo = ({ register }) => {
+const BasicInfo = ({ register, errors }) => {
   return (
     <section className="grid md:grid-cols-2 gap-4">
       
@@ -9,10 +9,11 @@ const BasicInfo = ({ register }) => {
         name="title"
         register={register}
         placeholder="عنوان آگهی"
+        error={errors.title}
       />
 
       {/* Property Type */}
-      <InputField as="select" name="propertyType" register={register}>
+      <InputField as="select" name="propertyType" register={register} error={errors.propertyType}>
         <option value="">نوع ملک</option>
         <option value="apartment">اپارتمان</option>
         <option value="house">خانه</option>
@@ -31,11 +32,12 @@ const BasicInfo = ({ register }) => {
         rows={5}
         placeholder="در مورد ملک بنویسید"
         wrapperClass="md:col-span-2"
+        error={errors.description}
         className="resize-none"
       />
 
       {/* Transaction */}
-      <InputField as="select" name="transaction" register={register}>
+      <InputField as="select" name="transaction" register={register} error={errors.transaction}>
         <option value="">نوع معامله</option>
         <option value="rent">کرایه</option>
         <option value="sell">فروش</option>

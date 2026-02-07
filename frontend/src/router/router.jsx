@@ -4,8 +4,10 @@ import App from '../App';
 // pages
 import Home from '../pages/Home';
 import ShowSingleProperty from '../pages/ShowSingleProperty';
-import Signup from '../pages/Signup';
-import Login from '../pages/Login';
+import Signup from '../auth/Signup';
+import Login from '../auth/Login';
+import CreateProperty from '../pages/CreateProperty';
+import BecomeAgent from '../auth/BecomeAgent';
 
 export const router = createBrowserRouter([
     {
@@ -27,6 +29,14 @@ export const router = createBrowserRouter([
                     {
                 path:'login',
                 element: <Login />
+            },
+            {
+                path:'become-agent',
+                element: <BecomeAgent />
+            },
+            {
+                path: 'about',
+                element: <CreateProperty/>
             }
         ]
     }

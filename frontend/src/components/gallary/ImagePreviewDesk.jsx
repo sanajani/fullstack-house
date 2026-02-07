@@ -33,7 +33,7 @@ const ImagePreviewDesk = ({setShowGallery}) => {
       <img
           src={iamges[0].src}
           alt={iamges[0].src}
-          className="w-full h-full object-cover rounded-xl"
+          className="w-full cursor-pointer h-full object-cover rounded-xl"
         />
       </div>
       <div className="col-span-5 row-span-12 grid grid-cols-2 gap-2">
@@ -44,7 +44,7 @@ const ImagePreviewDesk = ({setShowGallery}) => {
                   <img
                     src={val.src}
                     alt={val.alt}
-                    className="w-full h-full object-cover rounded-xl"
+                    className="w-full h-full object-cover rounded-xl cursor-pointer"
             />
               </div>
             )

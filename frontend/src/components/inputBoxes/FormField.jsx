@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from "motion/react"
 
-const FormField = ({label, error, children, lableStyle=""}) => {
+const FormField = ({label, error, children, lableStyle="", className=''}) => {
   return (
-    <div>
-        <label className={`text-sm font-medium mb-1 block ${lableStyle}`}>{label}</label>
+    <div className={`${className}`}>
+        <label className={`mb-1 text-sm font-medium block ${lableStyle}`}>{label}</label>
         {children}
         <div className='h-4'>
             <AnimatePresence>

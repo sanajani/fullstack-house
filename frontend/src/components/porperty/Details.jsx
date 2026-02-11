@@ -8,7 +8,7 @@ const Details = ({ register, errors }) => {
       <div className="grid md:grid-cols-3 gap-4">
 
         <InputField
-          type="number"
+          type="text"
           name="details.bedroom"
           register={register}
           placeholder="تعداد اتاق خواب"
@@ -16,7 +16,7 @@ const Details = ({ register, errors }) => {
         />
 
         <InputField
-          type="number"
+          type="text"
           name="details.bathroom"
           register={register}
           placeholder="تعداد حمام"
@@ -33,7 +33,7 @@ const Details = ({ register, errors }) => {
         />
 
         <InputField
-          type="number"
+          type="text"
           name="details.floor"
           register={register}
           placeholder="منزل"
@@ -42,7 +42,7 @@ const Details = ({ register, errors }) => {
         />
 
         <InputField
-          type="number"
+          type="text"
           name="details.totalFloor"
           register={register}
           error={errors.details?.totalFloor}

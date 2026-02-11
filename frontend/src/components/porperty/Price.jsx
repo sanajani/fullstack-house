@@ -36,7 +36,7 @@ const Price = ({ register,errors }) => {
         <InputField
           name="price.amount"
           register={register}
-          type="number"
+          type="text"
           placeholder="مقدار"
           error={errors.price?.amount}
         />
@@ -48,21 +48,20 @@ const Price = ({ register,errors }) => {
           <option value="dollar">دالر</option>
         </InputField>
 
-        {/* Period */}
-        <InputField
-          name="price.period"
-          register={register}
-          placeholder="زمان کرایه"
-          error={errors.price?.period}
-        />
-        
+    {/* Period */}
+        <InputField as="select" name="price.period" register={register} error={errors.price?.period}>
+          <option value="">زمان کرایه</option>
+          <option value="daily">روزانه</option>
+          <option value="monthly">ماهانه</option>
+          <option value="3 month">هر سه ماه</option>
+        </InputField>
         {/* negotiable */}
-        <InputField
-          name="price.negotiable"
-          register={register}
-          placeholder="ایا قابل مذاکره است؟"
-          error={errors.price?.negotiable}
-        />
+            {/* Period */}
+        <InputField as="select" name="price.negotiable" register={register} error={errors.price?.negotiable}>
+          <option value="yes">آیا قابل مذاکره </option>
+          <option value="yes">بلی قابل مذاکره است</option>
+          <option value="no">نخیر قابل مذاکره نیست</option>
+        </InputField>
 
       </div>
     </section>

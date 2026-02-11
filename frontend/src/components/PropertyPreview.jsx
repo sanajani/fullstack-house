@@ -7,6 +7,7 @@ const PropertyPreview = () => {
       {/* iamges */}
       <div>
         <img
+        className="w-full h-full object-cover cursor-pointer"
           src="https://a0.muscache.com/im/pictures/d3d082a1-2f0e-4772-8aa4-62468f245ceb.jpg?im_w=1200"
           alt=""
         />

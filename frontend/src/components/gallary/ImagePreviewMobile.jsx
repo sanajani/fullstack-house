@@ -57,7 +57,7 @@ const ImagePreviewMobile = ({setShowGallery}) => {
                 autoplay={false}       // disable auto sliding
                 allowTouchMove={true}  // allow manual swipe
                 speed={300}            // swipe animation speed
-            className='w-full h-full'>
+            className='w-full h-full cursor-pointer'>
                 {
                     iamges.map((value, index) => {
                        return <SwiperSlide onClick={() => setShowGallery(true)} key={index} className='w-full h-full'><img className='w-full h-full object-cover' src={value.src} alt={value.alt} /></SwiperSlide>

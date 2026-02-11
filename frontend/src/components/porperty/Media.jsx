@@ -14,6 +14,7 @@ const Media = ({ register }) => {
         name="media"
         register={register}
         className="cursor-pointer"
+        multiple
       />
     </section>
   );

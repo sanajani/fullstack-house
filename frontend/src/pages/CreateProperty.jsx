@@ -13,9 +13,9 @@ const CreateProperty = () => {
   console.log(errors);
   
   const handleCreateProperty = (data) => {
-    console.log('this is func', data);
-    
+    console.log('this is func', data); 
   }
+  
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center md:p-6">
       <form className="w-full md:max-w-5xl bg-white shadow-2xl rounded-xl p-3 md:p-6 space-y-4 md:space-y-6" onSubmit={handleSubmit(handleCreateProperty)}>

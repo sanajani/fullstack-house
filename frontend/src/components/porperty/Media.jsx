@@ -1,6 +1,6 @@
 
-
-import InputField from "../inputBoxes/InputField";
+// import InputField from "../inputBoxes/InputField";
+import Dropzone from "../DropZone";
 
 const Media = ({ register }) => {
   return (
@@ -8,14 +8,17 @@ const Media = ({ register }) => {
       <h2 className="font-semibold text-lg text-gray-700">عکس‌ها</h2>
 
       {/* Single file input */}
-      <InputField
+      {/* <InputField
         as="input"
         type="file"
         name="media"
         register={register}
         className="cursor-pointer"
         multiple
-      />
+      /> */}
+      <div>
+        <Dropzone />
+      </div>
     </section>
   );
 };

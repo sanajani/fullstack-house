@@ -10,7 +10,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 const CreateProperty = () => {
   const {register,handleSubmit, formState:{errors} } = useForm({resolver: zodResolver(propertySchema)})
-  console.log(errors);
   
   const handleCreateProperty = (data) => {
     console.log('this is func', data); 
@@ -28,14 +27,14 @@ const CreateProperty = () => {
         {/* Location */}
         <Location register={register} errors={errors} />
 
+        {/* Media */}
+        <Media register={register} errors={errors}/>
+
         {/* Details */}
         <Details register={register} errors={errors} />
 
         {/* Price */}
         <Price register={register} errors={errors} />
-
-        {/* Media */}
-        <Media register={register} errors={errors}/>
 
         <button className="w-full bg-blue-700 text-white py-3 rounded-lg font-semibold hover:opacity-90 cursor-pointer">
           پست کردن خانه

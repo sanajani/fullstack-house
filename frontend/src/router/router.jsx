@@ -8,6 +8,11 @@ import Signup from '../auth/Signup';
 import Login from '../auth/Login';
 import CreateProperty from '../pages/CreateProperty';
 import BecomeAgent from '../auth/BecomeAgent';
+import AgentOnlyProtected from '../protected/AgentOnlyProtected';
+import PageNotFound from '../pages/PageNotFound';
+import Protected from '../protected/Protected';
+import { Profiler } from 'react';
+import Profile from '../pages/Profile';
 
 export const router = createBrowserRouter([
     {
@@ -19,6 +24,10 @@ export const router = createBrowserRouter([
                 element: <Home />               
             },
             {
+                path:'/about',
+                element: <div>About US</div>               
+            },
+            {
                 path:'property/:id',
                 element: <ShowSingleProperty />
             },
@@ -26,17 +35,27 @@ export const router = createBrowserRouter([
                 path:'signup',
                 element: <Signup />
             },
-                    {
+            {
                 path:'login',
                 element: <Login />
             },
             {
                 path:'become-agent',
-                element: <BecomeAgent />
+                element:<AgentOnlyProtected isAuthenticated={false}><BecomeAgent /></AgentOnlyProtected>
             },
             {
-                path: 'about',
-                element: <CreateProperty/>
+                path:'profile',
+                element: <Protected isAuthenticated={true}>
+                    <Profile />
+                </Protected>  
+            },
+            {
+                path: 'create-property',
+                element: <AgentOnlyProtected isAuthenticated={true}><CreateProperty/></AgentOnlyProtected>
+            },
+            {
+                path:"*",
+                element: <PageNotFound />
             }
         ]
     }

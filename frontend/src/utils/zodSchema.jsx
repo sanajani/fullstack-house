@@ -212,17 +212,24 @@ media: z
     })
   )
   .min(1, "حداقل یک عکس لازم است")
-// media: z
-//   .array(
-//     z.object({
-//       url: z.string().min(1, "آدرس عکس الزامی است"),
-//       public_id: z.string().optional(),
-//       caption: z
-//         .string()
-//         .max(200, "حداکثر 200 کاراکتر")
-//         .default("One of the beautiest house in the market"),
-//       isPrimary: z.boolean().default(false),
-//     })
-//   )
-//   .min(1, "حداقل یک عکس الزامی است"), // Error when array is empty
+});
+
+
+export const profileSchema = z.object({
+  name: z.string().min(2, "نام باید حداقل ۲ حرف باشد").max(50),
+  lastName: z.string().min(2, "نام خانوادگی باید حداقل ۲ حرف باشد").max(50),
+  phoneNumber1: z.string().min(9, "شماره تماس معتبر وارد کنید"),
+  email: z.string().email("ایمیل معتبر وارد کنید").optional().or(z.literal('')),
+  province: z.string().optional(),
+  district: z.string().optional(),
+  password: z.string().min(2, "رمز عبور باید حداقل ۲ حرف باشد").optional().or(z.literal('')),
+  confirmPassword: z.string().optional()
+}).refine((data) => {
+  if (data.password && data.password !== data.confirmPassword) {
+    return false;
+  }
+  return true;
+}, {
+  message: "رمز عبور و تکرار آن مطابقت ندارند",
+  path: ["confirmPassword"]
 });

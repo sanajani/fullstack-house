@@ -9,7 +9,6 @@ import {propertySchema} from '../utils/zodSchema'
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const CreateProperty = () => {
-  // const {register ,handleSubmit ,control ,formState:{errors} } = useForm({resolver: zodResolver(propertySchema)},{defaultValue: {media: []}} )
   const {
   register,
   handleSubmit,
@@ -18,7 +17,7 @@ const CreateProperty = () => {
 } = useForm({
   resolver: zodResolver(propertySchema),
   defaultValues: {
-    media: []   // 👈 MUST BE HERE
+    media: [] 
   }
 })
   

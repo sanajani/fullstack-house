@@ -8,7 +8,6 @@ import { LuImagePlus } from "react-icons/lu";
 
 
 function DropzoneUI({ field, errors }) {
-  console.log(errors);
   
   const {value=[], onChange} = field;
   

@@ -9,10 +9,22 @@ import {propertySchema} from '../utils/zodSchema'
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const CreateProperty = () => {
-  const {register,handleSubmit, formState:{errors} } = useForm({resolver: zodResolver(propertySchema)})
+  // const {register ,handleSubmit ,control ,formState:{errors} } = useForm({resolver: zodResolver(propertySchema)},{defaultValue: {media: []}} )
+  const {
+  register,
+  handleSubmit,
+  control,
+  formState: { errors }
+} = useForm({
+  resolver: zodResolver(propertySchema),
+  defaultValues: {
+    media: []   // 👈 MUST BE HERE
+  }
+})
   
   const handleCreateProperty = (data) => {
-    console.log('this is func', data); 
+        // Transform images to match schema
+    console.log('this is transformed data', data); 
   }
   
   return (
@@ -28,7 +40,7 @@ const CreateProperty = () => {
         <Location register={register} errors={errors} />
 
         {/* Media */}
-        <Media register={register} errors={errors}/>
+        <Media errors={errors} control={control} />
 
         {/* Details */}
         <Details register={register} errors={errors} />

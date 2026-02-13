@@ -1,23 +1,13 @@
 
 // import InputField from "../inputBoxes/InputField";
-import Dropzone from "../DropZone";
+import DropZone from "../DropZone";
 
-const Media = ({ register }) => {
+const Media = ({ control,errors }) => {
   return (
     <section className="space-y-3">
       <h2 className="font-semibold text-lg text-gray-700">عکس‌ها</h2>
-
-      {/* Single file input */}
-      {/* <InputField
-        as="input"
-        type="file"
-        name="media"
-        register={register}
-        className="cursor-pointer"
-        multiple
-      /> */}
       <div>
-        <Dropzone />
+        <DropZone control={control} errors={errors} />
       </div>
     </section>
   );

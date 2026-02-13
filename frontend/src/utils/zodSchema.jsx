@@ -202,18 +202,27 @@ transaction: z
     period: z.string().optional(),
     negotiable: z.string().min(2, "ذکر کنید قابل مذاکره است یا خیر" ),
   }),
-
-  media: z
-    .array(
-      z.object({
-        url: z.string().nonempty("آدرس عکس الزامی است"),
-        public_id: z.string().optional(),
-        caption: z
-          .string()
-          .max(200, "حداکثر 200 کاراکتر")
-          .default("One of the beautiest house in the market"),
-        isPrimary: z.boolean().default(false),
-      })
-    )
-    .optional(),
+media: z
+  .array(
+    z.object({
+      url: z.any(),
+      public_id: z.number(),
+      caption: z.string().max(200).optional(),
+      isPrimary: z.boolean().optional()
+    })
+  )
+  .min(1, "حداقل یک عکس لازم است")
+// media: z
+//   .array(
+//     z.object({
+//       url: z.string().min(1, "آدرس عکس الزامی است"),
+//       public_id: z.string().optional(),
+//       caption: z
+//         .string()
+//         .max(200, "حداکثر 200 کاراکتر")
+//         .default("One of the beautiest house in the market"),
+//       isPrimary: z.boolean().default(false),
+//     })
+//   )
+//   .min(1, "حداقل یک عکس الزامی است"), // Error when array is empty
 });

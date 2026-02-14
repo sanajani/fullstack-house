@@ -100,6 +100,7 @@ export const allUsers = asyncErrorHandler(async (req, res, next) => {
 
 // become agent controller
 export const requestAgentController = asyncErrorHandler(async (req, res, next) => {
+    console.log(req.body, 'something big ready to hapen');
     
     const userId = req?.user?.id;
     if(!userId) {

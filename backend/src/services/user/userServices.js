@@ -58,10 +58,21 @@ export const updateMyProfile = async (userId, updateData) => {
     return updatedUser;
 }
 
+//   name
+//   phoneNumber1
+//   lastName
+//   email
+//   province
+//   district
+//   username
+//   phoneNumber2
+//   agencyName
+//   experienceYears
+//   specialization
+//   bio
 // Service to update user profile to agent profile
 export const requestAgentRole = async (userId, userData) => {
     const existingUser = await UserModel.findById(userId);
-    console.log(existingUser , 'this is log');
     
     if(!existingUser) {
         throw new AppError('User not found', 404);
@@ -79,19 +90,15 @@ export const requestAgentRole = async (userId, userData) => {
   province,
   district,
   role,
-  agentInfo
+  agencyName,
+  experienceYears,
+  specialization,
+  bio
     } = userData;
+
     if(role){
         throw new AppError('user can not change role', 400);
     }
-    const {
-    licenseNumber,
-    agencyName,
-    experienceYears,
-    specialization,
-    bio,
-    profilePicture,
-    } = agentInfo || {};
 
     if(!name || !lastName || !phoneNumber1 || !phoneNumber2 || !username || !province || !district || !agencyName ) {
     throw new AppError('All fields are required to become an agent', 400);
@@ -109,12 +116,10 @@ export const requestAgentRole = async (userId, userData) => {
             agentRequestStatus: 'pending',
             phoneNumber2,
             agentInfo: {
-                licenseNumber,
                 agencyName,
                 experienceYears,
                 specialization,
                 bio,
-                profilePicture
             }
         },
         { new: true }

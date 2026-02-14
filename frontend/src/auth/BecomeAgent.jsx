@@ -4,14 +4,19 @@ import FormField from "../components/inputBoxes/FormField";
 import {zodResolver} from '@hookform/resolvers/zod'
 import { BecomeAgentSchema } from "../utils/zodSchema";
 
+import { useAuthStore } from '../store/authStore';
 import {useForm} from 'react-hook-form'
+import { useBecomeAgent } from "../hooks/useBecomeAgent";
 
 const BecomeAgent = () => {
+  const becomeAgentMutation = useBecomeAgent();
+  const {user} = useAuthStore();
 
-  const {register, handleSubmit, formState: {errors}} = useForm({resolver: zodResolver(BecomeAgentSchema)});
-
+  const {register, handleSubmit, formState: {errors}} = useForm({resolver: zodResolver(BecomeAgentSchema), defaultValues: {...user}});
+  
   const signupFormSubmit = (data) => {
     console.log(data);
+    becomeAgentMutation.mutate(data);
   }
 
   return (

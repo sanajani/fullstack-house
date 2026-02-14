@@ -8,17 +8,18 @@ import bcrypt from 'bcryptjs';
 
 // Service to register user
 export const registerUser = async (userData) => {
-    const query = [];
-    if(userData.phoneNumber1) query.push({phoneNumber1: userData.phoneNumber1})
-    if(userData.email) query.push({email: userData.email})
-    if(userData.username) query.push({username: userData.username})
+    // const query = [];
+    // if(userData.phoneNumber1) query.push({phoneNumber1: userData.phoneNumber1})
+    // if(userData.email) query.push({email: userData.email})
+    // if(userData.username) query.push({username: userData.username})
 
     
     // Business logic for registering a user would go here
     const isUserExists = await UserModel.findOne({
-        $or: query
+        phoneNumber1: userData.phoneNumber1
     })
     // console.log(isUserExists);
+    console.log(isUserExists, 'user is exist');
     
     if(isUserExists) throw new AppError('User already exist', 409);
 
@@ -31,7 +32,9 @@ export const registerUser = async (userData) => {
 
 // Service to login user
 export const loginUser = async (userData) => {
-    const user = await UserModel.findOne({ phoneNumber1: userData.phoneNumber1 }).select('+password');
+    console.log('user data: ',userData);
+    
+    const user = await UserModel.findOne({ phoneNumber1: userData.phoneNumber1 }).select('+password name lastName phoneNumber1 email username province role');
     if(!user) throw new AppError('Invalid phone number or password', 401);
 
     const isPasswordValid = await bcrypt.compare(userData.password, user.password);

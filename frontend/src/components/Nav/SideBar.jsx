@@ -1,9 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, replace } from "react-router-dom";
+import { useAuthStore } from '../../store/authStore';
+
 
 const SideBar = ({ setShowSideBar }) => {
-  const role = 'agent'; // This would come from your auth context/state
-  const isLoggedIn = !!role; // If role exists, user is logged in
+  // const role = 'agent'; // This would come from your auth context/state
+  // const isAuthenticated = !!role; // If role exists, user is logged in
+  const {role, isAuthenticated} = useAuthStore()
+  const { logoutAuth } = useAuthStore((state) => state.logoutAuth);
 
+  const handleLogout = () => {
+    logoutAuth();
+    // Navigate('/login', {replace: true} )
+    return <Navigate to='/login' replace />;
+    setShowSideBar(false);
+  };
   return (
     <div className="h-full bg-white border-t-4 border-blue-700 mt-12">
       <ul className="flex flex-col gap-3 h-full pt-24 px-4">
@@ -22,7 +32,7 @@ const SideBar = ({ setShowSideBar }) => {
         </Link>
 
         {/* Conditional routes based on login status */}
-        {!isLoggedIn ? (
+        {!isAuthenticated ? (
           // Not logged in - show auth options
           <>
             <Link to='/signup' onClick={() => setShowSideBar(false)}>

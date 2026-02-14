@@ -3,16 +3,19 @@ import { Link } from "react-router-dom";
 import FormField from "../components/inputBoxes/FormField";
 import {zodResolver} from '@hookform/resolvers/zod'
 import { signupSchema } from "../utils/zodSchema";
-
-import {useForm} from 'react-hook-form'
+import { useRegister } from "../hooks/useAuth";
+import { useState } from "react";
+import {useForm} from 'react-hook-form';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Signup = () => {
-
+  const [showPassword, setShowPassword] = useState(false);
   const {register, handleSubmit, formState: {errors}} = useForm({resolver: zodResolver(signupSchema)});
+  const registerMutation = useRegister();
 
   const signupFormSubmit = (data) => {
     console.log(data);
-    
+    registerMutation.mutate(data);
   }
 
   return (
@@ -64,15 +67,21 @@ const Signup = () => {
           </FormField>
 
           {/* Password */}
-          <FormField label='رمز عبور' error={errors.password}>
-            <input
-              type="password"
-              placeholder="رمز عبور"
-              autoComplete="off"
-              {...register('password')}
-
-              className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+          <FormField label='رمز عبور' error={errors.password} className="relative">
+             <input 
+               placeholder="رمز عبور شما"
+               type={showPassword ? 'text' : 'password'} 
+               {...register('password')}
+               className={`relative w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
+               autoComplete="off"
+             />
+             <button
+               type="button"
+               onClick={() => setShowPassword(!showPassword)}
+               className="absolute left-4 inset-y-0 top-3 pr-3 flex items-center text-gray-500"
+             >
+               {showPassword ? <FaEyeSlash /> : <FaEye />}
+             </button>
           </FormField>
 
           {/* Email */}
@@ -124,7 +133,7 @@ const Signup = () => {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 md:col-span-2 transition"
+            className="w-full bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 md:col-span-2 transition-colors cursor-pointer"
           >
             ثبت نام
           </button>

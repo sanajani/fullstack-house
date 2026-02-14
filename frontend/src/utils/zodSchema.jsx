@@ -1,15 +1,15 @@
 import { z } from "zod";
 
 export const loginSchema = z.object({
-  name: z
-    .string()
-    .min(1, "نام الزامی است")
-    .min(2, "نام شما حداقل باید دو حرف باشد"),
   phoneNumber1: z
     .string()
     .min(1, "شماره تماس الزامی است")
     .refine((val) => /^07/.test(val), { message: "شماره تماس با 07 شروع کنید" })
     .refine((val) => /^07[0-9]{8}$/.test(val), { message: "شماره نامکمل" }),
+  password: z
+    .string()
+    .min(1, "رمز الزامی است")
+    .min(4, "رمز حداقل 4 حرف باشد"),
 });
 
 export const signupSchema = z.object({

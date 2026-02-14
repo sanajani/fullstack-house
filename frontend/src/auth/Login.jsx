@@ -3,12 +3,17 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from "../utils/zodSchema";
 import { useForm } from "react-hook-form";
 import FormField from "../components/inputBoxes/FormField";
+import { useLogin } from "../hooks/useAuth";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useState } from "react";
 
 const Login = () => {
-
+  const [showPassword, setShowPassword] = useState(false);
   const {register, handleSubmit, formState: {errors}} = useForm({resolver: zodResolver(loginSchema)});
+  const loginMutation = useLogin();
   const loginFormSubmit = (data) => {
     console.log('this is your data:', data);
+    loginMutation.mutate(data);
   }
 
   return (
@@ -24,16 +29,6 @@ const Login = () => {
         {/* Form */}
         <form className="space-y-4" onSubmit={handleSubmit(loginFormSubmit)}>
 
-          {/* Name */}
-          <FormField label={'نام '} error={errors.name} >
-              <input 
-                placeholder={' نام شما'}
-                type='text'
-                {...register('name')}
-                autoComplete="off"
-                className={`w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
-              />
-          </FormField>
           {/* Phone Number */}
           <FormField error={errors.phoneNumber1} label={'شماره تماس '}>
             <input 
@@ -43,6 +38,22 @@ const Login = () => {
               className={`w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
               autoComplete="off"
             />
+          </FormField>
+          <FormField error={errors.password} label={'رمز عبور'} className="relative">
+            <input 
+              placeholder="رمز عبور شما"
+              type={showPassword ? 'text' : 'password'} 
+              {...register('password')}
+              className={`w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              autoComplete="off"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute left-4 inset-y-0 top-3 pr-3 flex items-center text-gray-500"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
           </FormField>
           {/* Submit */}
           <button

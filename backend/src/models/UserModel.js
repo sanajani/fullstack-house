@@ -18,6 +18,8 @@ const userSchema = new mongoose.Schema({
         unique: true,
         sparse: true,
         required: true,
+        index: true
+
     },
     password: {
         type: String,
@@ -34,14 +36,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         unique: true,
         sparse: true,
-        index: true
     },
-    username: {
-        type: String,
-        unique: true,
-        index: true,
-        sparse: true
-    },
+    // username: {
+    //     type: String,
+    //     unique: true,
+    //     index: true,
+    //     sparse: true
+    // },
     province:{
         type: String,
     },
@@ -101,8 +102,6 @@ const userSchema = new mongoose.Schema({
 }, { 
     timestamps: true, 
     indexes: [
-        { email: 1 }, 
-        { username: 1 },
         {phoneNumber1: 1}
     ] });
 

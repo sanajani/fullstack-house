@@ -2,12 +2,21 @@ import { getAllPropertiesService, getSinglePropertyByIdService } from '../../ser
 import {asyncErrorHandler} from '../../utils/asyncErrorHandler.js';
 
 
-// get all properties
+// get all properties console
 export const allOfProperties = asyncErrorHandler(async (req,res,next) => {
-    const {transaction, location, minPrice, maxPrice, page, limit} = req.query;
+    const {
+            page,
+            limit,
+            province,
+            dealType,
+            houseRent,
+            propertyType
+    } = req.query;
+    console.log(req.query);
+    
+    
 
-    const properties = await getAllPropertiesService(transaction, location, minPrice, maxPrice, page, limit);
-
+    const properties = await getAllPropertiesService(page, limit, province, dealType, houseRent, propertyType);
     return res.status(200).json({
         message:"Success",
         data: properties

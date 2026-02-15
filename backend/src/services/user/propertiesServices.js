@@ -1,18 +1,23 @@
 import AppError from '../../errors/AppError.js';
 import {PropertiesModel} from '../../models/properties/PropertiesModel.js'
 
-export const getAllPropertiesService = async (transaction, city, minPrice, maxPrice, page, limit) => {
+export const getAllPropertiesService = async (page, limit, province, dealType, houseRent, propertyType) => {
     const pageNumber = parseInt(page) || 1;
-    const limitItems = parseInt(limit) || 1;
+    
+    const limitItems = parseInt(limit) || 10;
 
     let query = {}
 
-    if(transaction) query['transaction'] = transaction;
-    if(city) query['location.city'] = city;
-    if(minPrice || maxPrice){
+    if(dealType) query['dealType'] = dealType;
+    if(province) query['location.province'] = province;
+    if(houseRent){
         query['price.amount'] = {}
-        if(minPrice) query['price.amount'].$lte = parseInt(minPrice);
-        if(maxPrice) query['price.amount'].$gte = parseInt(maxPrice);
+        if(houseRent === "under_5000") query['price.amount'].$lte = 5000;
+        if(houseRent === "under_10000") query['price.amount'].$lte = 10000;
+        if(houseRent === "under_15000") query['price.amount'].$lte = 15000;
+        if(houseRent === "under_25000") query['price.amount'].$lte = 25000;
+        if(houseRent === "under_50000") query['price.amount'].$lte = 50000;
+        if(houseRent === "above_50000") query['price.amount'].$gte = 50001; // Assuming above 50,000 is the minimum for "above_50k"
     }
     const properties = await PropertiesModel.find(query)
         .skip((pageNumber - 1 )* limitItems)
@@ -23,8 +28,10 @@ export const getAllPropertiesService = async (transaction, city, minPrice, maxPr
     const pages = Math.ceil(totalDocuments / limitItems);
     
     
+    console.log(properties);
+    
     if(!properties || properties.length === 0) {
-        throw new AppError("There is no data", 400)
+        return {properties: [], pageNumber, pages};
     }
 
     return {properties, pageNumber, pages}

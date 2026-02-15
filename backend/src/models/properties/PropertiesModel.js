@@ -19,7 +19,7 @@ const PropertySchema = new Schema({
         enum: ['apartment', 'house','villa','room','studio','commercial','land'],
         required: true
     },
-    transaction: {
+    dealType: {
         type: String,
         enum: ['rent','sell','gerawi'],
         required: true
@@ -77,7 +77,7 @@ const PropertySchema = new Schema({
 
 
 // Indexes
-PropertySchema.index({ "location.city": 1, transaction: 1 }); // for search
+PropertySchema.index({ "location.province": 1, dealType: 1 }); // for search
 PropertySchema.index({ "price.amount": 1 }); // price sorting
 PropertySchema.index({ createdAt: -1 }); // newest first
 

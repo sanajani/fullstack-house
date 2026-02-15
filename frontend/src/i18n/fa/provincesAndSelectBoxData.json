@@ -35,7 +35,7 @@
     { "value": "zabul", "label": "زابل" }
   ],
   "dealTypes": [
-    { "value": "sale", "label": "فروشی" },
+    { "value": "sell", "label": "فروشی" },
     { "value": "rent", "label": "اجاره‌ای" }
   ],
   "houseRent": [

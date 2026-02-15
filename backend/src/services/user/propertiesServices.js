@@ -9,6 +9,7 @@ export const getAllPropertiesService = async (page, limit, province, dealType, h
     let query = {}
 
     if(dealType) query['dealType'] = dealType;
+    if(propertyType) query['propertyType'] = propertyType;
     if(province) query['location.province'] = province;
     if(houseRent){
         query['price.amount'] = {}

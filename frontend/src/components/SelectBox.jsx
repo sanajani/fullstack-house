@@ -18,4 +18,4 @@ const SelectBox = ({options, value, placeholder,onChange, className}) => {
   )
 }
 
-export default SelectBox
+export default SelectBox;

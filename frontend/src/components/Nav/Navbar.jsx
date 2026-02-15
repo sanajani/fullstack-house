@@ -6,13 +6,8 @@ import SideBar from "./SideBar";
 import { IoClose } from "react-icons/io5";
 
 const Navbar = () => {
-  const [showSideBar, setShowSideBar] = useState(false);
+  const [showSideBar, setShowSideBar] = useState(false);   
 
-    const [selectedProvince, setSelectedProvince] = useState("");
-    const [selectedDealType, setSelectDealTypes] = useState("");
-    const [selectedHouseRent, setSelectHouseRent] = useState("");
-    const [selectedPropertyType, setSelectPropertyType] = useState("");
-    
   return (
     <div className="z-50 flex flex-col bg-blue-600 p-2 text-white relative overflow-hidden">
         <div className="w-full md:w-[85vw] mx-auto">
@@ -20,12 +15,7 @@ const Navbar = () => {
             <Link to='/'><h1 className="font-bold text-3xl">خانه من</h1></Link>
             <div className="cursor-pointer" onClick={() => setShowSideBar(!showSideBar)}><GiHamburgerMenu size={28} /></div>
         </div>
-        <SearchSelectBoxes 
-        selectedProvince={selectedProvince} setSelectedProvince={setSelectedProvince}
-        selectedDealType={selectedDealType} setSelectDealTypes={setSelectDealTypes}
-        selectedHouseRent={selectedHouseRent} setSelectHouseRent={setSelectHouseRent}
-        selectedPropertyType={selectedPropertyType} setSelectPropertyType={setSelectPropertyType}
-        />
+        <SearchSelectBoxes />
         </div>
         {/* sidebar  */}
         <div className={`w-full bg-blue-600 fixed top-0 left-0 h-screen md:w-[35%] transition-transform duration-300 ease-in-out ${showSideBar ? 'translate-x-0': '-translate-x-450'}`}>

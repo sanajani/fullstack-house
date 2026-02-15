@@ -9,7 +9,6 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use((config) => {
   
   const {token} = useAuthStore.getState();
-  console.log(token);
 
   const publicEndpoints = ['users/login', 'users/register'];
   if(!publicEndpoints.includes(config.url) && token) {

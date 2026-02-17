@@ -20,16 +20,13 @@ export const getAllPropertiesService = async (page, limit, province, dealType, h
         if(houseRent === "under_50000") query['price.amount'].$lte = 50000;
         if(houseRent === "above_50000") query['price.amount'].$gte = 50001; // Assuming above 50,000 is the minimum for "above_50k"
     }
-    const properties = await PropertiesModel.find(query)
+    const properties = await PropertiesModel.find(query).select('title description propertyType dealType media location transaction price').lean()
         .skip((pageNumber - 1 )* limitItems)
         .limit(limitItems)
         .sort({createdAt: -1});
-    
+
     const totalDocuments = await PropertiesModel.countDocuments(query);
     const pages = Math.ceil(totalDocuments / limitItems);
-    
-    
-    console.log(properties);
     
     if(!properties || properties.length === 0) {
         return {properties: [], pageNumber, pages};

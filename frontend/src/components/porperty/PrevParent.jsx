@@ -1,4 +1,4 @@
-import React from 'react'
+
 import PropertyPreview from "../PropertyPreview"
 
 const PreviewPorpertiesComp = ({properties}) => {

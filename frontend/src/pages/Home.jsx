@@ -17,7 +17,6 @@ const Home = () => {
   const propertyType = searchParams.get("propertyType") || "";
   
   const {data, isLoading, error} = useGetAllProperties({page, limit, province, dealType, houseRent, propertyType});
-  console.log(data);
   
   const properties = data?.data?.properties;
   
@@ -27,34 +26,6 @@ const Home = () => {
     setSearchParams({ page: 1, limit: 4}, { replace: true });
   }
 }, [searchParams, setSearchParams]);
-
-  const prePage = () => {
-    if(page > 1) {
-      setSearchParams({
-        ...Object.entries(searchParams),
-        page: page -1,
-        limit,
-        province,
-        dealType,
-        houseRent,
-        propertyType
-      });
-    }
-  }
-  const nextPage = () => {
-    if(page < pages) {
-      setSearchParams({
-        ...Object.entries(searchParams),
-        page: page + 1,
-        limit,
-        province,
-        dealType,
-        houseRent,
-        propertyType
-      });
-    }
-  }
-
 
   if(isLoading) {
     return <div className="text-center mt-20 text-xl font-bold">Loading...</div>
@@ -68,7 +39,16 @@ const Home = () => {
         {properties?.length > 0 && <HosesHeader />}
         {/* grid parent div for all childs */}
         {properties?.length > 0 && <PreviewPorpertiesComp properties={properties} />}
-        { properties?.length > 0 && <PreNextButtons page={page} pages={pages} nextPage={nextPage} prePage={prePage}/>}
+        { properties?.length > 0 && <PreNextButtons 
+        page={page} pages={pages} 
+        setSearchParams={setSearchParams}
+        limit={limit}
+        province={province}
+        dealType={dealType}
+        houseRent={houseRent}
+        propertyType={propertyType}
+        searchParams={searchParams}
+        />}
         {properties?.length === 0 && <NotProperty />}
     </div>
   )

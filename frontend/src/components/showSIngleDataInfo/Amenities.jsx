@@ -1,5 +1,5 @@
 
-const Amenities = ({dummyProperties}) => {
+const Amenities = ({showSingleProperty}) => {
   return (
       <div className='bg-white rounded-2xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.12)] space-y-5'>
 

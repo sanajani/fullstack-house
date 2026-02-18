@@ -1,11 +1,11 @@
-import BasicInfo from "../components/porperty/BasicInfo";
-import Details from "../components/porperty/Details";
-import Location from "../components/porperty/Location";
-import Media from "../components/porperty/Media";
-import Price from "../components/porperty/Price";
+import BasicInfo from "../../components/porperty/BasicInfo";
+import Details from "../../components/porperty/Details";
+import Location from "../../components/porperty/Location";
+import Media from "../../components/porperty/Media";
+import Price from "../../components/porperty/Price";
 
 import { useForm } from 'react-hook-form';
-import {propertySchema} from '../utils/zodSchema'
+import {propertySchema} from '../../utils/zodSchema'
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const CreateProperty = () => {

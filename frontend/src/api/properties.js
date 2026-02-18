@@ -19,3 +19,14 @@ export const getAllProperties = async ({page, limit, province, dealType, houseRe
         throw error;
     }
 }
+
+export const getSinglePropertyByID = async (id) => {
+    
+    try {
+        const response = await api.get(`properties/${id}`)
+        return response.data
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}

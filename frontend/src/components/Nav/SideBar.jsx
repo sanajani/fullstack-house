@@ -1,4 +1,4 @@
-import { Link, Navigate, replace } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useAuthStore } from '../../store/authStore';
 
 
@@ -11,11 +11,11 @@ const SideBar = ({ setShowSideBar }) => {
   const handleLogout = () => {
     logoutAuth();
     // Navigate('/login', {replace: true} )
-    return <Navigate to='/login' replace />;
     setShowSideBar(false);
+    return <Navigate to='/login' replace={true} />;
   };
   return (
-    <div className="h-full bg-white border-t-4 border-blue-700 mt-12">
+    <div className="h-full bg-white border-t-4 border-blue-700 mt-12 z-50">
       <ul className="flex flex-col gap-3 h-full pt-24 px-4">
 
         {/* Public routes - always visible */}

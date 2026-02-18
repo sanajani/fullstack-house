@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { zodResolver } from '@hookform/resolvers/zod';
-import FormField from "../components/inputBoxes/FormField";
-import ShowInfo from "../components/inputBoxes/ShowInfo";
-import { profileSchema } from "../utils/zodSchema";
+import FormField from "../../components/inputBoxes/FormField";
+import ShowInfo from "../../components/inputBoxes/ShowInfo";
+import { profileSchema } from "../../utils/zodSchema";
 
 const mockUserData = {
   name: "علی",

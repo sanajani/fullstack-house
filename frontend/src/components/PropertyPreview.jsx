@@ -20,7 +20,7 @@ const tag = colorsTagMap[propertyDealType];
 
   return (
     <div className="p-3 border-2 m-2 mb-9 rounded-2xl border-blue-700 relative">
-      <span className={`absolute top-6 left-0 -rotate-60 z-50 ${tag.bgColor} text-white rounded-md px-4 py-2`}>{tag.label}</span>
+      <span className={`z-10 absolute top-6 left-0 -rotate-60 ${tag.bgColor} text-white rounded-md px-4 py-2`}>{tag.label}</span>
       <Link to={`/property/${property._id}`}>
         {/* Images */}
         <div className="w-full h-64 relative">

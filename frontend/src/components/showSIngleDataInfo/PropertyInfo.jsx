@@ -4,28 +4,28 @@ import Details from './Details';
 import Amenities from './Amenities';
 import Price from './Price';
 import AgentInfo from './AgentInfo';
-const PropertyInfo = ({dummyProperties}) => {
+const PropertyInfo = ({showSingleProperty}) => {
   return (
     <div className='mt-4 p-2 space-y-6 max-w-6xl mx-auto w-full md:w-[85%]'>
 
   {/* title section */}
-  <TitleAndDesc dummyProperties={dummyProperties}/>
+  <TitleAndDesc showSingleProperty={showSingleProperty}/>
 
   {/* location */}
-  <Location dummyProperties={dummyProperties} />
+  <Location showSingleProperty={showSingleProperty} />
 
   {/* details */}
-  <Details dummyProperties={dummyProperties}/>
+  <Details showSingleProperty={showSingleProperty}/>
 
   {/* amenities */}
-  <Amenities dummyProperties={dummyProperties}/>
+  <Amenities showSingleProperty={showSingleProperty}/>
 
 
   {/* price */}
-  <Price dummyProperties={dummyProperties}/>
+  <Price showSingleProperty={showSingleProperty}/>
 
   {/* agent */}
-  <AgentInfo dummyProperties={dummyProperties} />
+  <AgentInfo showSingleProperty={showSingleProperty} />
 
 </div>
   )

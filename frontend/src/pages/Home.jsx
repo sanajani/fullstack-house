@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useGetAllProperties } from "../hooks/useProperties"
 import { useSearchParams } from "react-router-dom";
 import PreNextButtons from "../components/PreNextButtons";
-import HosesHeader from "../components/HosesHeader";
 import PreviewPorpertiesComp from "../components/porperty/PrevParent";
 import NotProperty from "../components/porperty/NotProperty";
+import HousesHeader from "../components/HosesHeader";
 
 const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -36,7 +36,7 @@ const Home = () => {
   
   return (
     <div className="max-w-6xl mx-auto">
-        {properties?.length > 0 && <HosesHeader />}
+        {properties?.length > 0 && <HousesHeader />}
         {/* grid parent div for all childs */}
         {properties?.length > 0 && <PreviewPorpertiesComp properties={properties} />}
         { properties?.length > 0 && <PreNextButtons 

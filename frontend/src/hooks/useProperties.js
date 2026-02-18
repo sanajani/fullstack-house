@@ -1,11 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
-import { getAllProperties } from '../api/properties';
-// import { useSearchParams } from 'react-router-dom';
+import { getAllProperties, getSinglePropertyByID } from '../api/properties';
 
 export const useGetAllProperties = ({page, limit, province, dealType, houseRent, propertyType}) => {
-    // const [searchParams, setSearchParams] = useSearchParams();
   return useQuery({
     queryKey: ['properties', page, limit, province, dealType, houseRent, propertyType],
     queryFn: () => getAllProperties({page, limit, province, dealType, houseRent, propertyType})
   })
 };
+
+export const useGetSinglePropertyByID = ({id}) => {
+  return useQuery({
+    queryKey: ['property', id],
+    queryFn: () => getSinglePropertyByID(id)
+  })
+}

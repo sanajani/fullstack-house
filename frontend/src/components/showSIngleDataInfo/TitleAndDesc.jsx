@@ -1,15 +1,15 @@
 
-const TitleAndDesc = ({dummyProperties}) => {
+const TitleAndDesc = ({showSingleProperty}) => {
   return (
       <div className='bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] p-6 space-y-6'>
 
     <div className='space-y-4'>
       <h1 className='font-bold text-2xl md:text-3xl leading-10 text-right text-gray-800'>
-        {dummyProperties.title}
+        {showSingleProperty.title}
       </h1>
 
       <p className='text-gray-600 text-base md:text-lg leading-8 bg-gray-50 p-4 rounded-xl border border-gray-200 text-right'>
-        {dummyProperties.description}
+        {showSingleProperty.description}
       </p>
     </div>
 

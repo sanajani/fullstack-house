@@ -3,13 +3,13 @@ import App from '../App';
 
 // pages
 import Home from '../pages/Home';
-import ShowSingleProperty from '../pages/ShowSingleProperty';
+import ShowSingleProperty from '../pages/properties/ShowSingleProperty';
 import Signup from '../auth/Signup';
 import Login from '../auth/Login';
-import CreateProperty from '../pages/CreateProperty';
+import CreateProperty from '../pages/properties/CreateProperty';
 import BecomeAgent from '../auth/BecomeAgent';
 import PageNotFound from '../pages/PageNotFound';
-import Profile from '../pages/Profile';
+import Profile from '../pages/common/Profile';
 import ProtectedAuth from '../protected/ProtectedAuth'; // if user logged in, they should not access login and signup page
 import ProtectRole from '../protected/ProtectRole'; // if user is agent they should not access become agent page
 import ProtectUserOnly from '../protected/ProtectedUserOnly'; // if user is not logged in they should not access profile page

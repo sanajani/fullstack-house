@@ -1,71 +1,78 @@
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { useState } from "react";
+import LoadingImage from "../../public/LoadingImageSVG";
+import ErrorIcon from "../../public/ErrorImageSVG";
 
-// Import Swiper styles
-import 'swiper/css';
+const ImagePreviewMobile = ({ setShowGallery, images = [] }) => {
+  const [imageStatus, setImageStatus] = useState({});
 
-const iamges = [
-    {
-        src: 'https://a0.muscache.com/im/pictures/86aa5a51-2981-4a0e-8ac5-86a43a86fb91.jpg?im_w=960',
-        alt: 'hello'
-    },
-       {
-        src: 'https://a0.muscache.com/im/pictures/86aa5a51-2981-4a0e-8ac5-86a43a86fb91.jpg?im_w=960',
-        alt: 'hello'
-    },
-       {
-        src: 'https://a0.muscache.com/im/pictures/86aa5a51-2981-4a0e-8ac5-86a43a86fb91.jpg?im_w=960',
-        alt: 'hello'
-    },
-       {
-        src: 'https://a0.muscache.com/im/pictures/86aa5a51-2981-4a0e-8ac5-86a43a86fb91.jpg?im_w=960',
-        alt: 'hello'
-    },
-       {
-        src: 'https://a0.muscache.com/im/pictures/86aa5a51-2981-4a0e-8ac5-86a43a86fb91.jpg?im_w=960',
-        alt: 'hello'
-    },
-       {
-        src: 'https://a0.muscache.com/im/pictures/86aa5a51-2981-4a0e-8ac5-86a43a86fb91.jpg?im_w=960',
-        alt: 'hello'
-    },
-       {
-        src: 'https://a0.muscache.com/im/pictures/86aa5a51-2981-4a0e-8ac5-86a43a86fb91.jpg?im_w=960',
-        alt: 'hello'
-    },
-       {
-        src: 'https://a0.muscache.com/im/pictures/86aa5a51-2981-4a0e-8ac5-86a43a86fb91.jpg?im_w=960',
-        alt: 'hello'
-    },
-       {
-        src: 'https://a0.muscache.com/im/pictures/86aa5a51-2981-4a0e-8ac5-86a43a86fb91.jpg?im_w=960',
-        alt: 'hello'
-    },
-       {
-        src: 'https://a0.muscache.com/im/pictures/86aa5a51-2981-4a0e-8ac5-86a43a86fb91.jpg?im_w=960',
-        alt: 'hello'
-    },
-]
+  const handleLoad = (index) => {
+    setImageStatus((prev) => ({
+      ...prev,
+      [index]: { loaded: true, error: false },
+    }));
+  };
 
-const ImagePreviewMobile = ({setShowGallery}) => {
+  const handleError = (index) => {
+    setImageStatus((prev) => ({
+      ...prev,
+      [index]: { loaded: false, error: true },
+    }));
+  };
+
   return (
-    <div className='bg-gray-600 w-full '>
-            <Swiper 
-                slidesPerView={1}      // show 1 slide at a time
-                spaceBetween={0}       // optional, gap between slides
-                loop={true}            // disable infinite loop if you want
-                autoplay={false}       // disable auto sliding
-                allowTouchMove={true}  // allow manual swipe
-                speed={300}            // swipe animation speed
-            className='w-full h-full cursor-pointer'>
-                {
-                    iamges.map((value, index) => {
-                       return <SwiperSlide onClick={() => setShowGallery(true)} key={index} className='w-full h-full'><img className='w-full h-full object-cover' src={value.src} alt={value.alt} /></SwiperSlide>
-                    })
-                }
-            </Swiper>
-    </div>
-  )
-}
+    <div className="bg-gray-600 w-full h-[300px]">
+      <Swiper
+        slidesPerView={1}
+        spaceBetween={0}
+        loop={true}
+        allowTouchMove={true}
+        speed={300}
+        className="w-full h-full cursor-pointer"
+      >
+        {images.map((value, index) => (
+          <SwiperSlide
+            key={index}
+            onClick={() => setShowGallery(true)}
+            className="relative w-full h-full"
+          >
+            {/* Loader */}
+            {!imageStatus[index]?.loaded &&
+              !imageStatus[index]?.error && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
+                  <LoadingImage />
+                </div>
+              )}
 
-export default ImagePreviewMobile
+            {/* Error */}
+            {imageStatus[index]?.error && (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
+                <ErrorIcon />
+              </div>
+            )}
+
+            {/* Image */}
+            {!imageStatus[index]?.error && (
+              <img
+                src={value?.url || value?.src}
+                alt={value?.alt || "property image"}
+                className={`w-full h-full object-cover transition-opacity duration-500 ${
+                  imageStatus[index]?.loaded
+                    ? "opacity-100"
+                    : "opacity-0"
+                }`}
+                onLoad={() => handleLoad(index)}
+                onError={() => handleError(index)}
+                loading="lazy"
+              />
+            )}
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
+  );
+};
+
+export default ImagePreviewMobile;

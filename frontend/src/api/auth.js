@@ -1,6 +1,4 @@
 import api from './axiosInstance.js';
-
-
 // axios.defaults.baseURL = 'http://localhost:44004/api/v1/'; // Set the base URL for your API
 // http://localhost:44004/api/v1/users/register
 
@@ -23,3 +21,24 @@ export const register = async (userData) => {
     throw error;
   }
 };
+
+export const updateProfile = async (userUpdatedData) => {
+  try {
+    const response = await api.put('/users/me', userUpdatedData)
+    return response.data
+  } catch (error) {
+    console.log(error);
+    
+  }
+};
+
+export const getUserProfile = async () => {
+  try {
+    const response = await api.get('users/me')
+    return response.data
+  } catch (error) {
+    console.log(error);
+    throw error;
+    
+  }
+}

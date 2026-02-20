@@ -219,8 +219,6 @@ export const profileSchema = z.object({
   email: z.string().email("ایمیل معتبر وارد کنید").optional().or(z.literal('')),
   province: z.string().optional(),
   district: z.string().optional(),
-  password: z.string().min(2, "رمز عبور باید حداقل ۲ حرف باشد").optional().or(z.literal('')),
-  confirmPassword: z.string().optional()
 }).refine((data) => {
   if (data.password && data.password !== data.confirmPassword) {
     return false;

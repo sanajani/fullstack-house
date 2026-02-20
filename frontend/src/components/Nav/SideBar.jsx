@@ -3,17 +3,15 @@ import { useAuthStore } from '../../store/authStore';
 
 
 const SideBar = ({ setShowSideBar }) => {
-  // const role = 'agent'; // This would come from your auth context/state
-  // const isAuthenticated = !!role; // If role exists, user is logged in
   const {role, isAuthenticated} = useAuthStore()
-  const { logoutAuth } = useAuthStore((state) => state.logoutAuth);
+  const { logoutAuth } = useAuthStore();
 
   const handleLogout = () => {
     logoutAuth();
-    // Navigate('/login', {replace: true} )
     setShowSideBar(false);
     return <Navigate to='/login' replace={true} />;
   };
+
   return (
     <div className="h-full bg-white border-t-4 border-blue-700 mt-12 z-50">
       <ul className="flex flex-col gap-3 h-full pt-24 px-4">
@@ -83,10 +81,7 @@ const SideBar = ({ setShowSideBar }) => {
 
             {/* Logout option */}
             <li 
-              onClick={() => {
-                // Handle logout here
-                setShowSideBar(false);
-              }}
+              onClick={handleLogout}
               className="bg-white text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white transition-colors duration-200 text-lg font-medium py-2 px-6 rounded-full text-center cursor-pointer mt-4"
             >
               خروج از حساب
@@ -97,7 +92,7 @@ const SideBar = ({ setShowSideBar }) => {
         {/* Version footer - always visible */}
         <div className="mt-8 pt-4 border-t border-blue-700/30">
           <p className="text-blue-700/70 text-sm text-center">
-            نسخه ۱.۰
+            نسخه 1.0
           </p>
         </div>
 

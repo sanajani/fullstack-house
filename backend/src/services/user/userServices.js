@@ -47,30 +47,18 @@ export const loginUser = async (userData) => {
 
 // Service to get user profile
 export const getMyProfile = async (userId) => {
-    const user = await UserModel.findById(userId);
+    // change it that for now for only user route
+    const user = await UserModel.findById(userId).select("name lastName role phoneNumber1 email province district");
     if(!user) throw new AppError('User not found', 404);
     return user;
 }
 
 // Service to update user profile
 export const updateMyProfile = async (userId, updateData) => {
-    const updatedUser = await UserModel.findByIdAndUpdate(userId, updateData, { new: true });
+    const updatedUser = await UserModel.findByIdAndUpdate(userId, updateData, { new: true }).select("name lastName phoneNumber1 province role email district").lean();
     return updatedUser;
 }
 
-//   name
-//   phoneNumber1
-//   lastName
-//   email
-//   province
-//   district
-//   username
-//   phoneNumber2
-//   agencyName
-//   experienceYears
-//   specialization
-//   bio
-// Service to update user profile to agent profile
 export const requestAgentRole = async (userId, userData) => {
     const existingUser = await UserModel.findById(userId);
     

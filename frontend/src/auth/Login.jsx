@@ -8,11 +8,13 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 
 const Login = () => {
+
   const [showPassword, setShowPassword] = useState(false);
   const {register, handleSubmit, formState: {errors}} = useForm({resolver: zodResolver(loginSchema)});
   const loginMutation = useLogin();
+  
+  // login function call api from backend
   const loginFormSubmit = (data) => {
-    console.log('this is your data:', data);
     loginMutation.mutate(data);
   }
 

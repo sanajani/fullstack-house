@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
 import App from '../App';
 
 // pages
@@ -16,6 +16,7 @@ import ProtectUserOnly from '../protected/ProtectedUserOnly'; // if user is not 
 import ProtectAgentOnly from '../protected/ProtectAgentOnly'; // if user is not agent they should not access create property page
 import About from '../pages/About';
 import Contact from '../pages/Contact';
+import AgentLayout from '../layout/AgentLayout';
 
 export const router = createBrowserRouter([
     {
@@ -61,6 +62,16 @@ export const router = createBrowserRouter([
             {
                 path:"*",
                 element: <PageNotFound />
+            }
+        ]
+    },
+    {
+        path:'/dashboard',
+        element: <AgentLayout />,
+        children: [
+            {
+                path: 'agent',
+                element: <h1>Agent</h1>
             }
         ]
     }

@@ -58,10 +58,8 @@ export const loginUserController = asyncErrorHandler(async (req,res,next) => {
 
 // Controller to handle get user profile
 export const getMyProfileController = asyncErrorHandler(async (req,res,next) => {
-    console.log(req.user);
     
     const userId = req?.user?.id;
-    console.log(userId);
     
     if(!userId) {
         return next(new AppError('User ID is missing', 400));

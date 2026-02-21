@@ -45,6 +45,11 @@ const AdminDashboard2 = () => {
   return (
     <div>
       <div className="max-w-5xl pb-2 mx-auto bg-gray-200">
+
+      {/* header */}
+      <div className="my-5 text-2xl md:text-4xl font-bold">
+        <h1>لیست دیتا برای ادمین</h1>
+      </div>
         {/* Overview of State */}
         <State stats={stats} />
         {/* End Overview of State */}

@@ -1,3 +1,4 @@
+import AgentRequests from "./AgentRequest";
 import AllProperties from "./AllProperties";
 import AllUsers from "./AllUsers";
 
@@ -6,7 +7,7 @@ const RenderTabContent = ({activeTab}) => {
     case "properties":
       return <AllProperties />;
     case "agents":
-      return <h1>hello world agents</h1>;
+      return <AgentRequests />;
     case "users":
       return <AllUsers />;
     default:

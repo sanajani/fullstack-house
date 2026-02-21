@@ -1,22 +1,54 @@
 
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import FormField from "../components/inputBoxes/FormField";
 import {zodResolver} from '@hookform/resolvers/zod'
 import { BecomeAgentSchema } from "../utils/zodSchema";
 
-import { useAuthStore } from '../store/authStore';
 import {useForm} from 'react-hook-form'
 import { useBecomeAgent } from "../hooks/useBecomeAgent";
+import { useGetUserProfile } from "../hooks/useAuth";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 const BecomeAgent = () => {
+  const {data, isLoading, isError, error} = useGetUserProfile();
+  const userInfo = data?.data;
   const becomeAgentMutation = useBecomeAgent();
-  const {user} = useAuthStore();
 
-  const {register, handleSubmit, formState: {errors}} = useForm({resolver: zodResolver(BecomeAgentSchema), defaultValues: {...user}});
+  const {register, handleSubmit, formState: {errors}, reset} = useForm({resolver: zodResolver(BecomeAgentSchema)});
+
+  useEffect(() => {
+    if(userInfo){
+        reset({
+        name: userInfo?.name || '',
+        lastName: userInfo?.lastName || '',
+        phoneNumber1: userInfo?.phoneNumber1 || '',
+        email: userInfo?.email || '',
+        province: userInfo?.province || '',
+        district: userInfo?.district || '',
+      });
+    }
+  }, [userInfo, reset])
+
   
-  const signupFormSubmit = (data) => {
-    console.log(data);
-    becomeAgentMutation.mutate(data);
+  const becomeAgentFormSubmit = (data) => {
+    becomeAgentMutation.mutate(data, {
+      onSuccess: () => {
+        <Navigate to='create-property' replace={true} />
+        toast.success("فرم تان برای ارزیابی ب مدیر ارسال شد")
+      },
+      onError: (error)=> {
+        console.log('error from frontend', error.name);
+        
+        toast.error(`مشکلی در ${error.message} لطفا طبق هدایت پیش بروید`)
+      }
+    });
+  }
+  if(isLoading){
+    return <h1>Loading...</h1>
+  }
+  if(isError){
+    return <h1>Error {error.message}</h1>
   }
 
   return (
@@ -30,7 +62,7 @@ const BecomeAgent = () => {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit(signupFormSubmit)} className="space-y-1 grid grid-cols-1 md:grid-cols-2 gap-2 w-full">
+        <form onSubmit={handleSubmit(becomeAgentFormSubmit)} className="space-y-1 grid grid-cols-1 md:grid-cols-2 gap-2 w-full">
 
           {/* Name */}
           {/* <FormField label={'نام '} error={errors.name} > */}

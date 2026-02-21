@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom"
 import NavAgent from "../components/agent/NavAgent.jsx"
+import Footer from "../components/agent/Footer.jsx"
 
 const AgentLayout = () => {
   return (
@@ -7,12 +8,9 @@ const AgentLayout = () => {
         <div>
             <NavAgent/>
         </div>
-        <div>
+        <div className="min-h-screen">
             <Outlet />
         </div>
-        <footer>
-        footer
-        </footer>
     </div>
   )
 }

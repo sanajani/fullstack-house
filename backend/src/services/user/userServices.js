@@ -88,7 +88,7 @@ export const requestAgentRole = async (userId, userData) => {
         throw new AppError('user can not change role', 400);
     }
 
-    if(!name || !lastName || !phoneNumber1 || !phoneNumber2 || !username || !province || !district || !agencyName ) {
+    if(!name || !lastName || !phoneNumber1 || !phoneNumber2 || !province || !district || !agencyName ) {
     throw new AppError('All fields are required to become an agent', 400);
     }
     const updatedAgentStatus = await UserModel.findByIdAndUpdate(userId, 

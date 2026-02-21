@@ -17,6 +17,9 @@ import ProtectAgentOnly from '../protected/ProtectAgentOnly'; // if user is not 
 import About from '../pages/About';
 import Contact from '../pages/Contact';
 import AgentLayout from '../layout/AgentLayout';
+import AgentDashboard from '../pages/agent/AgentDashboard';
+import AdimDashboard from '../pages/admin/AdimDashboard';
+import AdminDashboard2 from '../pages/admin/AdminDashboard2';
 
 export const router = createBrowserRouter([
     {
@@ -71,7 +74,15 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: 'agent',
-                element: <h1>Agent</h1>
+                element:<AgentDashboard />
+            },
+            {
+                path: 'admin',
+                element: <AdimDashboard/>
+            },
+            {
+                path: 'admin2',
+                element: <AdminDashboard2/>
             }
         ]
     }

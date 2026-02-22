@@ -20,6 +20,8 @@ import AgentLayout from '../layout/AgentLayout';
 import AgentDashboard from '../pages/agent/AgentDashboard';
 import AdimDashboard from '../pages/admin/AdimDashboard';
 import AdminDashboard2 from '../pages/admin/AdminDashboard2';
+import AgentRequestStatus from '../pages/AgentRequestStatus';
+import CheckAgentStatus from '../protected/CheckAgentStatus';
 
 export const router = createBrowserRouter([
     {
@@ -52,15 +54,11 @@ export const router = createBrowserRouter([
             },
             {
                 path:'become-agent',
-                element:<ProtectRole><BecomeAgent /></ProtectRole>
+                element:<ProtectRole><CheckAgentStatus><BecomeAgent /></CheckAgentStatus></ProtectRole>
             },
             {
                 path:'profile',
                 element: <ProtectUserOnly><Profile /></ProtectUserOnly>  
-            },
-            {
-                path: 'create-property',
-                element: <ProtectAgentOnly><CreateProperty/></ProtectAgentOnly>
             },
             {
                 path:"*",
@@ -74,7 +72,11 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: 'agent',
-                element:<AgentDashboard />
+                element: <AgentDashboard />
+            },
+            {
+                path: 'agent/create-property',
+                element: <ProtectAgentOnly><CreateProperty /></ProtectAgentOnly>
             },
             {
                 path: 'admin',
@@ -83,7 +85,7 @@ export const router = createBrowserRouter([
             {
                 path: 'admin2',
                 element: <AdminDashboard2/>
-            }
+            },
         ]
     }
 ])

@@ -48,7 +48,7 @@ export const loginUser = async (userData) => {
 // Service to get user profile
 export const getMyProfile = async (userId) => {
     // change it that for now for only user route
-    const user = await UserModel.findById(userId).select("name lastName role phoneNumber1 email province district");
+    const user = await UserModel.findById(userId).select("name lastName role phoneNumber1 email province district hasRequestedAgent agentRequestStatus");
     if(!user) throw new AppError('User not found', 404);
     return user;
 }

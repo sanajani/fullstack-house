@@ -8,4 +8,4 @@ const CardButtons = () => {
   )
 }
 
-export default CardButtons
+export default CardButtons;

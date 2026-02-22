@@ -39,7 +39,7 @@ const properties = [
             properties.map((property) => {
               return <Card key={property.id} cardItem={property} />
             })
-        } 
+        }
     </div>
   )
 }

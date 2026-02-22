@@ -1,16 +1,26 @@
 import { Link, Navigate } from "react-router-dom";
 import { useAuthStore } from '../../store/authStore';
-
+import { useGetUserProfile } from "../../hooks/useAuth";
 
 const SideBar = ({ setShowSideBar }) => {
-  const {role, isAuthenticated} = useAuthStore()
+  const {isAuthenticated} = useAuthStore();
   const { logoutAuth } = useAuthStore();
+  const {data, isLoading, isError} = useGetUserProfile();
 
   const handleLogout = () => {
     logoutAuth();
     setShowSideBar(false);
     return <Navigate to='/login' replace={true} />;
   };
+
+  if(isLoading){
+    return <h1>Loading...</h1>
+  }
+  if(isError){
+    return <h1>Error</h1>
+  }
+  const role = data?.data?.role;
+  
 
   return (
     <div className="h-full bg-white border-t-4 border-blue-700 mt-12 z-50">
@@ -66,12 +76,12 @@ const SideBar = ({ setShowSideBar }) => {
 
             {role === 'agent' && (
               <>
-                <Link to='/dashboard' onClick={() => setShowSideBar(false)}>
+                <Link to='/dashboard/agent' onClick={() => setShowSideBar(false)}>
                   <li className="bg-blue-700 text-white border-2 border-blue-700 hover:bg-white hover:text-blue-700 transition-colors duration-200 text-lg font-medium py-2 px-6 rounded-full text-center cursor-pointer">
                     داشبورد نماینده
                   </li>
                 </Link>
-                <Link to='/create-property' onClick={() => setShowSideBar(false)}>
+                <Link to='/dashboard/agent/create-property' onClick={() => setShowSideBar(false)}>
                   <li className="bg-blue-700 text-white border-2 border-blue-700 hover:bg-white hover:text-blue-700 transition-colors duration-200 text-lg font-medium py-2 px-6 rounded-full text-center cursor-pointer">
                     اضافه کردن ملک جدید
                   </li>

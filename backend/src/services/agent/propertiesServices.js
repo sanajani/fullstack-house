@@ -11,7 +11,6 @@ export const fetchPropertiesByAgent = async (agentId) => {
     
     // const properties = await PropertiesModel.find().populate("agent", "title _id description propertyType location")
     const properties = await PropertiesModel.find({agent: agentId}, 'title description propertyType transaction province').populate('agent' , "name")
-    console.log(properties);
     
     if(!properties || properties.length === 0){
         throw new AppError("There is no property for that agent");

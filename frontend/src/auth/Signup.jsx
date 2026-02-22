@@ -14,7 +14,6 @@ const Signup = () => {
   const registerMutation = useRegister();
 
   const signupFormSubmit = (data) => {
-    console.log(data);
     registerMutation.mutate(data);
   }
 

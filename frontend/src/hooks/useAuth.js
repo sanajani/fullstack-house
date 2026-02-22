@@ -13,10 +13,8 @@ export const useRegister = () => {
             queryClient.invalidateQueries('auth');
               toast.success('User registered successfully');
             navigate('/login');
-            console.log('user registered');
         },
         onError: (error) => {
-              console.log('error comes from backend ',error.response?.data);
               toast.error(error.response?.data?.message || 'Registration failed');
         }
     })
@@ -45,7 +43,6 @@ export const useLogin = () => {
       navigate('/dashboard');
     },
     onError: (error) => {
-      console.log('error comes from backend ', error.response?.data);
       toast.error(error.response?.data?.message || 'Login failed');
     }
   });
@@ -53,14 +50,7 @@ export const useLogin = () => {
 
 export const useUpdateProfile = () => {
   return useMutation({
-    mutationFn: updateProfile,
-    onSuccess: (response) => {
-      console.log(response);
-    },
-    onError: (error) => {
-      console.log(error);
-      
-    }
+    mutationFn: updateProfile
   })
 }
 

@@ -12,9 +12,6 @@ export const allOfProperties = asyncErrorHandler(async (req,res,next) => {
             houseRent,
             propertyType
     } = req.query;
-    console.log(req.query);
-    
-    
 
     const properties = await getAllPropertiesService(page, limit, province, dealType, houseRent, propertyType);
     return res.status(200).json({

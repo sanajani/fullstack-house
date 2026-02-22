@@ -6,7 +6,6 @@ import WantToBecomeAgentModel from "../../models/wantToBecomeAgent.js";
 
 export const fetchAllUsers = async () => {
     const allUsers = await UserModel.find();
-    console.log(allUsers);
     
     return allUsers
 }
@@ -26,7 +25,7 @@ export const deleteUserById = async (userId) => {
 }
 
 export const fetchPendingAgentRequests = async () => {
-    const pendingAgents = await WantToBecomeAgentModel.find().populate('userId', 'name phoneNumber1');
+    const pendingAgents = await WantToBecomeAgentModel.find().populate('userId', 'name phoneNumber1 agentInfo createdAt');
     if(!pendingAgents || pendingAgents.length === 0){
         throw new AppError('There is no agent pending', 404);
     }
@@ -35,10 +34,8 @@ export const fetchPendingAgentRequests = async () => {
 
 
 export const approveAgentRole = async (userId) => {
-    // console.log(userId);
     
     let isUserExist = await UserModel.findOne({_id: userId});
-    console.log('what you got',isUserExist);
 
     if(!isUserExist) throw new AppError("User NOT Fount to change role", 404);
 
@@ -48,6 +45,6 @@ export const approveAgentRole = async (userId) => {
     approvePendingAgents.agentRequestStatus = 'approved';
     await approvePendingAgents.save();
     const becomedAgent = await isUserExist.save();
-    return becomedAgent
+    return becomedAgent;
 }
 

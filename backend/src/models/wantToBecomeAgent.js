@@ -9,8 +9,10 @@ const wantToBecomeAgentSchema = new mongoose.Schema({
     agentRequestStatus: {
         type: String,
         enum: ['pending', 'approved', 'rejected', null],
-        default: null
+        default: 'pending'
     }
+},{
+    timestamps: true
 });
 
 const WantToBecomeAgentModel = mongoose.model('WantToBecomeAgent', wantToBecomeAgentSchema);

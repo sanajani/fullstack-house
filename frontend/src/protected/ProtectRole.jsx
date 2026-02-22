@@ -3,8 +3,6 @@ import { useAuthStore } from "../store/authStore";
 
 const ProtectRole = ({children}) => {
   const {role, isAuthenticated} = useAuthStore()
-  console.log(role);
-  
 
   if(!isAuthenticated && role !== 'tenant'){
     return <Navigate to='/' replace />;

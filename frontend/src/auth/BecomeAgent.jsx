@@ -1,5 +1,5 @@
 
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormField from "../components/inputBoxes/FormField";
 import {zodResolver} from '@hookform/resolvers/zod'
 import { BecomeAgentSchema } from "../utils/zodSchema";
@@ -14,6 +14,7 @@ const BecomeAgent = () => {
   const {data, isLoading, isError, error} = useGetUserProfile();
   const userInfo = data?.data;
   const becomeAgentMutation = useBecomeAgent();
+  const navigate = useNavigate();
 
   const {register, handleSubmit, formState: {errors}, reset} = useForm({resolver: zodResolver(BecomeAgentSchema)});
 
@@ -34,13 +35,11 @@ const BecomeAgent = () => {
   const becomeAgentFormSubmit = (data) => {
     becomeAgentMutation.mutate(data, {
       onSuccess: () => {
-        <Navigate to='create-property' replace={true} />
+        navigate("/", { replace: true });
         toast.success("فرم تان برای ارزیابی ب مدیر ارسال شد")
       },
       onError: (error)=> {
-        console.log('error from frontend', error.name);
-        
-        toast.error(`مشکلی در ${error.message} لطفا طبق هدایت پیش بروید`)
+        toast.error(error.message)
       }
     });
   }

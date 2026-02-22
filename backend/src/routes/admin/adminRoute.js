@@ -12,7 +12,7 @@ router.get("/user/:userId", isAuthenticateUser,getUserController);
 router.delete("/user/:userId", isAuthenticateUser,deleteUserController);
 
 // api/v1/admin
-router.get('/want-to-become-agent', isAuthenticateUser, listPendingAgentsController)
-router.get('/tenant-to-agent/:userId', isAuthenticateUser, approveAgentRequestController)
+router.get('/pending-agent-lists', isAuthenticateUser, listPendingAgentsController)
+router.patch('/tenant-to-agent-accept/:userId', isAuthenticateUser, approveAgentRequestController)
 
 export default router;

@@ -16,12 +16,9 @@ export const registerUserController = asyncErrorHandler(async (req,res, next) =>
         return next(new AppError('Request body is missing', 400));
     }
     const userData = req.body;
-    console.log('user data', userData);
-    
 
     // Logic to handle user registration using userData
     const { error } = registerationSchemaValidation.validate(userData);
-    console.log('validation error ', error);
     
     if( error ) {
         return next(new AppError(error.details[0].message, 400));

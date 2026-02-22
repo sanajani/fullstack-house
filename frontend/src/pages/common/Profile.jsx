@@ -47,15 +47,12 @@ const Profile = () => {
   }
 
   const onSubmit = (formData) => {
-    console.log(formData);
     
     mutate(formData, {onSuccess: (data) => {
-      console.log('data ', data);
       queryClient.invalidateQueries({queryKey: ['userProfile']})
       toast.success("موفقانه اپدیت شد")
       setIsEditing(false)
     }, onError: (error) => {
-      console.log('error ', error);
       toast.error(`خطا صورت گرتف ${error.message}`)
     }});
     

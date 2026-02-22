@@ -27,8 +27,7 @@ export const updateProfile = async (userUpdatedData) => {
     const response = await api.put('/users/me', userUpdatedData)
     return response.data
   } catch (error) {
-    console.log(error);
-    
+    throw error
   }
 };
 
@@ -37,7 +36,6 @@ export const getUserProfile = async () => {
     const response = await api.get('users/me')
     return response.data
   } catch (error) {
-    console.log(error);
     throw error;
     
   }

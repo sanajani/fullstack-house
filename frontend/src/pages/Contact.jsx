@@ -17,7 +17,6 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(form); // later connect to backend
     alert("پیام شما ارسال شد");
     setForm({ name: "", email: "", message: "" });
   };

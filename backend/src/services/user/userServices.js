@@ -18,8 +18,6 @@ export const registerUser = async (userData) => {
     const isUserExists = await UserModel.findOne({
         phoneNumber1: userData.phoneNumber1
     })
-    // console.log(isUserExists);
-    console.log(isUserExists, 'user is exist');
     
     if(isUserExists) throw new AppError('User already exist', 409);
 
@@ -32,7 +30,6 @@ export const registerUser = async (userData) => {
 
 // Service to login user
 export const loginUser = async (userData) => {
-    console.log('user data: ',userData);
     
     const user = await UserModel.findOne({ phoneNumber1: userData.phoneNumber1 }).select('+password name lastName phoneNumber1 email username province role');
     if(!user) throw new AppError('Invalid phone number or password', 401);
@@ -115,6 +112,8 @@ export const requestAgentRole = async (userId, userData) => {
     if(!updatedAgentStatus) {
         throw new AppError('Failed to update user to agent', 500);
     }
+    console.log(updatedAgentStatus);
+    
     const wantToBecomeAgent = new WantToBecomeAgentModel({ userId });
     await wantToBecomeAgent.save();
     return updatedAgentStatus;

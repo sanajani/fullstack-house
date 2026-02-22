@@ -1,4 +1,4 @@
-import { createBrowserRouter, Outlet } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
 
 // pages
@@ -20,7 +20,6 @@ import AgentLayout from '../layout/AgentLayout';
 import AgentDashboard from '../pages/agent/AgentDashboard';
 import AdimDashboard from '../pages/admin/AdimDashboard';
 import AdminDashboard2 from '../pages/admin/AdminDashboard2';
-import AgentRequestStatus from '../pages/AgentRequestStatus';
 import CheckAgentStatus from '../protected/CheckAgentStatus';
 
 export const router = createBrowserRouter([

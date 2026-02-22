@@ -53,12 +53,9 @@ export const listPendingAgentsController = asyncErrorHandler(async (req,res, nex
 
 export const approveAgentRequestController = asyncErrorHandler(async (req, res, next) => {
     const {userId} = req.params;
-    console.log(userId, 'controller');
     
     if(!userId) return next(new AppError("UserId is required", 404))
     const acceptedAgent = await approveAgentRole(userId)
-console.log('user is', acceptedAgent);
-
 
     return res.status(200).json({
         message:"Success",

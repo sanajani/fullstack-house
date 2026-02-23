@@ -5,6 +5,9 @@ import {
     getAllPropertiesByAgentController, 
     getPropertyById, 
     updatePropertyById} from '../../controllers/agent/properties/Properties.js';
+import { upload } from '../../middlewares/multer.js';
+import isAgentProtectedRoute from '../../auth/agentAuth/isAgent.js';
+import { isAuthenticateUser } from '../../auth/auth.js';
 
 // // /api/v1/agent/property
 
@@ -12,14 +15,14 @@ import {
 const router = express.Router();
 
 // Apply authentication middleware for all agent routes
-// router.use(protectAgent);
+router.use(isAuthenticateUser, isAgentProtectedRoute);
 
 // ----------------------
 // /api/v1/agent/property
 // ----------------------
 
 // Create a new property
-router.post("/property", createPropertyByAgentController);
+router.post("/property", upload.array("images", 30),createPropertyByAgentController);
 
 // Get all properties of logged-in agent
 router.get("/property", getAllPropertiesByAgentController);

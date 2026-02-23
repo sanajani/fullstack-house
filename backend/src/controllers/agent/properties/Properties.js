@@ -8,23 +8,26 @@ import { propertiesValidation } from '../../../validations/properties/properties
 // // add property 
 export const createPropertyByAgentController = asyncErrorHandler(async (req,res,next) => {
     
-    const agentId = req.user?._id || '697a62488010053c82c340b3';
-    const isAgent = req.user?.role || 'agent';
+    const agentId = req.user?._id;
+    const role = req.user?.role;
 
-    if(!agentId || !isAgent === 'agent') return next(new AppError("Invalid credintials", 409)) 
+    if(!agentId || role !== 'agent') return next(new AppError("Invalid credentials", 403)) 
     if(!req.body || Object.keys(req.body).length === 0) return next(new AppError("Request body is missing", 400))
 
     // validation on req body
-    const {error} = propertiesValidation.validate(req.body);
+    const {error, value} = propertiesValidation.validate(req.body);
+
     if(error) {
         return next(new AppError(error.details[0].message, 400))
     }
+    console.log(value);
+    
 
-    const property = await createProperty(req.body, agentId);
+    // const property = await createProperty(value, agentId);
 
-    return res.status(200).json({
+    return res.status(201).json({
         message: "Successfully property created",
-        data: property
+        // data: property
     })
 })
 

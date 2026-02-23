@@ -7,8 +7,10 @@ import Price from "../../components/porperty/Price";
 import { useForm } from 'react-hook-form';
 import {propertySchema} from '../../utils/zodSchema'
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from "react";
 
 const CreateProperty = () => {
+  const [Loading,setLoading] = useState()
   const {
   register,
   handleSubmit,

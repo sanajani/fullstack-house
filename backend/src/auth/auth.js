@@ -14,9 +14,9 @@ export const isAuthenticateUser = (req, res, next) => {
         const decoded = verifyToken(token);
         req.user = decoded;
 
-        next();
+       return next();
         
     } catch (error) {
-        next(error);
+        next(error)
     }
 };

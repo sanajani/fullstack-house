@@ -4,6 +4,8 @@ import { useGetUserProfile } from '../hooks/useAuth';
 
 const ProtectAgentOnly = ({children}) => {
     const {data, isLoading, isError} = useGetUserProfile();
+  const { isAuthenticated} = useAuthStore();
+
   if(isLoading){
     return <h1>Loading...</h1>
   }
@@ -13,7 +15,6 @@ const ProtectAgentOnly = ({children}) => {
   const role = data?.data?.role;
   
 
-  const { isAuthenticated} = useAuthStore()
   if(!isAuthenticated || role !== 'agent'){
     return <Navigate to='/become-agent' replace />;
   }

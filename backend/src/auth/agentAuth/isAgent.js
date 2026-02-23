@@ -1,14 +1,16 @@
 import AppError from "../../errors/AppError.js";
 
-const isAdminProtectedRoute = (req, res, next) => {
+
+const isAgentProtectedRoute = (req, res, next) => {
     if (!req.user) {
         return next(new AppError("Unauthorized access", 401));
     }
 
-    if (req.user.role !== 'admin') {
+    if (req.user.role !== 'agent') {
         return next(new AppError("Forbidden: Admins only", 403));
     }
 
     next();
 };
-export default isAdminProtectedRoute
+
+export default isAgentProtectedRoute

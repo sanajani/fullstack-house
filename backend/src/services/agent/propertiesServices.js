@@ -3,8 +3,10 @@ import {PropertiesModel} from '../../models/properties/PropertiesModel.js'
 import mongoose from "mongoose";
 
 // CREATE PROPERTY BT AGENT SERVICE
-export const createProperty = async (reqData, agentId) => 
-    PropertiesModel.create({...reqData, agent: agentId})
+export const createProperty = async (reqData, agentId) => {
+  return PropertiesModel.create({...reqData, agent: agentId})
+  
+}
 
 // FETCH SINGLE PROPERTY BY AGENT
 export const fetchPropertiesByAgent = async (agentId) => {

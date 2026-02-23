@@ -15,6 +15,7 @@ import { isAuthenticateUser } from '../../auth/auth.js';
 const router = express.Router();
 
 // Apply authentication middleware for all agent routes
+// in frontend you take token from local storage which is not updated on become agent so you get tenant update the token 
 router.use(isAuthenticateUser, isAgentProtectedRoute);
 
 // ----------------------
@@ -22,7 +23,7 @@ router.use(isAuthenticateUser, isAgentProtectedRoute);
 // ----------------------
 
 // Create a new property
-router.post("/property", upload.array("images", 30),createPropertyByAgentController);
+router.post("/property", upload.array("media", 30),createPropertyByAgentController);
 
 // Get all properties of logged-in agent
 router.get("/property", getAllPropertiesByAgentController);

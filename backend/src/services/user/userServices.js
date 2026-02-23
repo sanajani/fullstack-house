@@ -112,7 +112,6 @@ export const requestAgentRole = async (userId, userData) => {
     if(!updatedAgentStatus) {
         throw new AppError('Failed to update user to agent', 500);
     }
-    console.log(updatedAgentStatus);
     
     const wantToBecomeAgent = new WantToBecomeAgentModel({ userId });
     await wantToBecomeAgent.save();

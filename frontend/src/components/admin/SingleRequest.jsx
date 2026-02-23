@@ -2,8 +2,10 @@ import { useAcceptAgentRequest } from "../../hooks/admin/useAgents";
 import { formatDate } from "../../utils/dateFormat";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from 'react-hot-toast'
+// import { useAuthStore } from "../../store/authStore";
 
 const SingleRequest = ({agent, activeTab}) => {
+    // const { setAuth } = useAuthStore();
     const queryClient = useQueryClient();
     const {agentInfo, name, _id, phoneNumber1,createdAt , email} = agent.userId || {};
     const formattedDate = formatDate(createdAt);
@@ -15,7 +17,7 @@ const SingleRequest = ({agent, activeTab}) => {
         mutate(userId, {
             onSuccess:(res) => {
                 console.log(res, 'this is successfull attampt');
-                queryClient.invalidateQueries("agentpendingrequests")
+                queryClient.invalidateQueries(["agentpendingrequests"]);
                 toast.success(`${name} موفقانه تبدیل ب نماینده شدن`)
             },
             onError: (err) => {

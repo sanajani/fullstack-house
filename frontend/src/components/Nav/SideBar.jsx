@@ -4,8 +4,15 @@ import { useGetUserProfile } from "../../hooks/useAuth";
 
 const SideBar = ({ setShowSideBar }) => {
   const {isAuthenticated} = useAuthStore();
+  if(!isAuthenticated){
+
+  }
+  console.log(isAuthenticated);
+  
   const { logoutAuth } = useAuthStore();
-  const {data, isLoading, isError} = useGetUserProfile();
+  const {data, isLoading, isError, error} = useGetUserProfile({
+      enabled: isAuthenticated
+  });
 
   const handleLogout = () => {
     logoutAuth();
@@ -17,6 +24,8 @@ const SideBar = ({ setShowSideBar }) => {
     return <h1>Loading...</h1>
   }
   if(isError){
+    console.log(error.message);
+    
     return <h1>Error</h1>
   }
   const role = data?.data?.role;

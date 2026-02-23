@@ -1,7 +1,6 @@
 import AppError from "../../errors/AppError.js";
 import UserModel from "../../models/UserModel.js";
 import WantToBecomeAgentModel from "../../models/wantToBecomeAgent.js";
-
 // ADMIN SERVICES
 
 export const fetchAllUsers = async () => {
@@ -41,10 +40,12 @@ export const approveAgentRole = async (userId) => {
 
     isUserExist.role = 'agent';
     isUserExist.agentRequestStatus = 'approved'
+
     const approvePendingAgents = await WantToBecomeAgentModel.findOne({userId})
     approvePendingAgents.agentRequestStatus = 'approved';
     await approvePendingAgents.save();
     const becomedAgent = await isUserExist.save();
-    return becomedAgent;
+    
+    return {becomedAgent, token};
 }
 

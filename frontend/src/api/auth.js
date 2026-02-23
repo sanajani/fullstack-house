@@ -7,7 +7,6 @@ export const login = async (data) => {
     const response = await api.post('users/login', data);
     return response.data; // Assuming the token is returned in the response data
   } catch (error) {
-    console.error('Login failed:', error);
     throw error;
   }
 };
@@ -17,7 +16,6 @@ export const register = async (userData) => {
     const response = await api.post('users/register', userData);
     return response.data; // Assuming the token is returned in the response data
   } catch (error) {
-    console.error('Registration failed:', error);
     throw error;
   }
 };
@@ -37,6 +35,5 @@ export const getUserProfile = async () => {
     return response.data
   } catch (error) {
     throw error;
-    
   }
 }

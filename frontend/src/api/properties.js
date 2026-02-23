@@ -28,3 +28,16 @@ export const getSinglePropertyByID = async (id) => {
         throw error;
     }
 }
+
+export const createProperty = async (propertyData) => {
+    try {
+        const resposne = await api.post("/agent/property",propertyData,{
+              headers: {
+    "Content-Type": "multipart/form-data",
+  },
+        })
+        return resposne.data
+    } catch (error) {
+        throw error
+    }
+}

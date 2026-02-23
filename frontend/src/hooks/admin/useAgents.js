@@ -5,7 +5,7 @@ export const useGetPendingAgentRequests = () => {
     return useQuery({
         queryKey: ['agentpendingrequests'],
         queryFn: pendingAgentRequests,
-        staleTime: 5 * 60 * 1000
+        // staleTime: 5 * 60 * 1000
     })
 }
 

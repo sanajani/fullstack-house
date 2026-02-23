@@ -2,6 +2,7 @@ import AppError from "../../errors/AppError.js";
 
 
 const isAgentProtectedRoute = (req, res, next) => {
+
     if (!req.user) {
         return next(new AppError("Unauthorized access", 401));
     }

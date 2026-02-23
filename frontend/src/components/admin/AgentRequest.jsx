@@ -5,7 +5,7 @@ import SingleRequest from "./SingleRequest";
 const AgentRequests = () => {
   const [activeTab, setActiveTab] = useState("pending");
   const { data, isLoading, isError, error } = useGetPendingAgentRequests();
-  const agentInfo = data?.data;
+  const agentInfo = data?.data || [];
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -15,7 +15,7 @@ const AgentRequests = () => {
   }
 
   // ✅ Filter once
-  const filteredAgents = agentInfo.filter((agent) =>
+  const filteredAgents = agentInfo?.filter((agent) =>
     activeTab === "pending"
       ? agent.agentRequestStatus === "pending"
       : agent.agentRequestStatus !== "pending",

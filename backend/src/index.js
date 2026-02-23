@@ -42,6 +42,11 @@ import properties from './routes/user/propertyRoute.js'
 
 app.use(cors());
 app.use(express.json({limit: '10kb'}));
+// 3. FOR URL-ENCODED DATA (form fields) - YOU NEED THIS!
+app.use(express.urlencoded({ 
+  extended: true,  // Allows nested objects
+  limit: '50mb' 
+}));
 
 // app.use(ExpressMongoSanitize());
 // app.use(xss());

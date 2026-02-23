@@ -20,9 +20,7 @@ export const createPropertyByAgentController = asyncErrorHandler(async (req,res,
     if(error) {
         return next(new AppError(error.details[0].message, 400))
     }
-    console.log(value);
     
-
     // const property = await createProperty(value, agentId);
 
     return res.status(201).json({

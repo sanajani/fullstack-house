@@ -54,10 +54,26 @@ export const useUpdateProfile = () => {
   })
 }
 
-export const useGetUserProfile = () => {
+// export const useGetUserProfile = () => {
+//   return useQuery({
+//     queryKey: ['userProfile'],
+//     queryFn: getUserProfile, 
+//     staleTime: 5 * 60 * 1000
+//   })
+// }
+
+
+// ✅ MODIFIED: Accept options and pass to useQuery
+export const useGetUserProfile = (options = {}) => {
   return useQuery({
     queryKey: ['userProfile'],
-    queryFn: getUserProfile, 
-    staleTime: 5 * 60 * 1000
-  })
-}
+    queryFn: getUserProfile,
+    // Don't retry on 401 errors
+    retry: (failureCount, error) => {
+      if (error.response?.status === 401) return false;
+      return failureCount < 3;
+    },
+    // Pass through any options (like enabled)
+    ...options
+  });
+};

@@ -7,12 +7,12 @@ const SideBar = ({ setShowSideBar }) => {
   if(!isAuthenticated){
 
   }
-  console.log(isAuthenticated);
-  
+
   const { logoutAuth } = useAuthStore();
   const {data, isLoading, isError, error} = useGetUserProfile({
       enabled: isAuthenticated
   });
+
 
   const handleLogout = () => {
     logoutAuth();
@@ -28,7 +28,7 @@ const SideBar = ({ setShowSideBar }) => {
     
     return <h1>Error</h1>
   }
-  const role = data?.data?.role;
+  const role = data?.data?.role || null;
   
 
   return (

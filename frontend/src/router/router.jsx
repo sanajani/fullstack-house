@@ -21,6 +21,7 @@ import AgentDashboard from '../pages/agent/AgentDashboard';
 import AdimDashboard from '../pages/admin/AdimDashboard';
 import AdminDashboard2 from '../pages/admin/AdminDashboard2';
 import CheckAgentStatus from '../protected/CheckAgentStatus';
+import AgentLogin from '../auth/AgentLogin';
 
 export const router = createBrowserRouter([
     {
@@ -70,6 +71,10 @@ export const router = createBrowserRouter([
         element: <AgentLayout />,
         children: [
             {
+                path: 'agent-login',
+                element: <AgentLogin />
+            }
+            ,{
                 path: 'agent',
                 element: <AgentDashboard />
             },

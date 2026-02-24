@@ -1,5 +1,6 @@
 import api from './axiosInstance.js';
 
+// becoem agent api
 export const becomeAgent = async (data) => {
   try {
     // http://localhost:44004/api/v1/users/become-agent
@@ -10,3 +11,15 @@ export const becomeAgent = async (data) => {
     throw error;
   }
 };
+
+// agent login api 
+// agent-login
+
+export const agentLogin = async (data) => {
+  try {
+    const response = await api.post("/agent/login", data)
+    return response.data
+  } catch (error) {
+    return error
+  }
+}

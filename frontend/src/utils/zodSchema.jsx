@@ -12,6 +12,18 @@ export const loginSchema = z.object({
     .min(4, "رمز حداقل 4 حرف باشد"),
 });
 
+export const agentLoginSchema = z.object({
+  phoneNumber1: z
+    .string()
+    .min(1, "شماره تماس الزامی است")
+    .refine((val) => /^07/.test(val), { message: "شماره تماس با 07 شروع کنید" })
+    .refine((val) => /^07[0-9]{8}$/.test(val), { message: "شماره نامکمل" }),
+  password: z
+    .string()
+    .min(1, "رمز الزامی است")
+    .min(4, "رمز حداقل 4 حرف باشد"),
+});
+
 export const signupSchema = z.object({
   name: z
   .string()
@@ -210,7 +222,6 @@ media: z
   )
   .min(1, "حداقل یک عکس لازم است")
 });
-
 
 export const profileSchema = z.object({
   name: z.string().min(2, "نام باید حداقل ۲ حرف باشد").max(50),

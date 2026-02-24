@@ -17,7 +17,8 @@ const Profile = () => {
   const { data, isLoading, isError, error } = useGetUserProfile();
 
   const userInfo = data?.data;
-
+  console.log(userInfo);
+  
   // ✅ Hooks must be before any return
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: zodResolver(profileSchema),

@@ -40,7 +40,7 @@ export const useLogin = () => {
       queryClient.invalidateQueries('auth');
       
       toast.success('User logged in successfully');
-      navigate('/dashboard');
+      navigate('/');
     },
     onError: (error) => {
       toast.error(error.response?.data?.message || 'Login failed');

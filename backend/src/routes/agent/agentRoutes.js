@@ -8,14 +8,14 @@ import {
 import { upload } from '../../middlewares/multer.js';
 import isAgentProtectedRoute from '../../auth/agentAuth/isAgent.js';
 import { isAuthenticateUser } from '../../auth/auth.js';
+import {loginAgentController} from '../../controllers/agent/agent.js'
 
-// // /api/v1/agent/property
 
 // export default router;
 const router = express.Router();
 
-// Apply authentication middleware for all agent routes
-// in frontend you take token from local storage which is not updated on become agent so you get tenant update the token 
+router.post('/login',loginAgentController)
+
 router.use(isAuthenticateUser, isAgentProtectedRoute);
 
 // ----------------------

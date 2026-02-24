@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import FormField from "../components/inputBoxes/FormField";
 import {zodResolver} from '@hookform/resolvers/zod'
 import { BecomeAgentSchema } from "../utils/zodSchema";
-import { useQueryClient } from "@tanstack/react-query";
 
 import {useForm} from 'react-hook-form'
 import { useBecomeAgent } from "../hooks/useBecomeAgent";
@@ -17,7 +16,6 @@ const BecomeAgent = () => {
   const userInfo = data?.data;
   const becomeAgentMutation = useBecomeAgent();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const {register, handleSubmit, formState: {errors}, reset} = useForm({resolver: zodResolver(BecomeAgentSchema)});
 
@@ -39,7 +37,6 @@ const BecomeAgent = () => {
     becomeAgentMutation.mutate(data, {
       onSuccess: () => {
         navigate("/", { replace: true });
-        queryClient.invalidateQueries("userProfile")
         toast.success("فرم تان برای ارزیابی ب مدیر ارسال شد")
       },
       onError: (error)=> {

@@ -5,7 +5,6 @@ import mongoose from "mongoose";
 // CREATE PROPERTY BT AGENT SERVICE
 export const createProperty = async (reqData, agentId) => {
   return PropertiesModel.create({...reqData, agent: agentId})
-  
 }
 
 // FETCH SINGLE PROPERTY BY AGENT

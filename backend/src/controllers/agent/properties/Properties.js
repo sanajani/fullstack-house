@@ -3,29 +3,71 @@ import AppError from '../../../errors/AppError.js';
 import { createProperty, deletePropertyService, fetchPropertiesByAgent, fetchPropertyByIDService, updatePropertyService } from '../../../services/agent/propertiesServices.js';
 import { asyncErrorHandler } from "../../../utils/asyncErrorHandler.js"
 import { propertiesValidation } from '../../../validations/properties/properties.js'
+import { PropertiesModel } from '../../../models/properties/PropertiesModel.js';
+import { uploadImagesToBunny } from '../../../middlewares/Bunny_CDN.js';
 
 // // properties controller
 // // add property 
 export const createPropertyByAgentController = asyncErrorHandler(async (req,res,next) => {
     
-    const agentId = req.user?._id;
+    const agentId = req.user?.id;
     const role = req.user?.role;
+    
 
     if(!agentId || role !== 'agent') return next(new AppError("Invalid credentials", 403)) 
     if(!req.body || Object.keys(req.body).length === 0) return next(new AppError("Request body is missing", 400))
 
-    // validation on req body
-    const {error, value} = propertiesValidation.validate(req.body);
+    const mediaMetadata = req.body.media_metadata.map(item => JSON.parse(item));
+    
+    // Create media array with URLs from uploaded files
+    const mediaArray = req?.files?.map((file, index) => ({
+        url: 'his is some', // or file.filename, or construct full URL
+        public_id: mediaMetadata[index]?.public_id || Date.now() + index,
+        caption: mediaMetadata[index]?.caption || "One of the beautiest house in the market",
+        isPrimary: mediaMetadata[index]?.isPrimary || false
+    })) || [];
 
+          // Parse JSON strings
+  const propertyData = {
+    agent: req?.user?.id,
+    title: req?.body?.title,
+    description: req?.body?.description,
+    propertyType: req?.body?.propertyType,
+    dealType: req?.body?.transaction,
+    location: JSON.parse(req?.body?.location),
+    details: JSON.parse(req?.body?.details),
+    price: JSON.parse(req?.body?.price),
+    media: mediaArray
+
+  };
+
+    // validation on req body
+    const {error, value} = propertiesValidation.validate(propertyData);
+    // console.log(value);
+    
     if(error) {
         return next(new AppError(error.details[0].message, 400))
     }
     
-    // const property = await createProperty(value, agentId);
+    const property = await createProperty(value, agentId);
 
+    const filesURL = await uploadImagesToBunny(property?._id, req?.files) || []
+
+        // Create media array with URLs from uploaded files
+    const cdnURL = filesURL?.map((file, index) => ({
+        url: file?.url, // or file.filename, or construct full URL
+        public_id: mediaMetadata[index]?.public_id || Date.now() + index,
+        caption: mediaMetadata[index]?.caption || "One of the beautiest house in the market",
+        isPrimary: mediaMetadata[index]?.isPrimary || false
+    })) || [];
+    property.media = cdnURL
+    
+    const newPorperty = await property.save();
+    console.log(newPorperty);
+    
     return res.status(201).json({
         message: "Successfully property created",
-        // data: property
+        data: newPorperty
     })
 })
 

@@ -33,14 +33,14 @@ const PropertySchema = new Schema({
         landmark: {type: String, required: true}
     },
     details: {
-        bedroom: {type: Number, required: true},
-        bathroom: {type: Number, required: true},
-        area: {type: Number},
-        floor: {type: Number},
-        totalFloor: {type: Number},
-        yearBuild: {type: Number},
+        bedroom: {type: String, required: true},
+        bathroom: {type: String, required: true},
+        area: {type: String},
+        floor: {type: String},
+        totalFloor: {type: String},
+        yearBuild: {type: String},
         furniture: {type: Boolean},
-        parking: {type: Boolean, required: true},
+        parking: {type: Boolean},
         security: {type: String},
     },
     amenities: [
@@ -50,7 +50,7 @@ const PropertySchema = new Schema({
         }
     ],
     price:{
-        amount:{type: Number, required: [true, "Amount is required"]},
+        amount:{type: String, required: [true, "Amount is required"]},
         currency: {type: String, enum: ['afghani','doller'], default: 'afghani'},
         period: {type: String},
         negotiable: {type: Boolean, default: false},

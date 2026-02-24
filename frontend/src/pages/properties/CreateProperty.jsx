@@ -93,6 +93,7 @@ import Location from "../../components/porperty/Location";
 import Media from "../../components/porperty/Media";
 import Price from "../../components/porperty/Price";
 
+import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
 import { propertySchema } from '../../utils/zodSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -100,10 +101,14 @@ import { useRef } from "react";
 
 import { useCreateProperty } from "../../hooks/useProperties";
 import { buildPropertyFormData } from "../../utils/formdata";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
 const CreateProperty = () => {
   const { mutate } = useCreateProperty();
   const dropzoneRef = useRef(); // ← Create ref to access images with files
+  const [loading,setLoading] = useState(false)
+  const navigate = useNavigate()
   
   const {
     register,
@@ -118,26 +123,38 @@ const CreateProperty = () => {
   });
   
   const handleCreateProperty = (data) => {
+    setLoading(true)
     // Get images WITH FILE objects from DropzoneUI ref
     const imagesWithFiles = dropzoneRef.current?.getImages() || [];
-    
-    console.log('Form data (metadata only):', data);
-    console.log('Images with files:', imagesWithFiles);
     
     // Build FormData with both metadata and files
     const formData = buildPropertyFormData(data, imagesWithFiles);
     
-    // Debug: see what's in FormData
-    for (let pair of formData.entries()) {
-      if (pair[1] instanceof File) {
-        console.log(`${pair[0]}: [FILE] ${pair[1].name}`);
-      } else {
-        console.log(`${pair[0]}:`, pair[1]);
-      }
-    }
+    // // Debug: see what's in FormData
+    // for (let pair of formData.entries()) {
+    //   if (pair[1] instanceof File) {
+    //     console.log(`${pair[0]}: [FILE] ${pair[1].name}`);
+    //   } else {
+    //     console.log(`${pair[0]}:`, pair[1]);
+    //   }
+    // }
     
     // Send to backend
-    mutate(formData);
+    mutate(formData, {
+      onSuccess: (res) => {
+        setLoading(false)
+        navigate('/', {replace: true})
+        toast.success("موفقا خانه شما در لیست بازدید اضافه شد")
+      },
+      onError: (err) => {
+        console.log('❌ Error:', err);
+        console.log('Error response:', err.response?.data); // ← This will show WHY
+        console.log('Error status:', err.response?.status);
+        console.log('Error details:', err.response?.data?.details); // ← Joi validation errors     
+        setLoading(false)
+        toast.error(err.response?.data?.details)   
+      }
+    });
   };
   
   return (
@@ -165,8 +182,8 @@ const CreateProperty = () => {
         {/* Price */}
         <Price register={register} errors={errors} />
 
-        <button className="w-full bg-blue-700 text-white py-3 rounded-lg font-semibold hover:opacity-90 cursor-pointer">
-          پست کردن خانه
+        <button className={`w-full bg-blue-700 text-white py-3 rounded-lg font-semibold hover:opacity-90 cursor-pointer ${loading ? "opacity-50 cursor-not-allowed bg-red-600" : ""}`} disabled={loading} type="submit"> 
+         {!loading ? " پست کردن خانه" : "صبر کنید"}
         </button>
       </form>
     </div>

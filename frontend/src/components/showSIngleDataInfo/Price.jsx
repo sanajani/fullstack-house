@@ -1,5 +1,15 @@
 
 const Price = ({showSingleProperty}) => {
+  const currency = {
+    // ['afghani','doller'],
+    afghani:'افغانی',
+    doller: 'دالر'
+  }
+  const period = {
+    daily: 'روزانه',
+    monthly: 'ماهانه',
+    yearly: 'سالانه'
+  }
   return (
       <div className='bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-6 shadow-[0_12px_32px_rgba(37,99,235,0.3)] space-y-5 text-white'>
 
@@ -24,14 +34,14 @@ const Price = ({showSingleProperty}) => {
           <span className='text-yellow-300'>🏦</span>
           واحد پولی
         </span>
-        <span className='font-bold text-lg'>{showSingleProperty.price?.currency}</span>
+        <span className='font-bold text-lg'>{currency[showSingleProperty.price?.currency]}</span>
       </div>
       <div className='flex justify-between items-center py-3 border-b border-blue-500/30 last:border-0'>
         <span className='text-blue-100 text-sm flex items-center gap-2'>
           <span className='text-yellow-300'>📅</span>
           دوره پرداخت
         </span>
-        <span className='font-bold text-lg'>{showSingleProperty.price?.period || "یک بار"}</span>
+        <span className='font-bold text-lg'>{period[showSingleProperty.price?.period]}</span>
       </div>
       <div className='flex justify-between items-center py-3'>
         <span className='text-blue-100 text-sm flex items-center gap-2'>

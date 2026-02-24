@@ -3,12 +3,12 @@ import AppError from '../../../errors/AppError.js';
 import { createProperty, deletePropertyService, fetchPropertiesByAgent, fetchPropertyByIDService, updatePropertyService } from '../../../services/agent/propertiesServices.js';
 import { asyncErrorHandler } from "../../../utils/asyncErrorHandler.js"
 import { propertiesValidation } from '../../../validations/properties/properties.js'
-import { PropertiesModel } from '../../../models/properties/PropertiesModel.js';
 import { uploadImagesToBunny } from '../../../middlewares/Bunny_CDN.js';
 
 // // properties controller
 // // add property 
 export const createPropertyByAgentController = asyncErrorHandler(async (req,res,next) => {
+    console.log(JSON.parse(req?.body?.amenities));
     
     const agentId = req.user?.id;
     const role = req.user?.role;
@@ -33,12 +33,12 @@ export const createPropertyByAgentController = asyncErrorHandler(async (req,res,
     title: req?.body?.title,
     description: req?.body?.description,
     propertyType: req?.body?.propertyType,
+    amenities: JSON.parse(req?.body?.amenities),
     dealType: req?.body?.transaction,
     location: JSON.parse(req?.body?.location),
     details: JSON.parse(req?.body?.details),
     price: JSON.parse(req?.body?.price),
     media: mediaArray
-
   };
 
     // validation on req body
@@ -63,7 +63,6 @@ export const createPropertyByAgentController = asyncErrorHandler(async (req,res,
     property.media = cdnURL
     
     const newPorperty = await property.save();
-    console.log(newPorperty);
     
     return res.status(201).json({
         message: "Successfully property created",

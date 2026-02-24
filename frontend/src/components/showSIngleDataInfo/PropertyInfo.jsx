@@ -20,12 +20,11 @@ const PropertyInfo = ({showSingleProperty}) => {
   {/* amenities */}
   <Amenities showSingleProperty={showSingleProperty}/>
 
-
   {/* price */}
   <Price showSingleProperty={showSingleProperty}/>
 
   {/* agent */}
-  <AgentInfo showSingleProperty={showSingleProperty} />
+  <AgentInfo agentData={showSingleProperty} />
 
 </div>
   )

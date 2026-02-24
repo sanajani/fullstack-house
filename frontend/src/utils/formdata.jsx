@@ -60,6 +60,7 @@ export const buildPropertyFormData = (data, imagesWithFiles) => {
   appendJSON('location', data.location);
   appendJSON('details', data.details);
   appendJSON('price', data.price);
+  appendJSON('amenities', data.amenities);
   
   // Handle images - FILES come from LOCAL STATE (imagesWithFiles)
   if (imagesWithFiles && imagesWithFiles.length > 0) {

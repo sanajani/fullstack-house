@@ -1,4 +1,5 @@
 import InputField from "../inputBoxes/InputField";
+import {provinces} from '../../i18n/fa/provincesAndSelectBoxData.json'
 
 const Location = ({ register, errors }) => {
   return (
@@ -7,12 +8,27 @@ const Location = ({ register, errors }) => {
 
       <div className="grid md:grid-cols-3 gap-4">
 
-        <InputField
-          name="location.province"
-          register={register}
-          placeholder="ولایت"
-          error={errors?.location?.province}
-        />
+    <div className="flex flex-col">
+      <select
+        {...register("location.province", { 
+          required: "ولایت الزامی است" // Optional validation
+        })}
+        className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option value="">ولایت</option>
+        {
+          provinces.map((province) => {
+            return <option key={province.value} value={province.value}>{province.label}</option>
+          })
+        }
+      </select>
+      {errors?.location?.province && (
+        <span className="text-red-500 text-sm mt-1">
+          {errors.location.province.message}
+        </span>
+      )}
+    </div>
+
 
         <InputField
           name="location.city"

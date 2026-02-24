@@ -45,7 +45,7 @@ const Price = ({ register,errors }) => {
         <InputField as="select" name="price.currency" register={register} error={errors.price?.currency}>
           <option value="">واحد پولی</option>
           <option value="afghani">افغانی</option>
-          <option value="dollar">دالر</option>
+          <option value="doller">دالر</option>
         </InputField>
 
     {/* Period */}
@@ -53,7 +53,7 @@ const Price = ({ register,errors }) => {
           <option value="">زمان کرایه</option>
           <option value="daily">روزانه</option>
           <option value="monthly">ماهانه</option>
-          <option value="3 month">هر سه ماه</option>
+          <option value="yearly">هر سه ماه</option>
         </InputField>
         {/* negotiable */}
             {/* Period */}

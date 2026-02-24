@@ -37,7 +37,7 @@ export const getAllPropertiesService = async (page, limit, province, dealType, h
 
 
 export const getSinglePropertyByIdService = async (propertyId) => {
-    const property = await PropertiesModel.findById(propertyId);
+    const property = await PropertiesModel.findById(propertyId).populate('agent','name agentInfo')
     if(!property) {
         throw new AppError("Property Not Found", 404);
     }

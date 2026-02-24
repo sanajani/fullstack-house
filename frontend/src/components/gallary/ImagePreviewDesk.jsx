@@ -4,8 +4,11 @@ import LoadingImage from "../../public/LoadingImageSVG";
 import LoadingBigImagesSVG from "../../public/LoadingBigImagesSVG";
 import ErrorIcon from "../../public/ErrorImageSVG";
 
-const ImagePreviewDesk = ({ setShowGallery, images = [] }) => {
+const ImagePreviewDesk = ({ setShowGallery, allImages = [] }) => {
   const [imageStatus, setImageStatus] = useState({});
+  
+
+  const images = allImages.slice(0,5)
 
   const handleLoad = (index) => {
     setImageStatus((prev) => ({

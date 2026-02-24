@@ -40,18 +40,19 @@ const Details = ({showSingleProperty}) => {
       <div className='flex justify-between items-center p-4 bg-gray-50 rounded-xl border border-gray-200'>
         <span className='text-gray-500 text-sm'>فرنیچر</span>
         <span className={`font-bold ${showSingleProperty.details?.furniture ? 'text-green-600' : 'text-red-600'}`}>
-          {showSingleProperty.details?.furniture ? '✅ دارد' : '❌ ندارد'}
+          {showSingleProperty.amenities.includes('furniture') ? '✅ دارد' : '❌ ندارد'}
+
         </span>
       </div>
       <div className='flex justify-between items-center p-4 bg-gray-50 rounded-xl border border-gray-200'>
         <span className='text-gray-500 text-sm'>پارکینگ</span>
         <span className={`font-bold ${showSingleProperty.details?.parking ? 'text-green-600' : 'text-red-600'}`}>
-          {showSingleProperty.details?.parking ? '✅ دارد' : '❌ ندارد'}
+          {showSingleProperty.amenities.includes('parking') ? '✅ دارد' : '❌ ندارد'}
         </span>
       </div>
       <div className='md:col-span-2 flex justify-between items-center p-4 bg-gray-50 rounded-xl border border-gray-200'>
         <span className='text-gray-500 text-sm'>سیستم امنیتی</span>
-        <span className='font-medium text-gray-800 text-right'>{showSingleProperty.details?.security}</span>
+        <span className='font-medium text-gray-800 text-right'>{showSingleProperty.amenities.includes("security")}</span>
       </div>
     </div>
 

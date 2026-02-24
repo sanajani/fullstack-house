@@ -1,76 +1,3 @@
-// import SelectBox from "../SelectBox"
-// import {provinces, dealTypes, houseRent, propertyType} from '../../i18n/fa/provincesAndSelectBoxData.json'
-// import { useEffect, useState } from "react"
-// import { useSearchParams } from "react-router-dom"
-
-// const SearchSelectBoxes = () => {
-//     const [searchParam,setSearchParam] = useSearchParams();
-//     const query = {};
-
-//     const [selectedProvince, setSelectedProvince] = useState("");
-//     const [selectedDealType, setSelectDealTypes] = useState("");
-//     const [selectedHouseRent, setSelectHouseRent] = useState("");
-//     const [selectedPropertyType, setSelectPropertyType] = useState("");
-
-//     if(selectedProvince) query.province = selectedProvince;
-//     if(selectedDealType) query.dealType = selectedDealType;
-//     if(selectedHouseRent) query.houseRent = selectedHouseRent;
-//     if(selectedPropertyType) query.propertyType = selectedPropertyType;
-//     console.log(query, 'this is qeury');
-    
-//     useEffect(() => {
-//         if(selectedDealType || selectedHouseRent || selectedPropertyType || selectedProvince) {
-//     setSearchParam({ 
-//         ...Object.fromEntries(searchParam), // keep other params
-//         ...query // update province
-//     });
-// }
-//     }, [selectedProvince, selectedDealType, selectedHouseRent, selectedPropertyType])
-//   return (
-//      <div className="flex justify-between gap-4">
-//             <div className="relative flex-1">
-//                 <SelectBox
-//                     placeholder={'انتخاب ولایت'}
-//                     options={provinces}
-//                     value={selectedProvince}
-//                     onChange={setSelectedProvince}
-//                     className="cursor-pointer"
-//                 />            
-//             </div>
-//             <div className="relative flex-1">
-//                 <SelectBox
-//                     placeholder={'کرایی یا فروشی'}
-//                     options={dealTypes}
-//                     value={selectedDealType}
-//                     onChange={setSelectDealTypes}
-//                     className="cursor-pointer"
-//                 />   
-//             </div>
-//             {/* 2 more */}
-//             <div className="flex-1 hidden sm:block">
-//                  <SelectBox
-//                     placeholder={'مقدار کرایه'}
-//                     options={houseRent}
-//                     value={selectedHouseRent}
-//                     onChange={setSelectHouseRent}
-//                     className="cursor-pointer"
-//                 />   
-//             </div>
-//             <div className="flex-1 hidden md:block">
-//                 <SelectBox
-//                     placeholder={'نوع خانه'}
-//                     options={propertyType}
-//                     value={selectedPropertyType}
-//                     onChange={setSelectPropertyType}
-//                     className="cursor-pointer"
-//                 />   
-//             </div>
-//         </div>
-// )
-// }
-
-// export default SearchSelectBoxes
-
 import { useSearchParams } from "react-router-dom"
 import { provinces, dealTypes, houseRent, propertyType } from "../../i18n/fa/provincesAndSelectBoxData.json";
 import SelectBox from "../SelectBox"
@@ -96,7 +23,6 @@ const SearchSelectBoxes = () => {
     }
     setSearchParam(params);
   }
-
 
   return (
      <div className="flex justify-between gap-4">

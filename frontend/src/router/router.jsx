@@ -21,6 +21,8 @@ import AgentDashboard from '../pages/agent/AgentDashboard';
 import AdimDashboard from '../pages/admin/AdimDashboard';
 import AdminDashboard2 from '../pages/admin/AdminDashboard2';
 import CheckAgentStatus from '../protected/CheckAgentStatus';
+import ShowSinglePropertyToAgent from '../components/agent/PropertiesList/ShowSinglePropertyToAgent';
+import EditProperty from '../components/agent/PropertiesList/EditProperty';
 
 export const router = createBrowserRouter([
     {
@@ -72,6 +74,17 @@ export const router = createBrowserRouter([
             {
                 path: 'agent',
                 element: <AgentDashboard />
+            },
+            ,
+            {
+                path: 'agent/edit/:id',
+                element: <EditProperty />
+                // element: <h1>edit</h1>
+            },
+            {
+                path: 'agent/show/:id',
+                element: <ShowSinglePropertyToAgent />
+                // element: <h1>show</h1>
             },
             {
                 path: 'agent/create-property',

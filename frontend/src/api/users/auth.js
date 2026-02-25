@@ -1,6 +1,4 @@
-import api from './axiosInstance.js';
-// axios.defaults.baseURL = 'http://localhost:44004/api/v1/'; // Set the base URL for your API
-// http://localhost:44004/api/v1/users/register
+import api from '../axiosInstance.js'
 
 export const login = async (data) => {
   try {

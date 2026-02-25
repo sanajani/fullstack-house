@@ -40,7 +40,6 @@ export const createPropertyByAgentController = asyncErrorHandler(async (req,res,
 
     // validation on req body
     const {error, value} = propertiesValidation.validate(propertyData);
-    // console.log(value);
     
     if(error) {
         return next(new AppError(error.details[0].message, 400))
@@ -70,16 +69,17 @@ export const createPropertyByAgentController = asyncErrorHandler(async (req,res,
 // // properties controller
 // get all properties
 export const getAllPropertiesByAgentController = asyncErrorHandler(async (req,res,next) => {
-    const agentId = req.user._id || '697a5f977fe150abe9e37c60';
+    
+    const agentId = req.user.id;
     if(!agentId) {
-        return next(new AppError("User Id is missing", 400))
+        return next(new AppError("User Id is missing", 400));
     }
     
     const allProperties = await fetchPropertiesByAgent(agentId);
 
     return res.status(200).json({
         message: "Success",
-        data: allProperties
+        allProperties
     })
 })
 
@@ -87,7 +87,7 @@ export const getAllPropertiesByAgentController = asyncErrorHandler(async (req,re
 // // properties controller
 export const getPropertyById = asyncErrorHandler(async (req,res,next) => {
     const propertyId = req.params.propertyId;
-    const agentId = req.user?._id;
+    const agentId = req.user?.id;
     if(!agentId) {
         return next("Invalid credentials",403)
     }
@@ -101,11 +101,10 @@ export const getPropertyById = asyncErrorHandler(async (req,res,next) => {
     })
 })
 
-
 // update a property
 export const updatePropertyById = asyncErrorHandler(async (req,res,next) => {
     const propertyId = req.params?.propertyId;
-    const agentId = req.user?._id || '697a62488010053c82c340b3';
+    const agentId = req.user?.id;
     const propertyData = req.body;
     const data = await updatePropertyService(propertyId, agentId, propertyData)
     return res.status(201).json({

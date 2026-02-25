@@ -27,7 +27,6 @@ const ImagePreviewMobile = ({ setShowGallery, images = [] }) => {
       <Swiper
         slidesPerView={1}
         spaceBetween={0}
-        loop={true}
         allowTouchMove={true}
         speed={300}
         className="w-full h-full cursor-pointer"

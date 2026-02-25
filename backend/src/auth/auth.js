@@ -4,7 +4,6 @@ import verifyToken from "../utils/verifyToken.js";
 export const isAuthenticateUser = (req, res, next) => {
     const authHeader = req?.headers?.authorization;
     
-
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return next(new AppError('Authorization header missing or malformed', 401));
     }

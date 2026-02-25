@@ -9,11 +9,11 @@ const isAgentProtectedRoute = async (req, res, next) => {
     const userID = req?.user?.id;
     const {role} = await UserModel.findById(userID)
 
-
     if (role !== 'agent') {
         return next(new AppError("Forbidden: Agents only", 403));
     }
-    req.user.role = role
+    req.user.role = role;
+    
     next();
 };
 

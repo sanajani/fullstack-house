@@ -16,15 +16,12 @@ const NavAgent = () => {
           <div className="flex justify-between items-center h-16">
             {/* Desktop Navigation Links */}
             <div className="hidden md:flex space-x-8 space-x-reverse">
-              <Link to="/dashboard" className="hover:bg-blue-700 px-3 py-2 rounded-md transition">
+              <Link to="/dashboard/agent" className="hover:bg-blue-700 px-3 py-2 rounded-md transition">
                 داشبورد
               </Link>
-              <Link to="/properties" className="hover:bg-blue-700 px-3 py-2 rounded-md transition">
-                ملک‌ها
-              </Link>
-              <Link to="/clients" className="hover:bg-blue-700 px-3 py-2 rounded-md transition">
+              {/* <Link to="/clients" className="hover:bg-blue-700 px-3 py-2 rounded-md transition">
                 مشتریان
-              </Link>
+              </Link> */}
               <Link to="/profile" className="hover:bg-blue-700 px-3 py-2 rounded-md transition">
                 پروفایل
               </Link>
@@ -32,9 +29,9 @@ const NavAgent = () => {
 
             {/* Desktop User Menu */}
             <div className="hidden md:flex items-center space-x-4 space-x-reverse">
-              <button className="bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-md transition">
+              <Link to='/' className="bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-md transition">
                 خروج
-              </button>
+              </Link>
             </div>
 
             {/* Mobile menu button */}
@@ -82,20 +79,13 @@ const NavAgent = () => {
               >
                 داشبورد
               </Link>
-              <Link 
-                to="/properties" 
-                className="hover:bg-blue-700 px-4 py-3 rounded-md transition"
-                onClick={toggleSidebar}
-              >
-                ملک‌ها
-              </Link>
-              <Link 
+              {/* <Link 
                 to="/clients" 
                 className="hover:bg-blue-700 px-4 py-3 rounded-md transition"
                 onClick={toggleSidebar}
               >
                 مشتریان
-              </Link>
+              </Link> */}
               <Link 
                 to="/profile" 
                 className="hover:bg-blue-700 px-4 py-3 rounded-md transition"

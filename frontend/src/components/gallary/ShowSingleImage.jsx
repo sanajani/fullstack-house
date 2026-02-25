@@ -55,7 +55,6 @@ const ShowSingleImage = ({ imageIndex: initialIndex, images, setShowImage }) => 
           modules={[Navigation]}
           navigation={false}
           onSlideChange={(swiper) => setCurrentIndex(swiper.realIndex)}
-          loop={true}
         >
           {images.map((img) => (
             <SwiperSlide key={img?._id || img.url}>

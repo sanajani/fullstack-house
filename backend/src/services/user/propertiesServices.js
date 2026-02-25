@@ -36,11 +36,28 @@ export const getAllPropertiesService = async (page, limit, province, dealType, h
 }
 
 
-export const getSinglePropertyByIdService = async (propertyId) => {
-    const property = await PropertiesModel.findById(propertyId).populate('agent','name agentInfo')
-    if(!property) {
-        throw new AppError("Property Not Found", 404);
-    }
+// export const getSinglePropertyByIdService = async (propertyId) => {
+//     const property = await PropertiesModel.findById(propertyId).populate('agent','name agentInfo')
+//     if(!property) {
+//         throw new AppError("Property Not Found", 404);
+//     }
 
-    return property
-}
+//     property.views += 1;
+//     await property.save();
+
+//     return property
+// }
+
+export const getSinglePropertyByIdService = async (propertyId) => {
+  const property = await PropertiesModel.findByIdAndUpdate(
+    propertyId,
+    { $inc: { views: 1 } },
+    { new: true }
+  ).populate('agent', 'name agentInfo');
+
+  if (!property) {
+    throw new AppError("Property Not Found", 404);
+  }
+
+  return property;
+};

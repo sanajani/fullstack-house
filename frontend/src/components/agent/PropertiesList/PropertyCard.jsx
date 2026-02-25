@@ -3,24 +3,25 @@ import {
   HiOutlinePencilSquare,
   HiOutlineTrash,
 } from "react-icons/hi2";
+import ActionLinks from "./ActionLinks";
 
 const PropertyCard = ({ property }) => {
   return (
     <div className="bg-white rounded-xl shadow-sm p-4">
       <div className="flex justify-between items-start">
         <div>
-          <h3 className="font-semibold text-gray-800">{property.title}</h3>
-          <p className="text-blue-600 font-bold mt-1">{property.price}</p>
+          <h3 className="font-semibold text-gray-800">{property?.title}</h3>
+          <p className="text-blue-600 font-bold mt-1">{property?.price?.amount}</p>
         </div>
 
         <span
           className={`px-2 py-1 rounded-full text-xs ${
-            property.status === "فروشی"
+            property.status === "sold"
               ? "bg-green-100 text-green-700"
               : "bg-orange-100 text-orange-700"
           }`}
         >
-          {property.status}
+          {property?.status || 'pending' }
         </span>
       </div>
 
@@ -32,29 +33,13 @@ const PropertyCard = ({ property }) => {
       </div>
 
       <div className="flex gap-2 mt-3 pt-3 border-t">
-        <ActionButton icon={HiOutlineEye} text="مشاهده" color="blue" />
-        <ActionButton icon={HiOutlinePencilSquare} text="ویرایش" color="yellow" />
-        <ActionButton icon={HiOutlineTrash} text="حذف" color="red" />
+        <ActionLinks to={`/dashboard/agent/show/${property?._id}`} icon={HiOutlineEye} text="مشاهده" color="blue"  />
+        <ActionLinks to={`/dashboard/agent/edit/${property?._id}`} icon={HiOutlinePencilSquare} text="ویرایش" color="yellow" />
+        <ActionLinks to="/" icon={HiOutlineTrash} text="حذف" color="red"  />
       </div>
     </div>
   );
 };
 
-const ActionButton = ({ icon: Icon, text, color }) => {
-  const colors = {
-    blue: "bg-blue-50 text-blue-600",
-    yellow: "bg-yellow-50 text-yellow-600",
-    red: "bg-red-50 text-red-600",
-  };
-
-  return (
-    <button
-      className={`flex-1 cursor-pointer py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-1 ${colors[color]}`}
-    >
-      <Icon className="w-4 h-4" />
-      {text}
-    </button>
-  );
-};
 
 export default PropertyCard;

@@ -6,6 +6,11 @@ const PropertySchema = new Schema({
         ref: 'User',
         required: [true, "User Id is required"]
     },
+    status:{
+        type: String,
+        enum: ['pending','rented','sold'],
+        default: 'pending'
+    },
     title: {
         type: String,
         required: true
@@ -18,6 +23,10 @@ const PropertySchema = new Schema({
         type: String,
         enum: ['apartment', 'house','villa','room','studio','commercial','land'],
         required: true
+    },
+    views: {
+        type: Number,
+        default: 0
     },
     dealType: {
         type: String,

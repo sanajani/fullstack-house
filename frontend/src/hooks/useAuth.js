@@ -1,6 +1,6 @@
 import { toast } from 'react-hot-toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import {  register, login, updateProfile, getUserProfile } from '../api/auth';
+import {  register, login, updateProfile, getUserProfile } from '../api/users/auth';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 

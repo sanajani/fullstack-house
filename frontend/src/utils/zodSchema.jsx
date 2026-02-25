@@ -116,7 +116,7 @@ export const propertySchema = z.object({
 
   title: z.string().nonempty("عنوان ملک الزامی است"),
 
-  description: z.string().min(1,"توضیحات الزامی است").max(200, "توضیحات نباید بیشتر 200 حرف باشد"),
+  description: z.string().min(1,"توضیحات الزامی است").max(600, "توضیحات نباید بیشتر 600 حرف باشد"),
 
   propertyType:   z.string()
   .min(1, "نوع ملک الزامی است")

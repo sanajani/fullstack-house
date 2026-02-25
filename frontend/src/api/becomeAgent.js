@@ -11,15 +11,3 @@ export const becomeAgent = async (data) => {
     throw error;
   }
 };
-
-// agent login api 
-// agent-login
-
-export const agentLogin = async (data) => {
-  try {
-    const response = await api.post("/agent/login", data)
-    return response.data
-  } catch (error) {
-    return error
-  }
-}

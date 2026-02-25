@@ -10,7 +10,7 @@ const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = parseInt(searchParams.get("page")) || 1;
-  const limit = parseInt(searchParams.get("limit")) || 4;
+  const limit = parseInt(searchParams.get("limit")) || 8;
   const province = searchParams.get("province") || "";
   const dealType = searchParams.get("dealType") || "";
   const houseRent = searchParams.get("houseRent") || "";
@@ -23,7 +23,7 @@ const Home = () => {
   const pages = data?.data?.pages;
   useEffect(() => {
   if (!searchParams.get("page") || !searchParams.get("limit")) {
-    setSearchParams({ page: 1, limit: 4}, { replace: true });
+    setSearchParams({ page: 1, limit: 8}, { replace: true });
   }
 }, [searchParams, setSearchParams]);
 

@@ -8,11 +8,8 @@ import { uploadImagesToBunny } from '../../../middlewares/Bunny_CDN.js';
 // // properties controller
 // // add property 
 export const createPropertyByAgentController = asyncErrorHandler(async (req,res,next) => {
-    console.log(JSON.parse(req?.body?.amenities));
-    
     const agentId = req.user?.id;
     const role = req.user?.role;
-    
 
     if(!agentId || role !== 'agent') return next(new AppError("Invalid credentials", 403)) 
     if(!req.body || Object.keys(req.body).length === 0) return next(new AppError("Request body is missing", 400))

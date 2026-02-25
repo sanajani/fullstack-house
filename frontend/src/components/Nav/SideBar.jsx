@@ -4,15 +4,11 @@ import { useGetUserProfile } from "../../hooks/useAuth";
 
 const SideBar = ({ setShowSideBar }) => {
   const {isAuthenticated} = useAuthStore();
-  if(!isAuthenticated){
-
-  }
 
   const { logoutAuth } = useAuthStore();
   const {data, isLoading, isError, error} = useGetUserProfile({
       enabled: isAuthenticated
   });
-
 
   const handleLogout = () => {
     logoutAuth();

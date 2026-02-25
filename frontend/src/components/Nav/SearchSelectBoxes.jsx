@@ -17,7 +17,7 @@ const SearchSelectBoxes = () => {
     if(value) {
         params.set(key, value);
         params.set("page", 1); // reset page to 1 when any filter changes
-        params.set("limit", 4); // reset limit to default when any filter changes
+        params.set("limit", 8); // reset limit to default when any filter changes
     }else {
         params.delete(key);
     }

@@ -2,7 +2,7 @@ import { toast } from 'react-hot-toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {  register, login, updateProfile, getUserProfile } from '../api/auth';
 import { useNavigate } from 'react-router-dom';
-import {useAuthStore} from '../store/authStore';
+import { useAuthStore } from '../store/authStore';
 
 export const useRegister = () => {
     const queryClient = useQueryClient();

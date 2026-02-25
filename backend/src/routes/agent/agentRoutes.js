@@ -8,13 +8,11 @@ import {
 import { upload } from '../../middlewares/multer.js';
 import isAgentProtectedRoute from '../../auth/agentAuth/isAgent.js';
 import { isAuthenticateUser } from '../../auth/auth.js';
-import {loginAgentController} from '../../controllers/agent/agent.js'
 
 
 // export default router;
 const router = express.Router();
 
-router.post('/login',loginAgentController)
 
 router.use(isAuthenticateUser, isAgentProtectedRoute);
 

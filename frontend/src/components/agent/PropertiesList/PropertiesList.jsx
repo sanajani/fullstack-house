@@ -1,12 +1,6 @@
 import { getAllPropertiesByAgent } from "../../../hooks/agent/useAgentDashboardProperties";
 import PropertyCard from "./PropertyCard";
 
-// const properties = [
-//   { id: 1, title: "آپارتمان لوکس", price: "$85,000", status: "فروشی", views: 234 },
-//   { id: 2, title: "خانه ویلایی", price: "$120,000", status: "فروشی", views: 156 },
-// ];
-
-
 const PropertiesList = () => {
   const {data: { allProperties: allPropertiesByAgent = [] } = {}, isLoading, isError } = getAllPropertiesByAgent();
   

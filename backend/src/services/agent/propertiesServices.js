@@ -10,7 +10,7 @@ export const createProperty = async (reqData, agentId) => {
 // FETCH SINGLE PROPERTY BY AGENT
 export const fetchPropertiesByAgent = async (agentId) => {
     
-    const properties = await PropertiesModel.find({agent: agentId}, 'title status description price propertyType views').populate('agent' , "name")
+    const properties = await PropertiesModel.find({agent: agentId}, 'title status description price propertyType dealType views').populate('agent' , "name")
     
     if(!properties || properties.length === 0){
         return ("There is no property for that agent");

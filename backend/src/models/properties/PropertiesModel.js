@@ -8,7 +8,7 @@ const PropertySchema = new Schema({
     },
     status:{
         type: String,
-        enum: ['pending','rented','sold'],
+        enum: ['pending','rented','sold','gerawed'],
         default: 'pending'
     },
     title: {

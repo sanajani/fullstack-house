@@ -48,7 +48,7 @@ const PropertyPreview = ({ property }) => {
       dot: "🟡"
     },
     rented: {
-      label: "اجاره شده",
+      label: "به کرایه داده شد",
       bgColor: "bg-blue-100",
       textColor: "text-blue-700",
       dot: "🔵"

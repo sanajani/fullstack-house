@@ -69,12 +69,6 @@ export const createPropertyByAgentController = asyncErrorHandler(async (req,res,
 
 // update property controller - everything in one place
 export const updatePropertyById = asyncErrorHandler(async (req, res, next) => {
-    console.log("=== UPDATE PROPERTY CONTROLLER ===");
-    console.log("Property ID:", req.params?.propertyId);
-    console.log("User:", req.user?.id, "Role:", req.user?.role);
-    console.log("Files received:", req.files?.length || 0);
-    console.log("Body keys:", Object.keys(req.body));
-
     const propertyId = req.params?.propertyId;
     const agentId = req.user?.id;
     const role = req.user?.role;
@@ -120,7 +114,6 @@ export const updatePropertyById = asyncErrorHandler(async (req, res, next) => {
             updateFields.amenities = JSON.parse(req.body.amenities);
         }
 
-        console.log("Parsed fields:", Object.keys(updateFields));
     } catch (parseError) {
         console.error("JSON parse error:", parseError);
         return next(new AppError("Invalid JSON format in form data", 400));
@@ -208,6 +201,57 @@ export const updatePropertyById = asyncErrorHandler(async (req, res, next) => {
         success: true,
         message: "Property updated successfully",
         data: updatedProperty
+    });
+});
+
+// update status of the property
+export const updateStatus = asyncErrorHandler(async (req, res, next) => {
+    const propertyId = req.params?.propertyId;
+    const agentId = req.user?.id;
+    const role = req.user?.role;
+    
+    const { status } = req.body; // Get status from request body
+
+    // Check if user is an agent
+    if (role !== 'agent') {
+        return next(new AppError("Only agents can update property status", 403));
+    }
+
+    // Validate status
+    const validStatuses = ['pending', 'rented', 'sold', 'gerawed'];
+    if (!validStatuses.includes(status)) {
+        return next(new AppError("Invalid status value", 400));
+    }
+
+    // Find and update only the status field
+    const updatedProperty = await PropertiesModel.findOneAndUpdate(
+        { 
+            _id: propertyId, 
+            agent: agentId // Ensure the property belongs to this agent
+        },
+        { 
+            $set: { status: status } // Only update the status field
+        },
+        { 
+            new: true, // Return the updated document
+            runValidators: true // Run schema validators
+        }
+    );
+
+    // Check if property exists and belongs to agent
+    if (!updatedProperty) {
+        return next(new AppError("Property not found or you don't have permission", 404));
+    }
+
+    // Send response
+    return res.status(200).json({
+        success: true,
+        message: "Property status updated successfully",
+        data: {
+            _id: updatedProperty._id,
+            status: updatedProperty.status,
+            title: updatedProperty.title
+        }
     });
 });
 

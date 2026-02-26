@@ -1,4 +1,4 @@
-import { getAllPropertiesByAgentAPI, getSinglePropertyByAgentByIdAPI, patchSinglePropertyByAgentByIdAPI } from "../../api/agent/agentDashboardProperties";
+import { getAllPropertiesByAgentAPI, getSinglePropertyByAgentByIdAPI, patchPropertyStatus, patchSinglePropertyByAgentByIdAPI } from "../../api/agent/agentDashboardProperties";
 import { useMutation, useQuery } from "@tanstack/react-query";
 export const getAllPropertiesByAgent = () => {
     return useQuery({
@@ -26,5 +26,12 @@ export const useUpdateProperty = () => {
   return useMutation({
     mutationFn: ({ propertyId, data }) => 
       patchSinglePropertyByAgentByIdAPI(propertyId, data)
+  });
+};
+
+export const useUpdatePropertyStatus = () => {
+  return useMutation({
+    mutationFn: ({ propertyId, status }) => 
+      patchPropertyStatus(propertyId, status)
   });
 };

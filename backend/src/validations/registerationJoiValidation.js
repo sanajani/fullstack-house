@@ -13,8 +13,12 @@ export const registerationSchemaValidation = joi.object({
     phoneNumber1: joi.string().required().messages({
         'any.required': 'Phone Number 1 is required'
     }),
-    email: joi.string().email().messages({
-        'string.email': 'Email must be a valid email address',
+    email: joi.string()
+    .email({ tlds: { allow: false } })
+    .allow(null, "")
+    .optional()
+    .messages({
+      "string.email": "ایمیل معتبر وارد کنید",
     }),
     password: joi.string().min(2).required().messages({
         'string.min': 'Password should have a minimum length of 6',

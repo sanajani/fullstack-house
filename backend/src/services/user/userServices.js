@@ -8,17 +8,16 @@ import bcrypt from 'bcryptjs';
 
 // Service to register user
 export const registerUser = async (userData) => {
-    const query = [];
-    if(userData.phoneNumber1) query.push({phoneNumber1: userData.phoneNumber1})
-    if(userData.email) query.push({email: userData.email})
-    if(userData.username) query.push({username: userData.username})
+    // const query = [];
+    // if(userData.phoneNumber1) query.push({phoneNumber1: userData.phoneNumber1})
+    // if(userData.email) query.push({email: userData.email})
+    // if(userData.username) query.push({username: userData.username})
 
     
     // Business logic for registering a user would go here
     const isUserExists = await UserModel.findOne({
-        $or: query
+        phoneNumber1: userData.phoneNumber1
     })
-    // console.log(isUserExists);
     
     if(isUserExists) throw new AppError('User already exist', 409);
 
@@ -31,7 +30,8 @@ export const registerUser = async (userData) => {
 
 // Service to login user
 export const loginUser = async (userData) => {
-    const user = await UserModel.findOne({ phoneNumber1: userData.phoneNumber1 }).select('+password');
+    
+    const user = await UserModel.findOne({ phoneNumber1: userData.phoneNumber1 }).select('+password name lastName phoneNumber1 email username province role');
     if(!user) throw new AppError('Invalid phone number or password', 401);
 
     const isPasswordValid = await bcrypt.compare(userData.password, user.password);
@@ -44,21 +44,20 @@ export const loginUser = async (userData) => {
 
 // Service to get user profile
 export const getMyProfile = async (userId) => {
-    const user = await UserModel.findById(userId);
+    // change it that for now for only user route
+    const user = await UserModel.findById(userId).select("name lastName role phoneNumber1 email province district hasRequestedAgent agentRequestStatus");
     if(!user) throw new AppError('User not found', 404);
     return user;
 }
 
 // Service to update user profile
 export const updateMyProfile = async (userId, updateData) => {
-    const updatedUser = await UserModel.findByIdAndUpdate(userId, updateData, { new: true });
+    const updatedUser = await UserModel.findByIdAndUpdate(userId, updateData, { new: true }).select("name lastName phoneNumber1 province role email district").lean();
     return updatedUser;
 }
 
-// Service to update user profile to agent profile
 export const requestAgentRole = async (userId, userData) => {
     const existingUser = await UserModel.findById(userId);
-    console.log(existingUser , 'this is log');
     
     if(!existingUser) {
         throw new AppError('User not found', 404);
@@ -76,21 +75,17 @@ export const requestAgentRole = async (userId, userData) => {
   province,
   district,
   role,
-  agentInfo
+  agencyName,
+  experienceYears,
+  specialization,
+  bio
     } = userData;
+
     if(role){
         throw new AppError('user can not change role', 400);
     }
-    const {
-    licenseNumber,
-    agencyName,
-    experienceYears,
-    specialization,
-    bio,
-    profilePicture,
-    } = agentInfo || {};
 
-    if(!name || !lastName || !phoneNumber1 || !phoneNumber2 || !username || !province || !district || !agencyName ) {
+    if(!name || !lastName || !phoneNumber1 || !phoneNumber2 || !province || !district || !agencyName ) {
     throw new AppError('All fields are required to become an agent', 400);
     }
     const updatedAgentStatus = await UserModel.findByIdAndUpdate(userId, 
@@ -106,12 +101,10 @@ export const requestAgentRole = async (userId, userData) => {
             agentRequestStatus: 'pending',
             phoneNumber2,
             agentInfo: {
-                licenseNumber,
                 agencyName,
                 experienceYears,
                 specialization,
                 bio,
-                profilePicture
             }
         },
         { new: true }
@@ -119,6 +112,7 @@ export const requestAgentRole = async (userId, userData) => {
     if(!updatedAgentStatus) {
         throw new AppError('Failed to update user to agent', 500);
     }
+    
     const wantToBecomeAgent = new WantToBecomeAgentModel({ userId });
     await wantToBecomeAgent.save();
     return updatedAgentStatus;

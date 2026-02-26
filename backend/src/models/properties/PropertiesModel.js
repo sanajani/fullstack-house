@@ -6,6 +6,11 @@ const PropertySchema = new Schema({
         ref: 'User',
         required: [true, "User Id is required"]
     },
+    status:{
+        type: String,
+        enum: ['pending','rented','sold','gerawed'],
+        default: 'pending'
+    },
     title: {
         type: String,
         required: true
@@ -19,7 +24,11 @@ const PropertySchema = new Schema({
         enum: ['apartment', 'house','villa','room','studio','commercial','land'],
         required: true
     },
-    transaction: {
+    views: {
+        type: Number,
+        default: 0
+    },
+    dealType: {
         type: String,
         enum: ['rent','sell','gerawi'],
         required: true
@@ -33,14 +42,14 @@ const PropertySchema = new Schema({
         landmark: {type: String, required: true}
     },
     details: {
-        bedroom: {type: Number, required: true},
-        bathroom: {type: Number, required: true},
-        area: {type: Number},
-        floor: {type: Number},
-        totalFloor: {type: Number},
-        yearBuild: {type: Number},
+        bedroom: {type: String, required: true},
+        bathroom: {type: String, required: true},
+        area: {type: String},
+        floor: {type: String},
+        totalFloor: {type: String},
+        yearBuild: {type: String},
         furniture: {type: Boolean},
-        parking: {type: Boolean, required: true},
+        parking: {type: Boolean},
         security: {type: String},
     },
     amenities: [
@@ -50,7 +59,7 @@ const PropertySchema = new Schema({
         }
     ],
     price:{
-        amount:{type: Number, required: [true, "Amount is required"]},
+        amount:{type: String, required: [true, "Amount is required"]},
         currency: {type: String, enum: ['afghani','doller'], default: 'afghani'},
         period: {type: String},
         negotiable: {type: Boolean, default: false},
@@ -77,7 +86,7 @@ const PropertySchema = new Schema({
 
 
 // Indexes
-PropertySchema.index({ "location.city": 1, transaction: 1 }); // for search
+PropertySchema.index({ "location.province": 1, dealType: 1 }); // for search
 PropertySchema.index({ "price.amount": 1 }); // price sorting
 PropertySchema.index({ createdAt: -1 }); // newest first
 

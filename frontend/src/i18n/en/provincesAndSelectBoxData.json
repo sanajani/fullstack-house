@@ -1,0 +1,58 @@
+{
+  "provinces": {
+    "badakhshan": "Badakhshan",
+    "badghis": "Badghis",
+    "baghlan": "Baghlan",
+    "bamyan": "Bamyan",
+    "daykundi": "Daykundi",
+    "farah": "Farah",
+    "faryab": "Faryab",
+    "ghazni": "Ghazni",
+    "ghor": "Ghor",
+    "helmand": "Helmand",
+    "herat": "Herat",
+    "jowzjan": "Jowzjan",
+    "kabul": "Kabul",
+    "kandahar": "Kandahar",
+    "kapisa": "Kapisa",
+    "khost": "Khost",
+    "kunar": "Kunar",
+    "kunduz": "Kunduz",
+    "laghman": "Laghman",
+    "logar": "Logar",
+    "maidan_wardak": "Maidan Wardak",
+    "nangarhar": "Nangarhar",
+    "nimroz": "Nimroz",
+    "nuristan": "Nuristan",
+    "paktia": "Paktia",
+    "paktika": "Paktika",
+    "panjshir": "Panjshir",
+    "parwan": "Parwan",
+    "samangan": "Samangan",
+    "sar-e-pol": "Sar-e Pol",
+    "takhar": "Takhar",
+    "urozgan": "Urozgan",
+    "zabul": "Zabul"
+  },
+  "dealTypes": {
+    "sell": "sell",
+    "rent": "Rent"
+  },
+    "houseRent": {
+      "under_5000": "Under 5,000",
+      "under_10000": "Under 10,000",
+      "under_15000": "Under 15,000",
+      "under_25000": "Under 25,000",
+      "under_50000": "Under 50,000",
+      "above_50000": "Above 50,000"
+    },
+    "propertyType": {
+      "apartment": "Apartment",
+      "house": "House",
+      "villa": "Villa",
+      "room": "Room",
+      "studio": "Studio",
+      "commercial": "Commercial",
+      "land": "Land"
+    }
+}

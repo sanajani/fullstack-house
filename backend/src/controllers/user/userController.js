@@ -11,6 +11,7 @@ import { registerationSchemaValidation, loginSchemaValidation } from '../../vali
 
 // Controller to handle user registration
 export const registerUserController = asyncErrorHandler(async (req,res, next) => {
+    
     if(!req.body || Object.keys(req.body).length === 0) {
         return next(new AppError('Request body is missing', 400));
     }
@@ -18,6 +19,7 @@ export const registerUserController = asyncErrorHandler(async (req,res, next) =>
 
     // Logic to handle user registration using userData
     const { error } = registerationSchemaValidation.validate(userData);
+    
     if( error ) {
         return next(new AppError(error.details[0].message, 400));
     }
@@ -26,12 +28,13 @@ export const registerUserController = asyncErrorHandler(async (req,res, next) =>
     if(!user) {
         return next(new AppError('User registration failed', 500));
     }
-
+    
     res.status(201).json({ message: 'User registered successfully', data: user });
 });
 
 // controller to handle user login
 export const loginUserController = asyncErrorHandler(async (req,res,next) => {
+    
     if(!req.body || Object.keys(req.body).length === 0) {
         return next(new AppError('Request body is missing', 400));
     }
@@ -52,10 +55,8 @@ export const loginUserController = asyncErrorHandler(async (req,res,next) => {
 
 // Controller to handle get user profile
 export const getMyProfileController = asyncErrorHandler(async (req,res,next) => {
-    console.log(req.user);
     
     const userId = req?.user?.id;
-    console.log(userId);
     
     if(!userId) {
         return next(new AppError('User ID is missing', 400));

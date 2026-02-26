@@ -3,18 +3,17 @@ import {PropertiesModel} from '../../models/properties/PropertiesModel.js'
 import mongoose from "mongoose";
 
 // CREATE PROPERTY BT AGENT SERVICE
-export const createProperty = async (reqData, agentId) => 
-    PropertiesModel.create({...reqData, agent: agentId})
+export const createProperty = async (reqData, agentId) => {
+  return PropertiesModel.create({...reqData, agent: agentId})
+}
 
 // FETCH SINGLE PROPERTY BY AGENT
 export const fetchPropertiesByAgent = async (agentId) => {
     
-    // const properties = await PropertiesModel.find().populate("agent", "title _id description propertyType location")
-    const properties = await PropertiesModel.find({agent: agentId}, 'title description propertyType transaction province').populate('agent' , "name")
-    console.log(properties);
+    const properties = await PropertiesModel.find({agent: agentId}, 'title status description price propertyType dealType views').populate('agent' , "name")
     
     if(!properties || properties.length === 0){
-        throw new AppError("There is no property for that agent");
+        return ("There is no property for that agent");
     }
 
     return properties

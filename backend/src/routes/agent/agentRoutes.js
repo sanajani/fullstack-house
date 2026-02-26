@@ -34,7 +34,7 @@ router.get("/property", getAllPropertiesByAgentController);
 router.get("/property/:propertyId", getPropertyById);
 
 // Update property by ID
-router.put("/property/:propertyId", updatePropertyById);
+router.patch("/property/:propertyId", upload.array("media", 30),updatePropertyById);
 
 
 // Delete property by ID

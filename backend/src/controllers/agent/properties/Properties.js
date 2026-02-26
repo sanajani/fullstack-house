@@ -4,6 +4,7 @@ import { createProperty, deletePropertyService, fetchPropertiesByAgent, fetchPro
 import { asyncErrorHandler } from "../../../utils/asyncErrorHandler.js"
 import { propertiesValidation } from '../../../validations/properties/properties.js'
 import { uploadImagesToBunny } from '../../../middlewares/Bunny_CDN.js';
+import { PropertiesModel } from '../../../models/properties/PropertiesModel.js';
 
 // // properties controller
 // // add property 
@@ -66,6 +67,150 @@ export const createPropertyByAgentController = asyncErrorHandler(async (req,res,
     })
 })
 
+// update property controller - everything in one place
+export const updatePropertyById = asyncErrorHandler(async (req, res, next) => {
+    console.log("=== UPDATE PROPERTY CONTROLLER ===");
+    console.log("Property ID:", req.params?.propertyId);
+    console.log("User:", req.user?.id, "Role:", req.user?.role);
+    console.log("Files received:", req.files?.length || 0);
+    console.log("Body keys:", Object.keys(req.body));
+
+    const propertyId = req.params?.propertyId;
+    const agentId = req.user?.id;
+    const role = req.user?.role;
+
+    // 1. CHECK PERMISSIONS
+    if (!agentId || role !== 'agent') {
+        return next(new AppError("Only agents can update properties", 403));
+    }
+
+    // 2. FIND PROPERTY AND CHECK OWNERSHIP
+    const property = await PropertiesModel.findOne({ _id: propertyId, agent: agentId });
+    
+    if (!property) {
+        return next(new AppError("Property not found or you don't have permission", 404));
+    }
+
+    console.log("Found property:", property._id);
+
+    // 3. PARSE ALL JSON FIELDS FROM FORMDATA
+    let updateFields = {};
+    
+    try {
+        // Basic fields
+        if (req.body.title) updateFields.title = req.body.title;
+        if (req.body.description) updateFields.description = req.body.description;
+        if (req.body.propertyType) updateFields.propertyType = req.body.propertyType;
+        if (req.body.transaction) updateFields.dealType = req.body.transaction;
+
+        // Parse JSON fields
+        if (req.body.location) {
+            updateFields.location = JSON.parse(req.body.location);
+        }
+        
+        if (req.body.details) {
+            updateFields.details = JSON.parse(req.body.details);
+        }
+        
+        if (req.body.price) {
+            updateFields.price = JSON.parse(req.body.price);
+        }
+        
+        if (req.body.amenities) {
+            updateFields.amenities = JSON.parse(req.body.amenities);
+        }
+
+        console.log("Parsed fields:", Object.keys(updateFields));
+    } catch (parseError) {
+        console.error("JSON parse error:", parseError);
+        return next(new AppError("Invalid JSON format in form data", 400));
+    }
+
+    // 4. HANDLE EXISTING IMAGES (images to keep)
+    let imagesToKeep = [];
+    if (req.body.existingImages) {
+        try {
+            imagesToKeep = JSON.parse(req.body.existingImages);
+            console.log("Keeping existing images:", imagesToKeep);
+        } catch (e) {
+            console.log("Error parsing existingImages:", e);
+        }
+    }
+
+    // 5. FILTER MEDIA - KEEP ONLY SELECTED EXISTING IMAGES
+    if (imagesToKeep.length > 0) {
+        // Keep only images whose public_id is in imagesToKeep array
+        property.media = property.media.filter(img => 
+            imagesToKeep.includes(img.public_id)
+        );
+        console.log(`Kept ${property.media.length} existing images`);
+    } else if (req.body.existingImages === '[]') {
+        // Client explicitly sent empty array - remove all existing images
+        property.media = [];
+        console.log("Removed all existing images");
+    }
+
+    // 6. HANDLE NEW IMAGE UPLOADS
+    if (req.files && req.files.length > 0) {
+        console.log(`Uploading ${req.files.length} new images to Bunny CDN...`);
+        
+        // Upload to Bunny CDN
+        const uploadedFiles = await uploadImagesToBunny(propertyId, req.files) || [];
+        console.log(`Uploaded ${uploadedFiles.length} files to CDN`);
+
+        // Parse media metadata for new files
+        let mediaMetadata = [];
+        if (req.body.media_metadata) {
+            try {
+                // Handle both array and single metadata
+                if (Array.isArray(req.body.media_metadata)) {
+                    mediaMetadata = req.body.media_metadata.map(item => 
+                        typeof item === 'string' ? JSON.parse(item) : item
+                    );
+                } else if (typeof req.body.media_metadata === 'string') {
+                    mediaMetadata = [JSON.parse(req.body.media_metadata)];
+                }
+            } catch (e) {
+                console.log("Error parsing media_metadata:", e);
+            }
+        }
+
+        // Create media objects for new images
+        const newMedia = uploadedFiles.map((file, index) => ({
+            url: file.url || file.path || `https://your-bunny-cdn.com/${file.filename}`,
+            public_id: mediaMetadata[index]?.public_id || `img_${Date.now()}_${index}`,
+            caption: mediaMetadata[index]?.caption || "Property image",
+            isPrimary: mediaMetadata[index]?.isPrimary || false
+        }));
+
+        // Add new images to property media array
+        property.media = [...property.media, ...newMedia];
+        console.log(`Added ${newMedia.length} new images`);
+    }
+
+    // 7. UPDATE OTHER FIELDS
+    const fieldsToUpdate = ['title', 'description', 'propertyType', 'dealType', 'amenities', 'location', 'details', 'price'];
+    
+    fieldsToUpdate.forEach(field => {
+        if (updateFields[field] !== undefined) {
+            property[field] = updateFields[field];
+        }
+    });
+
+    // 8. SAVE UPDATED PROPERTY
+    property.updatedAt = Date.now();
+    const updatedProperty = await property.save();
+    
+    console.log("Property updated successfully");
+
+    // 9. RETURN RESPONSE
+    return res.status(200).json({
+        success: true,
+        message: "Property updated successfully",
+        data: updatedProperty
+    });
+});
+
 // // properties controller
 // get all properties
 export const getAllPropertiesByAgentController = asyncErrorHandler(async (req,res,next) => {
@@ -101,17 +246,7 @@ export const getPropertyById = asyncErrorHandler(async (req,res,next) => {
     })
 })
 
-// update a property
-export const updatePropertyById = asyncErrorHandler(async (req,res,next) => {
-    const propertyId = req.params?.propertyId;
-    const agentId = req.user?.id;
-    const propertyData = req.body;
-    const data = await updatePropertyService(propertyId, agentId, propertyData)
-    return res.status(201).json({
-        message:"Property updated successfully",
-        data
-    })
-})
+
 
 // // properties controller
 // delete a property by ID

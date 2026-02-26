@@ -138,11 +138,11 @@
 
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+// import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef, useEffect, useState, useCallback } from "react";
 
 import { useSinglePropertyByAgentById, useUpdateProperty } from "../../../hooks/agent/useAgentDashboardProperties";
-import { propertySchema } from "../../../utils/zodSchema";
+// import { propertySchema } from "../../../utils/zodSchema";
 import { buildPropertyFormData } from "../../../utils/formdata";
 import BasicInfo from "../../porperty/BasicInfo";
 import Location from "../../porperty/Location";
@@ -168,7 +168,7 @@ const EditProperty = () => {
 
   // React Hook Form
   const { register, handleSubmit, control, reset, formState: { errors } } = useForm({
-    resolver: zodResolver(propertySchema),
+    // resolver: zodResolver(propertySchema),
     defaultValues: {
       title: "",
       propertyType: "",

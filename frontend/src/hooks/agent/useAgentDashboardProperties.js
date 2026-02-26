@@ -17,8 +17,14 @@ export const useSinglePropertyByAgentById = (id) => {
   });
 };
 
-export const useUpdateProperty = (id) => {
+// export const useUpdateProperty = (id) => {
+//   return useMutation({
+//     mutationFn: patchSinglePropertyByAgentByIdAPI
+//   })
+// }
+export const useUpdateProperty = () => {
   return useMutation({
-    mutationFn: patchSinglePropertyByAgentByIdAPI
-  })
-}
+    mutationFn: ({ propertyId, data }) => 
+      patchSinglePropertyByAgentByIdAPI(propertyId, data)
+  });
+};

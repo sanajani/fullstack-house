@@ -17,6 +17,8 @@ export const getSinglePropertyByAgentByIdAPI = async (id) => {
 };
 
 export const patchSinglePropertyByAgentByIdAPI = async (id, data) => {
+  console.log(id, data, 'inside patch');
+  
   const response = await api.patch(`agent/property/${id}`, data);
   return response.data;
 };

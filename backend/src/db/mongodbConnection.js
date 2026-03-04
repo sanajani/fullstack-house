@@ -6,8 +6,8 @@ const dbPassword = process.env.MONGODB_CONNECTION_PASSWORD;
 const dbName = process.env.MONGODB_DB_NAME || 'propertyDB'; // Add this
 
 // Add database name to URL
-// const dbURL = `mongodb+srv://${dbUserName}:${dbPassword}@cluster0.qycidu4.mongodb.net/${dbName}?appName=Cluster0`
-const dbURL = 'mongodb://localhost:27017/housedbtestingfornow';
+const dbURL = `mongodb+srv://${dbUserName}:${dbPassword}@cluster0.qycidu4.mongodb.net/${dbName}?appName=Cluster0`
+// const dbURL = 'mongodb://localhost:27017/housedbtestingfornow';
 
 const connectToMongoDB = async () => {
   try {

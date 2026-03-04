@@ -5,6 +5,7 @@ import PreNextButtons from "../components/PreNextButtons";
 import PreviewPorpertiesComp from "../components/porperty/PrevParent";
 import NotProperty from "../components/porperty/NotProperty";
 import HousesHeader from "../components/HosesHeader";
+import HomePageLoading from "../components/loadings/HomePageLoading";
 
 const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,7 +29,7 @@ const Home = () => {
 }, [searchParams, setSearchParams]);
 
   if(isLoading) {
-    return <div className="text-center mt-20 text-xl font-bold">Loading...</div>
+    return <HomePageLoading />
   }
   if(error ) {
     return <div className="text-center mt-20 text-xl font-bold text-red-500">Error: {error.message}</div>

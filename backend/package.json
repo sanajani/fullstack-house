@@ -5,8 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.js"
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "dev": "nodemon src/index.js",
+  "start": "node src/index.js",
+  "prod": "pm2 start src/index.js --name property-backend"
   },
   "keywords": [],
   "author": "",

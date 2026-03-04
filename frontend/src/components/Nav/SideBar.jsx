@@ -1,14 +1,25 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuthStore } from '../../store/authStore';
 import { useGetUserProfile } from "../../hooks/useAuth";
+import { SpinnerGradient } from "../skeletons/Spinner";
+import { useEffect } from "react";
 
 const SideBar = ({ setShowSideBar }) => {
-  const {isAuthenticated} = useAuthStore();
+  const navigate = useNavigate();
+  const {isAuthenticated, logoutAuth} = useAuthStore();
 
-  const { logoutAuth } = useAuthStore();
   const {data, isLoading, isError, error} = useGetUserProfile({
       enabled: isAuthenticated
   });
+
+    // Handle error with useEffect - prevents loop
+  useEffect(() => {
+    if (isError) {
+      console.error("Profile fetch failed:", error?.message);
+      logoutAuth();
+      navigate('/login', { replace: true });
+    }
+  }, [isError, logoutAuth, navigate, error]);
 
   const handleLogout = () => {
     logoutAuth();
@@ -17,13 +28,10 @@ const SideBar = ({ setShowSideBar }) => {
   };
 
   if(isLoading){
-    return <h1>Loading...</h1>
+    return <div className="w-full h-full flex justify-center items-center"><SpinnerGradient /></div>
   }
-  if(isError){
-    console.log(error.message);
-    
-    return <h1>Error</h1>
-  }
+
+
   const role = data?.data?.role || null;
   
 

@@ -3,13 +3,13 @@ import ImageGallery from '../../components/gallary/ImageGallery';
 import ImagePreviewDesk from '../../components/gallary/ImagePreviewDesk'
 import ImagePreviewMobile from '../../components/gallary/ImagePreviewMobile';
 import PropertyInfo from '../../components/showSIngleDataInfo/PropertyInfo';
-
 import { AnimatePresence } from 'motion/react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetSinglePropertyByID } from '../../hooks/useProperties';
 
 const ShowSingleProperty = () => {
+
   const [showGallery, setShowGallery] = useState(false);
   const {id} = useParams();
   
@@ -20,8 +20,9 @@ const ShowSingleProperty = () => {
   if(error) return <h1>Something went wrong!!!</h1>
   
   
+
   return (
-    <div>
+    <div className='relative'>
       {/* IMAGES CONTAINER */}
         <div>
         <div className='hidden md:block'>
@@ -42,6 +43,7 @@ const ShowSingleProperty = () => {
       <PropertyInfo showSingleProperty={showSingleProperty}/>
 
       {/* SHOW DATA FOR SINGLE  */}
+
 
     </div>
   )

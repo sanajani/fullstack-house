@@ -1,6 +1,11 @@
+import { Link } from "react-router-dom";
+
+import WhatsappActionCall from "./WhatsappActionCall";
 
 const AgentInfo = ({agentData}) => {
-  const {name, agentInfo} = agentData?.agent;
+  const {name, agentInfo, phoneNumber1} = agentData?.agent;
+  console.log(agentData);
+  
   
   return (
       <div className='bg-white rounded-2xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.12)]'>
@@ -15,12 +20,14 @@ const AgentInfo = ({agentData}) => {
           <div className='font-medium text-gray-800'>{agentInfo?.agencyName}</div>
         </div>
       </div>
-      <div className='w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold'>
-        👤
-      </div>
+      <WhatsappActionCall phoneNumber1={phoneNumber1} propertyData={agentData} />
     </div>
   </div>
   )
 }
+
+      // <div className=' absolute bottom-24 right-10 p-4 border rounded-full text-3xl bg-green-800 text-white cursor-pointer'>
+    
+      // </div>
 
 export default AgentInfo

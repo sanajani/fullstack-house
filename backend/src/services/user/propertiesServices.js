@@ -20,6 +20,8 @@ export const getAllPropertiesService = async (page, limit, province, dealType, h
         if(houseRent === "under_50000") query['price.amount'].$lte = 50000;
         if(houseRent === "above_50000") query['price.amount'].$gte = 50001; // Assuming above 50,000 is the minimum for "above_50k"
     }
+    console.log(query);
+    
     // const properties = await PropertiesModel.find(query).lean()
     const properties = await PropertiesModel.find(query).select('title views status description propertyType dealType media location transaction price').lean()
         .skip((pageNumber - 1 )* limitItems)
@@ -54,7 +56,7 @@ export const getSinglePropertyByIdService = async (propertyId) => {
     propertyId,
     { $inc: { views: 1 } },
     { new: true }
-  ).populate('agent', 'name agentInfo');
+  ).populate('agent', 'name agentInfo phoneNumber1');
 
   if (!property) {
     throw new AppError("Property Not Found", 404);

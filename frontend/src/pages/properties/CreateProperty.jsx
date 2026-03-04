@@ -15,7 +15,7 @@ import { buildPropertyFormData } from "../../utils/formdata";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import AddAmenities from "../../components/porperty/AddAmenities";
-// import { SpinnerGradient } from "../../components/skeletons/Spinner";
+import { SpinnerGradient } from "../../components/skeletons/Spinner";
 
 const CreateProperty = () => {
   const { mutate } = useCreateProperty();
@@ -93,9 +93,14 @@ const CreateProperty = () => {
         {/* Price */}
         <Price register={register} errors={errors} />
 
-        <button className={`w-full bg-blue-700 text-white py-3 rounded-lg font-semibold hover:opacity-90 cursor-pointer`} disabled={loading} type="submit"> 
+        <button className={`w-full bg-blue-700 text-white py-3 rounded-lg font-semibold hover:opacity-90 cursor-pointer ${loading ? 'flex justify-center items-center cursor-not-allowed bg-blue-50 transition-colors gap-4': ''}`} disabled={loading} type="submit">
          {/* {!loading ? " پست کردن خانه" : `${ `صبر کنید ${<SpinnerGradient/>}`}`} */}
-         hello
+         {!loading ? " پست کردن خانه" : (
+            <>
+              <SpinnerGradient />
+              <span>صبر کنید</span>
+            </>
+          )}
         </button>
       </form>
     </div>
